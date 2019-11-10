@@ -4,7 +4,7 @@ Project Structure
 - css
 - data
   - scripts
-   - {all data collecting/cleaning scripts}
+    - {all data collecting/cleaning scripts}
   - {all csv/json files here}
 - js 
   - libraries
