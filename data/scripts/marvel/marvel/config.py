@@ -1,7 +1,7 @@
 from pathlib import Path
 
 
-root = Path(__file__).parent.parent.parent
+root = Path(__file__).parent.parent.parent.parent.parent
 data = root / 'data'
 rawdata = data / 'raw'
 cleandata = data / 'clean'
