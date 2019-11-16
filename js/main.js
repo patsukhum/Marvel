@@ -9,6 +9,18 @@ function makeSvg(vis, chartType) {
       .attr('transform', 'translate(' + vis.margin.left + ',' + vis.margin.top + ')');
 }
 
+
+// create Vis2: line chart
+queue()
+    .defer(d3.csv, 'data/clean/genre_and_reviews_ombd.csv')
+    .await(createLineChartVis);
+
+function createLineChartVis(error, data) {
+  console.log(data)
+  var linechartVis = new LineChartVis('linechart-vis', data);
+}
+
+// create Vis3: network chart
 queue()
     .defer(d3.json, 'data/clean/all_character_nodes.json')
     .defer(d3.json, 'data/clean/all_character_links.json')
@@ -20,3 +32,4 @@ function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
   var networkVis = new NetworkVis('network-vis', data);
 }
+
