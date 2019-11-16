@@ -4,8 +4,8 @@ queue()
     .await(createLineChartVis);
 
 function createLineChartVis(error, data) {
-  console.log(data)
-  var linechartVis = new LineChartVis('linechart-vis', data);
+  console.log(data);
+  // var linechartVis = new LineChartVis('linechart-vis', data);
 }
 
 // create Vis3: network chart
