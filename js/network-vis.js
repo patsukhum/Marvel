@@ -28,8 +28,8 @@ NetworkVis.prototype.initVis = function() {
   vis.height = vis.width * 0.75;
 
   // Defining parameters for force simulation
-  vis.strength = -500;
-  vis.distance = 25;
+  vis.strength = -200;
+  vis.distance = 100;
 
   vis.svg = makeSvg(vis, 'network-vis');
 
@@ -43,8 +43,20 @@ NetworkVis.prototype.initVis = function() {
       .on('drag', d => vis.dragging(d, vis))
       .on('end', d => vis.dragEnd(d, vis));
 
-  vis.scaleEdge = d3.scaleLinear()
+  // Scales for node and edge attributes
+  vis.scaleEdgeWidth = d3.scaleLinear()
       .range([1, 5]);
+  vis.scaleEdgeOpacity = d3.scaleLinear()
+      .range([0.01, 1.0]);
+  vis.scaleNodeRadius = d3.scaleLinear()
+      .range([1, 20])
+
+  // Tooltip
+  vis.tooltip = d3.tip()
+      .attr('class','d3-tip')
+      .html(d => d.name);
+
+  vis.svg.call(vis.tooltip);
 
   vis.wrangleData();
 };
@@ -52,7 +64,7 @@ NetworkVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Filtering out all edges below 10 counts
-  vis.displayData.edges = vis.data.edges.filter(d => d.count >= 5);
+  // vis.displayData.edges = vis.data.edges.filter(d => d.count >= 5);
 
   // Converting bidirectional links to double-counts
 
@@ -62,25 +74,34 @@ NetworkVis.prototype.wrangleData = function() {
 NetworkVis.prototype.updateVis = function() {
   var vis = this;
 
-  vis.scaleEdge.domain(d3.extent(vis.data.edges.map(d => d.count)));
+  vis.scaleEdgeWidth.domain(d3.extent(vis.displayData.edges.map(d => d.count)));
+  vis.scaleEdgeOpacity.domain(d3.extent(vis.displayData.edges.map(d => d.count)));
+  vis.scaleNodeRadius.domain(d3.extent(vis.displayData.nodes.map(d => d.centrality)))
 
-  vis.force = d3.forceSimulation(vis.data.nodes)
-      .force('charge', d3.forceManyBody().strength(vis.strength))
-      .force('link', d3.forceLink(vis.data.edges).distance(vis.distance)
+  vis.force = d3.forceSimulation(vis.displayData.nodes)
+      .force('charge', d3.forceManyBody()
+          .strength(vis.strength))
+      .force('link', d3.forceLink(vis.displayData.edges)
+          .distance(vis.distance)
           .strength(link => link.count / 100))
-      .force('center', d3.forceCenter().x(vis.width / 2).y(vis.height / 2));
+      .force('center', d3.forceCenter()
+          .x(vis.width / 2)
+          .y(vis.height / 2));
 
   var edges = vis.gEdges.selectAll('.edge')
-      .data(vis.data.edges)
+      .data(vis.displayData.edges)
       .enter().append('line')
         .attr('class', 'edge')
-        .style('stroke-width', d => vis.scaleEdge(d.count) + 'px');
+        .style('stroke-width', d => vis.scaleEdgeWidth(d.count) + 'px')
+        .style('opacity', d => vis.scaleEdgeOpacity(d.count));
 
   var nodes = vis.gNodes.selectAll('.node')
-      .data(vis.data.nodes)
+      .data(vis.displayData.nodes)
       .enter().append('circle')
         .attr('class', 'node')
-        .attr('r', 10); // For now... this will be determined by data after
+        .attr('r', d => vis.scaleNodeRadius(d.centrality))
+        .on('mouseover', d => vis.nodeMouseover(d, vis))
+        .on('mouseout', d => vis.nodeMouseout(d, vis)); // For now... this will be determined by data after
 
   vis.force.on('tick', function() {
     edges.attr('x1', d => d.source.x)
@@ -89,7 +110,11 @@ NetworkVis.prototype.updateVis = function() {
         .attr('y2', d => d.target.y);
 
     nodes.attr('cx', d => d.x)
-        .attr('cy', d => d.y)
+        .attr('cy', d => d.y);
+
+    nodes.append('text')
+        .text(d => d.name);
+
   });
 
   nodes.call(vis.dragNode);
@@ -111,4 +136,10 @@ NetworkVis.prototype.dragEnd = function(d, vis) {
   }
   d.fx = null;
   d.fy = null;
+};
+NetworkVis.prototype.nodeMouseover = function(d, vis) {
+  vis.tooltip.show(d);
+};
+NetworkVis.prototype.nodeMouseout = function(d, vis) {
+  vis.tooltip.hide(d);
 };

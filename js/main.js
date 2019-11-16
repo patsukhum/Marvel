@@ -10,7 +10,7 @@ function makeSvg(vis, chartType) {
 }
 
 queue()
-    .defer(d3.json, 'data/clean/all_character_nodes.json')
+    .defer(d3.json, 'data/clean/all_character_nodes_centrality.json')
     .defer(d3.json, 'data/clean/all_character_links.json')
     .await(createNetworkVis);
 
