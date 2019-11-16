@@ -1,0 +1,13 @@
+.vis-container {
+    width: 100%;
+    position: relative;
+}
+.edge {
+    stroke: darkred;
+    fill: none;
+}
+.node {
+    fill: yellow;
+    stroke: darkred;
+    stroke-width: 2px;
+}
