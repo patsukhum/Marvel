@@ -1,23 +1,11 @@
-function makeSvg(vis, chartType) {
-  return d3.select('#' + vis.parentElement)
-      .append('div')
-      .attr('class', 'svg-container ' + chartType)
-      .append('svg')
-      .attr('height', vis.height + vis.margin.top + vis.margin.bottom)
-      .attr('width', vis.width + vis.margin.left + vis.margin.right)
-      .append('g')
-      .attr('transform', 'translate(' + vis.margin.left + ',' + vis.margin.top + ')');
-}
-
-
 // create Vis2: line chart
 queue()
     .defer(d3.csv, 'data/clean/genre_and_reviews_ombd.csv')
     .await(createLineChartVis);
 
 function createLineChartVis(error, data) {
-  console.log(data)
-  var linechartVis = new LineChartVis('linechart-vis', data);
+  console.log(data);
+  // var linechartVis = new LineChartVis('linechart-vis', data);
 }
 
 // create Vis3: network chart
@@ -44,3 +32,4 @@ function createMatrixVis(error, matrix_data, all_characters_data) {
   console.log(all_characters_data)
   var matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };
+
