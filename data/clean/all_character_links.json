@@ -1,112 +1,2436 @@
 [
-  {
-    "source": "Iron Man",
-    "target": "Ant-Man",
-    "count": 11
-  },
-  {
-    "source": "Iron Man",
-    "target": "Black Panther",
-    "count": 5
-  },
-  {
-    "source": "Iron Man",
-    "target": "Black Widow",
-    "count": 16
-  },
-  {
-    "source": "Iron Man",
-    "target": "Hulk",
-    "count": 19
-  },
-  {
-    "source": "Iron Man",
-    "target": "Captain America",
-    "count": 32
-  },
-  {
-    "source": "Iron Man",
-    "target": "Captain Marvel",
-    "count": 7
-  },
-  {
-    "source": "Iron Man",
-    "target": "Doctor Strange",
-    "count": 6
-  },
-  {
-    "source": "Iron Man",
-    "target": "Drax the Destoyer",
-    "count": 10
-  },
-  {
-    "source": "Iron Man",
-    "target": "Falcon",
-    "count": 2
-  },
-  {
-    "source": "Iron Man",
-    "target": "Gamora",
-    "count": 10
-  },
-  {
-    "source": "Iron Man",
-    "target": "Groot",
-    "count": 10
-  },
-  {
-    "source": "Iron Man",
-    "target": "Star-Lord",
-    "count": 10
-  },
-  {
-    "source": "Iron Man",
-    "target": "Rocket Raccoon",
-    "count": 10
-  },
-  {
-    "source": "Iron Man",
-    "target": "Hawkeye",
-    "count": 2
-  },
-  {
-    "source": "Iron Man",
-    "target": "Iron Man",
-    "count": 20
-  },
-  {
-    "source": "Iron Man",
-    "target": "Loki",
-    "count": 2
-  },
-  {
-    "source": "Iron Man",
-    "target": "Nick Fury",
-    "count": 11
-  },
-  {
-    "source": "Iron Man",
-    "target": "Spider Man",
-    "count": 19
-  },
-  {
-    "source": "Iron Man",
-    "target": "Scarlet Witch",
-    "count": 1
-  },
-  {
-    "source": "Iron Man",
-    "target": "Thanos",
-    "count": 1
-  },
-  {
-    "source": "Iron Man",
-    "target": "Thor",
-    "count": 26
-  },
-  {
-    "source": "Iron Man",
-    "target": "Vision",
-    "count": 2
-  }
+  [
+    {
+      "source": "Iron Man",
+      "target": "Ant-Man",
+      "count": 11
+    },
+    {
+      "source": "Iron Man",
+      "target": "Black Panther",
+      "count": 5
+    },
+    {
+      "source": "Iron Man",
+      "target": "Black Widow",
+      "count": 16
+    },
+    {
+      "source": "Iron Man",
+      "target": "Hulk",
+      "count": 19
+    },
+    {
+      "source": "Iron Man",
+      "target": "Captain America",
+      "count": 32
+    },
+    {
+      "source": "Iron Man",
+      "target": "Captain Marvel",
+      "count": 7
+    },
+    {
+      "source": "Iron Man",
+      "target": "Doctor Strange",
+      "count": 6
+    },
+    {
+      "source": "Iron Man",
+      "target": "Drax the Destoyer",
+      "count": 10
+    },
+    {
+      "source": "Iron Man",
+      "target": "Falcon",
+      "count": 2
+    },
+    {
+      "source": "Iron Man",
+      "target": "Gamora",
+      "count": 10
+    },
+    {
+      "source": "Iron Man",
+      "target": "Groot",
+      "count": 10
+    },
+    {
+      "source": "Iron Man",
+      "target": "Star-Lord",
+      "count": 10
+    },
+    {
+      "source": "Iron Man",
+      "target": "Rocket Raccoon",
+      "count": 10
+    },
+    {
+      "source": "Iron Man",
+      "target": "Hawkeye",
+      "count": 2
+    },
+    {
+      "source": "Iron Man",
+      "target": "Iron Man",
+      "count": 20
+    },
+    {
+      "source": "Iron Man",
+      "target": "Loki",
+      "count": 2
+    },
+    {
+      "source": "Iron Man",
+      "target": "Nick Fury",
+      "count": 11
+    },
+    {
+      "source": "Iron Man",
+      "target": "Spider Man",
+      "count": 19
+    },
+    {
+      "source": "Iron Man",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Iron Man",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Iron Man",
+      "target": "Thor",
+      "count": 26
+    },
+    {
+      "source": "Iron Man",
+      "target": "Vision",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Captain America",
+      "target": "Ant-Man",
+      "count": 18
+    },
+    {
+      "source": "Captain America",
+      "target": "Black Panther",
+      "count": 6
+    },
+    {
+      "source": "Captain America",
+      "target": "Black Widow",
+      "count": 21
+    },
+    {
+      "source": "Captain America",
+      "target": "Captain America",
+      "count": 56
+    },
+    {
+      "source": "Captain America",
+      "target": "Captain Marvel",
+      "count": 8
+    },
+    {
+      "source": "Captain America",
+      "target": "Doctor Strange",
+      "count": 6
+    },
+    {
+      "source": "Captain America",
+      "target": "Drax the Destoyer",
+      "count": 12
+    },
+    {
+      "source": "Captain America",
+      "target": "Falcon",
+      "count": 8
+    },
+    {
+      "source": "Captain America",
+      "target": "Gamora",
+      "count": 12
+    },
+    {
+      "source": "Captain America",
+      "target": "Groot",
+      "count": 12
+    },
+    {
+      "source": "Captain America",
+      "target": "Star-Lord",
+      "count": 13
+    },
+    {
+      "source": "Captain America",
+      "target": "Rocket Raccoon",
+      "count": 13
+    },
+    {
+      "source": "Captain America",
+      "target": "Hawkeye",
+      "count": 5
+    },
+    {
+      "source": "Captain America",
+      "target": "Hulk",
+      "count": 17
+    },
+    {
+      "source": "Captain America",
+      "target": "Iron Man",
+      "count": 34
+    },
+    {
+      "source": "Captain America",
+      "target": "Loki",
+      "count": 4
+    },
+    {
+      "source": "Captain America",
+      "target": "Nick Fury",
+      "count": 18
+    },
+    {
+      "source": "Captain America",
+      "target": "Spider Man",
+      "count": 27
+    },
+    {
+      "source": "Captain America",
+      "target": "Scarlet Witch",
+      "count": 2
+    },
+    {
+      "source": "Captain America",
+      "target": "Thanos",
+      "count": 3
+    },
+    {
+      "source": "Captain America",
+      "target": "Thor",
+      "count": 34
+    },
+    {
+      "source": "Captain America",
+      "target": "Vision",
+      "count": 4
+    }
+  ],
+  [
+    {
+      "source": "Thor",
+      "target": "Captain America",
+      "count": 33
+    },
+    {
+      "source": "Thor",
+      "target": "Hulk",
+      "count": 20
+    },
+    {
+      "source": "Thor",
+      "target": "Iron Man",
+      "count": 26
+    },
+    {
+      "source": "Thor",
+      "target": "Loki",
+      "count": 6
+    },
+    {
+      "source": "Thor",
+      "target": "Thor",
+      "count": 30
+    },
+    {
+      "source": "Thor",
+      "target": "Ant-Man",
+      "count": 9
+    },
+    {
+      "source": "Thor",
+      "target": "Black Panther",
+      "count": 5
+    },
+    {
+      "source": "Thor",
+      "target": "Black Widow",
+      "count": 9
+    },
+    {
+      "source": "Thor",
+      "target": "Captain Marvel",
+      "count": 5
+    },
+    {
+      "source": "Thor",
+      "target": "Doctor Strange",
+      "count": 9
+    },
+    {
+      "source": "Thor",
+      "target": "Star-Lord",
+      "count": 10
+    },
+    {
+      "source": "Thor",
+      "target": "Rocket Raccoon",
+      "count": 11
+    },
+    {
+      "source": "Thor",
+      "target": "Groot",
+      "count": 12
+    },
+    {
+      "source": "Thor",
+      "target": "Gamora",
+      "count": 10
+    },
+    {
+      "source": "Thor",
+      "target": "Drax the Destoyer",
+      "count": 11
+    },
+    {
+      "source": "Thor",
+      "target": "Hawkeye",
+      "count": 2
+    },
+    {
+      "source": "Thor",
+      "target": "Nick Fury",
+      "count": 6
+    },
+    {
+      "source": "Thor",
+      "target": "Spider Man",
+      "count": 13
+    },
+    {
+      "source": "Thor",
+      "target": "Thanos",
+      "count": 3
+    },
+    {
+      "source": "Thor",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Thor",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Thor",
+      "target": "Vision",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Black Widow",
+      "target": "Ant-Man",
+      "count": 7
+    },
+    {
+      "source": "Black Widow",
+      "target": "Black Panther",
+      "count": 4
+    },
+    {
+      "source": "Black Widow",
+      "target": "Black Widow",
+      "count": 15
+    },
+    {
+      "source": "Black Widow",
+      "target": "Hulk",
+      "count": 9
+    },
+    {
+      "source": "Black Widow",
+      "target": "Captain America",
+      "count": 29
+    },
+    {
+      "source": "Black Widow",
+      "target": "Captain Marvel",
+      "count": 6
+    },
+    {
+      "source": "Black Widow",
+      "target": "Doctor Strange",
+      "count": 4
+    },
+    {
+      "source": "Black Widow",
+      "target": "Falcon",
+      "count": 5
+    },
+    {
+      "source": "Black Widow",
+      "target": "Star-Lord",
+      "count": 7
+    },
+    {
+      "source": "Black Widow",
+      "target": "Rocket Raccoon",
+      "count": 7
+    },
+    {
+      "source": "Black Widow",
+      "target": "Groot",
+      "count": 8
+    },
+    {
+      "source": "Black Widow",
+      "target": "Gamora",
+      "count": 7
+    },
+    {
+      "source": "Black Widow",
+      "target": "Drax the Destoyer",
+      "count": 7
+    },
+    {
+      "source": "Black Widow",
+      "target": "Hawkeye",
+      "count": 5
+    },
+    {
+      "source": "Black Widow",
+      "target": "Iron Man",
+      "count": 22
+    },
+    {
+      "source": "Black Widow",
+      "target": "Nick Fury",
+      "count": 11
+    },
+    {
+      "source": "Black Widow",
+      "target": "Spider Man",
+      "count": 10
+    },
+    {
+      "source": "Black Widow",
+      "target": "Thor",
+      "count": 13
+    },
+    {
+      "source": "Black Widow",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Black Widow",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Black Widow",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Black Widow",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Hulk",
+      "target": "Ant-Man",
+      "count": 8
+    },
+    {
+      "source": "Hulk",
+      "target": "Black Panther",
+      "count": 4
+    },
+    {
+      "source": "Hulk",
+      "target": "Black Widow",
+      "count": 6
+    },
+    {
+      "source": "Hulk",
+      "target": "Hulk",
+      "count": 12
+    },
+    {
+      "source": "Hulk",
+      "target": "Captain America",
+      "count": 17
+    },
+    {
+      "source": "Hulk",
+      "target": "Captain Marvel",
+      "count": 5
+    },
+    {
+      "source": "Hulk",
+      "target": "Doctor Strange",
+      "count": 5
+    },
+    {
+      "source": "Hulk",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Hulk",
+      "target": "Groot",
+      "count": 8
+    },
+    {
+      "source": "Hulk",
+      "target": "Star-Lord",
+      "count": 7
+    },
+    {
+      "source": "Hulk",
+      "target": "Rocket Raccoon",
+      "count": 7
+    },
+    {
+      "source": "Hulk",
+      "target": "Gamora",
+      "count": 7
+    },
+    {
+      "source": "Hulk",
+      "target": "Drax the Destoyer",
+      "count": 7
+    },
+    {
+      "source": "Hulk",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Hulk",
+      "target": "Iron Man",
+      "count": 19
+    },
+    {
+      "source": "Hulk",
+      "target": "Loki",
+      "count": 2
+    },
+    {
+      "source": "Hulk",
+      "target": "Nick Fury",
+      "count": 4
+    },
+    {
+      "source": "Hulk",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Hulk",
+      "target": "Spider Man",
+      "count": 12
+    },
+    {
+      "source": "Hulk",
+      "target": "Thanos",
+      "count": 2
+    },
+    {
+      "source": "Hulk",
+      "target": "Thor",
+      "count": 20
+    },
+    {
+      "source": "Hulk",
+      "target": "Vision",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Hawkeye",
+      "target": "Ant-Man",
+      "count": 4
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Black Panther",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Black Widow",
+      "count": 4
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Captain America",
+      "count": 4
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Captain Marvel",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Doctor Strange",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Groot",
+      "count": 2
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Star-Lord",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Rocket Raccoon",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Gamora",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Drax the Destoyer",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Hulk",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Iron Man",
+      "count": 2
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Nick Fury",
+      "count": 3
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Spider Man",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Thor",
+      "count": 2
+    },
+    {
+      "source": "Hawkeye",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Ant-Man",
+      "target": "Ant-Man",
+      "count": 12
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Black Panther",
+      "count": 4
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Black Widow",
+      "count": 5
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Captain America",
+      "count": 17
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Captain Marvel",
+      "count": 3
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Doctor Strange",
+      "count": 4
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Falcon",
+      "count": 3
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Groot",
+      "count": 6
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Hawkeye",
+      "count": 4
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Hulk",
+      "count": 11
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Iron Man",
+      "count": 13
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Loki",
+      "count": 3
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Nick Fury",
+      "count": 5
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Scarlet Witch",
+      "count": 2
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Spider Man",
+      "count": 8
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Thor",
+      "count": 12
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Vision",
+      "count": 1
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Star-Lord",
+      "count": 5
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Rocket Raccoon",
+      "count": 5
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Gamora",
+      "count": 5
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Drax the Destoyer",
+      "count": 5
+    },
+    {
+      "source": "Ant-Man",
+      "target": "Thanos",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Vision",
+      "target": "Ant-Man",
+      "count": 2
+    },
+    {
+      "source": "Vision",
+      "target": "Black Panther",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Black Widow",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Captain America",
+      "count": 3
+    },
+    {
+      "source": "Vision",
+      "target": "Captain Marvel",
+      "count": 2
+    },
+    {
+      "source": "Vision",
+      "target": "Doctor Strange",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Groot",
+      "count": 2
+    },
+    {
+      "source": "Vision",
+      "target": "Star-Lord",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Rocket Raccoon",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Gamora",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Drax the Destoyer",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Hulk",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Iron Man",
+      "count": 2
+    },
+    {
+      "source": "Vision",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Nick Fury",
+      "count": 2
+    },
+    {
+      "source": "Vision",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Spider Man",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Vision",
+      "target": "Thor",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Scarlet Witch",
+      "target": "Ant-Man",
+      "count": 2
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Black Panther",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Black Widow",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Captain America",
+      "count": 3
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Captain Marvel",
+      "count": 2
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Doctor Strange",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Groot",
+      "count": 2
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Star-Lord",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Rocket Raccoon",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Gamora",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Drax the Destoyer",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Hulk",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Iron Man",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Nick Fury",
+      "count": 2
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Spider Man",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Thor",
+      "count": 1
+    },
+    {
+      "source": "Scarlet Witch",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Falcon",
+      "target": "Ant-Man",
+      "count": 3
+    },
+    {
+      "source": "Falcon",
+      "target": "Black Panther",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Black Widow",
+      "count": 4
+    },
+    {
+      "source": "Falcon",
+      "target": "Hulk",
+      "count": 2
+    },
+    {
+      "source": "Falcon",
+      "target": "Captain America",
+      "count": 8
+    },
+    {
+      "source": "Falcon",
+      "target": "Captain Marvel",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Doctor Strange",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Groot",
+      "count": 2
+    },
+    {
+      "source": "Falcon",
+      "target": "Star-Lord",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Rocket Raccoon",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Gamora",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Drax the Destoyer",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Iron Man",
+      "count": 2
+    },
+    {
+      "source": "Falcon",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Nick Fury",
+      "count": 3
+    },
+    {
+      "source": "Falcon",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Spider Man",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Falcon",
+      "target": "Thor",
+      "count": 2
+    },
+    {
+      "source": "Falcon",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Star-Lord",
+      "target": "Hulk",
+      "count": 9
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Doctor Strange",
+      "count": 4
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Drax the Destoyer",
+      "count": 13
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Falcon",
+      "count": 2
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Gamora",
+      "count": 13
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Groot",
+      "count": 13
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Star-Lord",
+      "count": 12
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Rocket Raccoon",
+      "count": 13
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Iron Man",
+      "count": 11
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Spider Man",
+      "count": 10
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Thanos",
+      "count": 4
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Thor",
+      "count": 10
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Ant-Man",
+      "count": 6
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Black Widow",
+      "count": 5
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Captain America",
+      "count": 11
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Captain Marvel",
+      "count": 6
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Nick Fury",
+      "count": 3
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Vision",
+      "count": 1
+    },
+    {
+      "source": "Star-Lord",
+      "target": "Black Panther",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Rocket Raccoon",
+      "target": "Drax the Destoyer",
+      "count": 13
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Gamora",
+      "count": 13
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Groot",
+      "count": 14
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Star-Lord",
+      "count": 13
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Rocket Raccoon",
+      "count": 15
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Hawkeye",
+      "count": 2
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Hulk",
+      "count": 9
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Scarlet Witch",
+      "count": 2
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Spider Man",
+      "count": 10
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Thanos",
+      "count": 4
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Thor",
+      "count": 11
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Vision",
+      "count": 2
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Ant-Man",
+      "count": 6
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Black Widow",
+      "count": 5
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Captain America",
+      "count": 11
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Captain Marvel",
+      "count": 6
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Doctor Strange",
+      "count": 3
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Iron Man",
+      "count": 10
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Nick Fury",
+      "count": 3
+    },
+    {
+      "source": "Rocket Raccoon",
+      "target": "Black Panther",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Groot",
+      "target": "Ant-Man",
+      "count": 7
+    },
+    {
+      "source": "Groot",
+      "target": "Black Panther",
+      "count": 3
+    },
+    {
+      "source": "Groot",
+      "target": "Black Widow",
+      "count": 6
+    },
+    {
+      "source": "Groot",
+      "target": "Hulk",
+      "count": 10
+    },
+    {
+      "source": "Groot",
+      "target": "Captain America",
+      "count": 12
+    },
+    {
+      "source": "Groot",
+      "target": "Captain Marvel",
+      "count": 7
+    },
+    {
+      "source": "Groot",
+      "target": "Doctor Strange",
+      "count": 4
+    },
+    {
+      "source": "Groot",
+      "target": "Drax the Destoyer",
+      "count": 13
+    },
+    {
+      "source": "Groot",
+      "target": "Falcon",
+      "count": 2
+    },
+    {
+      "source": "Groot",
+      "target": "Gamora",
+      "count": 13
+    },
+    {
+      "source": "Groot",
+      "target": "Star-Lord",
+      "count": 13
+    },
+    {
+      "source": "Groot",
+      "target": "Rocket Raccoon",
+      "count": 14
+    },
+    {
+      "source": "Groot",
+      "target": "Groot",
+      "count": 13
+    },
+    {
+      "source": "Groot",
+      "target": "Hawkeye",
+      "count": 2
+    },
+    {
+      "source": "Groot",
+      "target": "Iron Man",
+      "count": 11
+    },
+    {
+      "source": "Groot",
+      "target": "Loki",
+      "count": 2
+    },
+    {
+      "source": "Groot",
+      "target": "Nick Fury",
+      "count": 5
+    },
+    {
+      "source": "Groot",
+      "target": "Scarlet Witch",
+      "count": 2
+    },
+    {
+      "source": "Groot",
+      "target": "Spider Man",
+      "count": 10
+    },
+    {
+      "source": "Groot",
+      "target": "Thanos",
+      "count": 4
+    },
+    {
+      "source": "Groot",
+      "target": "Thor",
+      "count": 11
+    },
+    {
+      "source": "Groot",
+      "target": "Vision",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Doctor Strange",
+      "target": "Ant-Man",
+      "count": 4
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Black Panther",
+      "count": 2
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Black Widow",
+      "count": 3
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Captain America",
+      "count": 7
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Captain Marvel",
+      "count": 3
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Doctor Strange",
+      "count": 3
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Drax the Destoyer",
+      "count": 4
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Gamora",
+      "count": 4
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Groot",
+      "count": 4
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Star-Lord",
+      "count": 4
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Rocket Raccoon",
+      "count": 5
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Hulk",
+      "count": 4
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Iron Man",
+      "count": 5
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Loki",
+      "count": 2
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Nick Fury",
+      "count": 2
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Spider Man",
+      "count": 6
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Thor",
+      "count": 6
+    },
+    {
+      "source": "Doctor Strange",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Gamora",
+      "target": "Ant-Man",
+      "count": 8
+    },
+    {
+      "source": "Gamora",
+      "target": "Black Widow",
+      "count": 6
+    },
+    {
+      "source": "Gamora",
+      "target": "Captain America",
+      "count": 12
+    },
+    {
+      "source": "Gamora",
+      "target": "Captain Marvel",
+      "count": 8
+    },
+    {
+      "source": "Gamora",
+      "target": "Doctor Strange",
+      "count": 4
+    },
+    {
+      "source": "Gamora",
+      "target": "Drax the Destoyer",
+      "count": 13
+    },
+    {
+      "source": "Gamora",
+      "target": "Falcon",
+      "count": 2
+    },
+    {
+      "source": "Gamora",
+      "target": "Groot",
+      "count": 13
+    },
+    {
+      "source": "Gamora",
+      "target": "Star-Lord",
+      "count": 13
+    },
+    {
+      "source": "Gamora",
+      "target": "Rocket Raccoon",
+      "count": 13
+    },
+    {
+      "source": "Gamora",
+      "target": "Gamora",
+      "count": 12
+    },
+    {
+      "source": "Gamora",
+      "target": "Hawkeye",
+      "count": 2
+    },
+    {
+      "source": "Gamora",
+      "target": "Hulk",
+      "count": 9
+    },
+    {
+      "source": "Gamora",
+      "target": "Iron Man",
+      "count": 11
+    },
+    {
+      "source": "Gamora",
+      "target": "Loki",
+      "count": 2
+    },
+    {
+      "source": "Gamora",
+      "target": "Nick Fury",
+      "count": 5
+    },
+    {
+      "source": "Gamora",
+      "target": "Scarlet Witch",
+      "count": 2
+    },
+    {
+      "source": "Gamora",
+      "target": "Spider Man",
+      "count": 10
+    },
+    {
+      "source": "Gamora",
+      "target": "Thanos",
+      "count": 4
+    },
+    {
+      "source": "Gamora",
+      "target": "Thor",
+      "count": 10
+    },
+    {
+      "source": "Gamora",
+      "target": "Vision",
+      "count": 2
+    },
+    {
+      "source": "Gamora",
+      "target": "Black Panther",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Drax the Destoyer",
+      "target": "Gamora",
+      "count": 17
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Groot",
+      "count": 17
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Star-Lord",
+      "count": 17
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Rocket Raccoon",
+      "count": 17
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Drax the Destoyer",
+      "count": 15
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Hulk",
+      "count": 10
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Iron Man",
+      "count": 12
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Loki",
+      "count": 3
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Thanos",
+      "count": 5
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Thor",
+      "count": 11
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Ant-Man",
+      "count": 6
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Black Widow",
+      "count": 5
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Captain America",
+      "count": 11
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Captain Marvel",
+      "count": 6
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Doctor Strange",
+      "count": 3
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Nick Fury",
+      "count": 3
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Spider Man",
+      "count": 9
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Vision",
+      "count": 1
+    },
+    {
+      "source": "Drax the Destoyer",
+      "target": "Black Panther",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Nick Fury",
+      "target": "Ant-Man",
+      "count": 4
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Black Panther",
+      "count": 2
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Black Widow",
+      "count": 9
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Captain America",
+      "count": 17
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Captain Marvel",
+      "count": 6
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Doctor Strange",
+      "count": 2
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Drax the Destoyer",
+      "count": 3
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Falcon",
+      "count": 3
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Gamora",
+      "count": 3
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Groot",
+      "count": 4
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Star-Lord",
+      "count": 4
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Rocket Raccoon",
+      "count": 3
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Hawkeye",
+      "count": 3
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Hulk",
+      "count": 3
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Iron Man",
+      "count": 11
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Loki",
+      "count": 2
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Nick Fury",
+      "count": 6
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Spider Man",
+      "count": 3
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Scarlet Witch",
+      "count": 2
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Thor",
+      "count": 4
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Vision",
+      "count": 2
+    },
+    {
+      "source": "Nick Fury",
+      "target": "Thanos",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Spider Man",
+      "target": "Ant-Man",
+      "count": 10
+    },
+    {
+      "source": "Spider Man",
+      "target": "Black Panther",
+      "count": 4
+    },
+    {
+      "source": "Spider Man",
+      "target": "Black Widow",
+      "count": 8
+    },
+    {
+      "source": "Spider Man",
+      "target": "Hulk",
+      "count": 12
+    },
+    {
+      "source": "Spider Man",
+      "target": "Captain America",
+      "count": 24
+    },
+    {
+      "source": "Spider Man",
+      "target": "Captain Marvel",
+      "count": 6
+    },
+    {
+      "source": "Spider Man",
+      "target": "Doctor Strange",
+      "count": 5
+    },
+    {
+      "source": "Spider Man",
+      "target": "Drax the Destoyer",
+      "count": 10
+    },
+    {
+      "source": "Spider Man",
+      "target": "Falcon",
+      "count": 2
+    },
+    {
+      "source": "Spider Man",
+      "target": "Gamora",
+      "count": 10
+    },
+    {
+      "source": "Spider Man",
+      "target": "Groot",
+      "count": 10
+    },
+    {
+      "source": "Spider Man",
+      "target": "Star-Lord",
+      "count": 10
+    },
+    {
+      "source": "Spider Man",
+      "target": "Rocket Raccoon",
+      "count": 10
+    },
+    {
+      "source": "Spider Man",
+      "target": "Hawkeye",
+      "count": 2
+    },
+    {
+      "source": "Spider Man",
+      "target": "Iron Man",
+      "count": 18
+    },
+    {
+      "source": "Spider Man",
+      "target": "Nick Fury",
+      "count": 5
+    },
+    {
+      "source": "Spider Man",
+      "target": "Spider Man",
+      "count": 13
+    },
+    {
+      "source": "Spider Man",
+      "target": "Thanos",
+      "count": 3
+    },
+    {
+      "source": "Spider Man",
+      "target": "Thor",
+      "count": 19
+    },
+    {
+      "source": "Spider Man",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Spider Man",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Spider Man",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Black Panther",
+      "target": "Ant-Man",
+      "count": 6
+    },
+    {
+      "source": "Black Panther",
+      "target": "Black Panther",
+      "count": 4
+    },
+    {
+      "source": "Black Panther",
+      "target": "Black Widow",
+      "count": 5
+    },
+    {
+      "source": "Black Panther",
+      "target": "Hulk",
+      "count": 8
+    },
+    {
+      "source": "Black Panther",
+      "target": "Captain America",
+      "count": 14
+    },
+    {
+      "source": "Black Panther",
+      "target": "Captain Marvel",
+      "count": 4
+    },
+    {
+      "source": "Black Panther",
+      "target": "Doctor Strange",
+      "count": 3
+    },
+    {
+      "source": "Black Panther",
+      "target": "Star-Lord",
+      "count": 6
+    },
+    {
+      "source": "Black Panther",
+      "target": "Rocket Raccoon",
+      "count": 6
+    },
+    {
+      "source": "Black Panther",
+      "target": "Groot",
+      "count": 6
+    },
+    {
+      "source": "Black Panther",
+      "target": "Gamora",
+      "count": 5
+    },
+    {
+      "source": "Black Panther",
+      "target": "Drax the Destoyer",
+      "count": 5
+    },
+    {
+      "source": "Black Panther",
+      "target": "Iron Man",
+      "count": 9
+    },
+    {
+      "source": "Black Panther",
+      "target": "Loki",
+      "count": 3
+    },
+    {
+      "source": "Black Panther",
+      "target": "Spider Man",
+      "count": 9
+    },
+    {
+      "source": "Black Panther",
+      "target": "Nick Fury",
+      "count": 4
+    },
+    {
+      "source": "Black Panther",
+      "target": "Thor",
+      "count": 9
+    },
+    {
+      "source": "Black Panther",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Black Panther",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Black Panther",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Black Panther",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Black Panther",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Captain Marvel",
+      "target": "Ant-Man",
+      "count": 7
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Black Panther",
+      "count": 3
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Black Widow",
+      "count": 6
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Hulk",
+      "count": 9
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Captain America",
+      "count": 12
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Captain Marvel",
+      "count": 8
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Doctor Strange",
+      "count": 4
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Star-Lord",
+      "count": 8
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Rocket Raccoon",
+      "count": 8
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Groot",
+      "count": 8
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Gamora",
+      "count": 8
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Drax the Destoyer",
+      "count": 8
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Iron Man",
+      "count": 11
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Nick Fury",
+      "count": 8
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Spider Man",
+      "count": 9
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Thor",
+      "count": 11
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Hawkeye",
+      "count": 2
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Loki",
+      "count": 2
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Scarlet Witch",
+      "count": 2
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Thanos",
+      "count": 2
+    },
+    {
+      "source": "Captain Marvel",
+      "target": "Vision",
+      "count": 2
+    }
+  ],
+  [
+    {
+      "source": "Thanos",
+      "target": "Ant-Man",
+      "count": 2
+    },
+    {
+      "source": "Thanos",
+      "target": "Black Panther",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Black Widow",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Hulk",
+      "count": 2
+    },
+    {
+      "source": "Thanos",
+      "target": "Captain America",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Captain Marvel",
+      "count": 2
+    },
+    {
+      "source": "Thanos",
+      "target": "Doctor Strange",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Drax the Destoyer",
+      "count": 4
+    },
+    {
+      "source": "Thanos",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Gamora",
+      "count": 4
+    },
+    {
+      "source": "Thanos",
+      "target": "Groot",
+      "count": 4
+    },
+    {
+      "source": "Thanos",
+      "target": "Star-Lord",
+      "count": 4
+    },
+    {
+      "source": "Thanos",
+      "target": "Rocket Raccoon",
+      "count": 4
+    },
+    {
+      "source": "Thanos",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Iron Man",
+      "count": 2
+    },
+    {
+      "source": "Thanos",
+      "target": "Loki",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Nick Fury",
+      "count": 2
+    },
+    {
+      "source": "Thanos",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Spider Man",
+      "count": 1
+    },
+    {
+      "source": "Thanos",
+      "target": "Thor",
+      "count": 4
+    },
+    {
+      "source": "Thanos",
+      "target": "Vision",
+      "count": 1
+    }
+  ],
+  [
+    {
+      "source": "Loki",
+      "target": "Ant-Man",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Black Panther",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Black Widow",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Captain America",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Captain Marvel",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Doctor Strange",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Falcon",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Groot",
+      "count": 2
+    },
+    {
+      "source": "Loki",
+      "target": "Star-Lord",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Rocket Raccoon",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Gamora",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Drax the Destoyer",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Hawkeye",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Hulk",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Iron Man",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Nick Fury",
+      "count": 2
+    },
+    {
+      "source": "Loki",
+      "target": "Scarlet Witch",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Spider Man",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Thanos",
+      "count": 1
+    },
+    {
+      "source": "Loki",
+      "target": "Thor",
+      "count": 6
+    },
+    {
+      "source": "Loki",
+      "target": "Vision",
+      "count": 1
+    }
+  ]
 ]
