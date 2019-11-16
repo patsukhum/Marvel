@@ -1,6 +1,42 @@
-Matrix = function(_parentElement, _characterData){
+/**
+ * MatrixVis - Object constructor function
+ *
+ * Matrix visualization for the abilities of major characters
+ *
+ * @param _parentElement  -- ID of HTML element that will contain the vis
+ * @param _binary_data           -- binary values data
+ * @param _all_characters_data    -- all characters data
+ * @constructor
+ */
+
+Matrix = function(_parentElement, _binary_data, _all_characters_data){
     this.parentElement = _parentElement;
-    this.characterData = _characterData;
+    // this.binaryData = _binary_data;
+    this.binaryData = [
+        [1,1,1,0,0,1,1,1,0,0,1],
+        [1,1,1,0,0,0,1,0,0,1,1],
+        [1,1,0,1,0,0,1,1,0,0,1],
+        [0,0,1,0,0,0,0,0,0,0,0],
+        [1,1,1,0,0,0,0,0,0,1,1],
+        [0,0,0,0,0,0,1,0,0,0,1],
+        [0,0,0,0,0,1,0,0,0,0,1],
+        [1,1,1,1,0,0,0,1,0,1,1],
+        [1,1,0,0,0,0,0,1,1,1,0],
+        [0,1,0,0,0,1,0,1,0,0,1],
+        [0,1,1,0,0,0,1,1,0,0,1],
+        [0,1,0,1,0,0,1,0,0,0,1],
+        [0,0,0,1,1,0,0,0,0,0,1],
+        [1,1,1,0,0,1,0,1,1,0,1],
+        [0,0,0,1,0,0,0,0,0,0,0],
+        [1,0,0,1,0,0,0,0,0,0,1],
+        [0,0,1,0,0,0,0,0,0,0,1],
+        [1,1,1,0,0,1,0,0,0,1,1],
+        [1,1,0,0,0,1,1,0,0,1,1],
+        [1,1,0,0,0,0,0,1,0,1,0],
+        [1,1,1,1,0,0,0,0,0,0,1],
+        [0,1,1,1,0,0,0,0,0,0,1]];
+    this.allCharactersData = _all_characters_data;
+    this.displayData = [];
 
     this.initVis();
 };
@@ -9,18 +45,16 @@ Matrix.prototype.initVis = function() {
     //code from lab 6
     var vis = this;
 
-    vis.margin = {top: 40, right: 0, bottom: 60, left: 60};
+    vis.margin = {
+        'top': 40,
+        'bottom': 40,
+        'left': 40,
+        'right': 40
+    };
+    vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
+    vis.height = vis.width * 2;
 
-    vis.width = 800 - vis.margin.left - vis.margin.right,
-        vis.height = 800 - vis.margin.top - vis.margin.bottom;
-
-
-    // SVG drawing area
-    vis.svg = d3.select("#" + vis.parentElement).append("svg")
-        .attr("width", vis.width + vis.margin.left + vis.margin.right)
-        .attr("height", vis.height + vis.margin.top + vis.margin.bottom);
-    // .append("g")
-    // .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+    vis.svg = makeSvg(vis, 'matrix-vis');
 
     vis.wrangleData();
 };
@@ -28,7 +62,7 @@ Matrix.prototype.initVis = function() {
 Matrix.prototype.wrangleData = function(){
     var vis = this;
 
-    vis.characterData.forEach(function(d, i){
+    vis.allCharactersData.forEach(function(d, i){
         d.super_strength = +d.super_strength;
         d.super_speed = +d.super_speed;
         d.super_intelligence = +d.super_intelligence;
@@ -50,30 +84,25 @@ Matrix.prototype.wrangleData = function(){
 
     // console.log(vis.characterData);
 
-    vis.matrix_data =
-
-
-
-
-        // Update the visualization
-        vis.updateVis();
+    // Update the visualization
+    vis.updateVis();
 };
 
 Matrix.prototype.updateVis = function() {
     var vis = this;
 
     //code for regular rectangles
-    vis.characterData.forEach(function(row,i){
+    vis.binaryData.forEach(function(row,i){
         console.log(row)
         vis.rgroup = vis.svg.append("g")
             .attr("class", "matrix_row")
             .attr("transform", "translate(" + vis.margin.left +
                 "," + vis.margin.top * (i+1) + ")");
 
-        row.each(function(element, j){
+        row.forEach(function(element, j){
             vis.rgroup.append("rect")
-                .attr("x", vis.margin.left + 35*j)
-                .attr("y",vis.margin.top + 50)
+                .attr("x", vis.margin.left + 50*j)
+                .attr("y",vis.margin.top + 30)
                 .attr("width", 30)
                 .attr("height", 30)
                 .attr("fill", function(d){
