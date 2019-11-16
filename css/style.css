@@ -3,11 +3,11 @@
     position: relative;
 }
 .edge {
-    stroke: darkred;
+    stroke: darkgray;
     fill: none;
 }
 .node {
     fill: yellow;
-    stroke: darkred;
+    stroke: darkgray;
     stroke-width: 2px;
 }
