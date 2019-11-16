@@ -49,14 +49,19 @@ NetworkVis.prototype.initVis = function() {
   vis.scaleEdgeOpacity = d3.scaleLinear()
       .range([0.01, 1.0]);
   vis.scaleNodeRadius = d3.scaleLinear()
-      .range([1, 20])
+      .range([1, 20]);
 
   // Tooltip
-  vis.tooltip = d3.tip()
+  vis.tip = d3.tip()
       .attr('class','d3-tip')
       .html(d => d.name);
 
-  vis.svg.call(vis.tooltip);
+  vis.gNodes.call(vis.tip);
+
+  vis.tooltip = d3.select('body').append('g')
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0);
 
   vis.wrangleData();
 };
@@ -66,7 +71,7 @@ NetworkVis.prototype.wrangleData = function() {
   // Filtering out all edges below 10 counts
   // vis.displayData.edges = vis.data.edges.filter(d => d.count >= 5);
 
-  // Converting bidirectional links to double-counts
+  // Converting bidirectional links to double-counts [... or maybe just don't]
 
 
   vis.updateVis();
@@ -76,7 +81,7 @@ NetworkVis.prototype.updateVis = function() {
 
   vis.scaleEdgeWidth.domain(d3.extent(vis.displayData.edges.map(d => d.count)));
   vis.scaleEdgeOpacity.domain(d3.extent(vis.displayData.edges.map(d => d.count)));
-  vis.scaleNodeRadius.domain(d3.extent(vis.displayData.nodes.map(d => d.centrality)))
+  vis.scaleNodeRadius.domain(d3.extent(vis.displayData.nodes.map(d => d.centrality)));
 
   vis.force = d3.forceSimulation(vis.displayData.nodes)
       .force('charge', d3.forceManyBody()
@@ -88,36 +93,37 @@ NetworkVis.prototype.updateVis = function() {
           .x(vis.width / 2)
           .y(vis.height / 2));
 
-  var edges = vis.gEdges.selectAll('.edge')
+  vis.edges = vis.gEdges.selectAll('.edge')
       .data(vis.displayData.edges)
       .enter().append('line')
         .attr('class', 'edge')
         .style('stroke-width', d => vis.scaleEdgeWidth(d.count) + 'px')
         .style('opacity', d => vis.scaleEdgeOpacity(d.count));
 
-  var nodes = vis.gNodes.selectAll('.node')
+  vis.nodes = vis.gNodes.selectAll('.node')
       .data(vis.displayData.nodes)
       .enter().append('circle')
         .attr('class', 'node')
         .attr('r', d => vis.scaleNodeRadius(d.centrality))
         .on('mouseover', d => vis.nodeMouseover(d, vis))
-        .on('mouseout', d => vis.nodeMouseout(d, vis)); // For now... this will be determined by data after
+        .on('mouseout', d => vis.nodeMouseout(d, vis))
+        .on('mousemove', d => vis.nodeMousemove(d, vis));
 
   vis.force.on('tick', function() {
-    edges.attr('x1', d => d.source.x)
+    vis.edges.attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y);
 
-    nodes.attr('cx', d => d.x)
+    vis.nodes.attr('cx', d => d.x)
         .attr('cy', d => d.y);
 
-    nodes.append('text')
+    vis.nodes.append('text')
         .text(d => d.name);
 
   });
 
-  nodes.call(vis.dragNode);
+  vis.nodes.call(vis.dragNode);
 };
 NetworkVis.prototype.dragStart = function(d, vis) {
   if (!d3.event.activate) {
@@ -138,8 +144,34 @@ NetworkVis.prototype.dragEnd = function(d, vis) {
   d.fy = null;
 };
 NetworkVis.prototype.nodeMouseover = function(d, vis) {
-  vis.tooltip.show(d);
+  vis.tooltip.transition()
+      .style('opacity', 0.8);
+
+  vis.tooltip.html(`<h3>${d.name}</h3>` +
+          `<p>Number of wikipedia pages: ${d.num_pages}</p>` +
+          `<p>Average views per month: ${format1d(d.avg_monthly_views)}</p>` +
+          `<p>Average references: ${format1d(d.num_refs)}</p>` +
+          `<p>Average page links: ${format1d(d.num_links)}</p>` +
+          `<p>Average word count: ${format1d(d.word_count)}</p>` +
+          `<p>Network centrality: ${format1d(d.centrality)}</p>`)
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY + 10) + "px");
+
+  vis.edges.style('stroke', l => d === l.source || d === l.target ? 'darkred' : 'darkgray' )
+      .style('opacity', l => d === l.source || d === l.target ? 1.0 : vis.scaleEdgeOpacity(d.count));
+  vis.nodes.style('stroke', n => d === n ? 'darkred' : 'darkgray')
+      .style('stroke-width', (d, n) => d === n ? '3px' : '2px');
 };
 NetworkVis.prototype.nodeMouseout = function(d, vis) {
-  vis.tooltip.hide(d);
+  vis.tooltip.transition()
+      .duration(100)
+      .style("opacity", 0);
+  vis.edges.style('stroke', 'darkgray')
+      .style('opacity', l => vis.scaleEdgeOpacity(l.count));
+  vis.nodes.style('stroke', 'darkgray')
+      .style('stroke-width', '2px');
+};
+NetworkVis.prototype.nodeMousemove = function(d, vis) {
+  vis.tooltip.style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY + 10) + "px");
 };

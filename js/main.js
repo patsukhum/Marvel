@@ -20,3 +20,6 @@ function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
   var networkVis = new NetworkVis('network-vis', data);
 }
+
+
+var format1d = d3.format(".1f");
