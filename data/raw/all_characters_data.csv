@@ -1,0 +1,23 @@
+name,super_strength,super_speed,super_intelligence,alien,healing,armor,weapon,flight,magic,acquired_power,gender,durability,energy,fighting_skills,intelligence,speed,strength,attack_range,primary_attribute
+Iron Man,1,1,1,0,0,1,1,1,0,0,1,6,6,4,6,5,6,both,intelligence
+Captain America,1,1,1,0,0,0,1,0,0,1,1,3,1,6,3,2,3,both,strength
+Thor,1,1,0,1,0,0,1,1,0,0,1,6,6,4,2,7,7,both,strength
+Black Widow,0,0,1,0,0,0,0,0,0,0,0,3,3,6,3,2,3,short,intelligence
+Hulk,1,1,1,0,0,0,0,0,0,1,1,7,5,4,6,3,7,short,strength
+Hawkeye,0,0,0,0,0,0,1,0,0,0,1,2,1,4,2,2,2,long,intelligence
+Ant-Man,0,0,0,0,0,1,0,0,0,0,1,2,3,2,4,2,2,short,intelligence
+Vision,1,1,1,1,0,0,0,1,0,1,1,6,6,3,4,3,5,both,strength
+Scarlet Witch,1,1,0,0,0,0,0,1,1,1,0,2,6,3,3,2,2,both,intelligence
+Falcon,0,1,0,0,0,1,0,1,0,0,1,2,1,4,2,3,2,both,speed
+Star-Lord,0,1,1,0,0,0,1,1,0,0,1,3,1,4,4,2,3,both,intelligence
+Rocket Raccoon,0,1,0,1,0,0,1,0,0,0,1,2,1,4,3,2,2,long,intelligence
+Groot,0,0,0,1,1,0,0,0,0,0,1,4,3,4,3,3,7,short,strength
+Doctor Strange,1,1,1,0,0,1,0,1,1,0,1,3,6,3,4,7,2,both,intelligence
+Gamora,0,0,0,1,0,0,0,0,0,0,0,3,1,6,3,4,3,short,speed
+Drax the Destoyer,1,0,0,1,0,0,0,0,0,0,1,7,6,4,2,2,5,short,strength
+Nick Fury,0,0,1,0,0,0,0,0,0,0,1,2,1,7,3,2,3,short,intelligence
+Spider Man,1,1,1,0,0,1,0,0,0,1,1,3,1,4,4,3,4,both,intelligence
+Black Panther,1,1,0,0,0,1,1,0,0,1,1,3,3,5,5,2,3,short,speed
+Captain Marvel,1,1,0,0,0,0,0,1,0,1,0,6,6,4,3,5,5,both,strength
+Thanos,1,1,1,1,0,0,0,0,0,0,1,6,6,4,6,7,7,short,strength
+Loki,0,1,1,1,0,0,0,0,0,0,1,6,6,3,5,7,5,both,intelligence

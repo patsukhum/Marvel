@@ -35,12 +35,12 @@ function createNetworkVis(error, nodes, edges) {
 
 //create Vis4: matrix
 queue()
-    .defer(d3.csv, 'data/clean/binary_characters.csv')
-    .defer(d3.csv, 'data/clean/characters.csv')
+    .defer(d3.csv, 'data/clean/matrix_data.csv')
+    .defer(d3.csv, 'data/raw/all_characters_data.csv')
     .await(createMatrixVis);
 
-function createMatrixVis(error, binary_data, all_characters_data) {
-  console.log(binary_data)
+function createMatrixVis(error, matrix_data, all_characters_data) {
+  console.log(matrix_data)
   console.log(all_characters_data)
-  var matrixVis = new Matrix("matrix-vis", binary_data, all_characters_data);
+  var matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };

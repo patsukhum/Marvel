@@ -1,0 +1,23 @@
+name,super_strength,super_speed,super_intelligence,alien,healing,armor,weapon,flight,magic,acquired_power,gender,power
+Iron Man,1,1,1,0,0,1,1,1,0,0,1,super_strength
+Captain America,1,1,1,0,0,0,1,0,0,1,1,super_speed
+Thor,1,1,0,1,0,0,1,1,0,0,1,super_intelligence
+Black Widow,0,0,1,0,0,0,0,0,0,0,0,alien
+Hulk,1,1,1,0,0,0,0,0,0,1,1,healing
+Hawkeye,0,0,0,0,0,0,1,0,0,0,1,armor
+Ant-Man,0,0,0,0,0,1,0,0,0,0,1,weapon
+Vision,1,1,1,1,0,0,0,1,0,1,1,flight
+Scarlet Witch,1,1,0,0,0,0,0,1,1,1,0,magic
+Falcon,0,1,0,0,0,1,0,1,0,0,1,acquired_power
+Star-Lord,0,1,1,0,0,0,1,1,0,0,1,gender
+Rocket Raccoon,0,1,0,1,0,0,1,0,0,0,1,
+Groot,0,0,0,1,1,0,0,0,0,0,1,
+Doctor Strange,1,1,1,0,0,1,0,1,1,0,1,
+Gamora,0,0,0,1,0,0,0,0,0,0,0,
+Drax the Destoyer,1,0,0,1,0,0,0,0,0,0,1,
+Nick Fury,0,0,1,0,0,0,0,0,0,0,1,
+Spider Man,1,1,1,0,0,1,0,0,0,1,1,
+Black Panther,1,1,0,0,0,1,1,0,0,1,1,
+Captain Marvel,1,1,0,0,0,0,0,1,0,1,0,
+Thanos,1,1,1,1,0,0,0,0,0,0,1,
+Loki,0,1,1,1,0,0,0,0,0,0,1,
