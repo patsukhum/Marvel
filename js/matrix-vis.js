@@ -78,6 +78,7 @@ Matrix.prototype.wrangleData = function(){
         d.gender = +d.gender;
         d.power = d.power;
     });
+
     //all characters data
     vis.allCharactersData.forEach(function(d, i){
         d.name = d.name;
@@ -109,6 +110,9 @@ Matrix.prototype.wrangleData = function(){
 Matrix.prototype.updateVis = function() {
     var vis = this;
 
+    console.log(vis.matrixData);
+
+    Object.keys(vis.matrixData).forEach(function(key){console.log(key)})
     //column labels
     vis.svg.selectAll("text.col_label")
         .data(vis.matrixData)
@@ -127,6 +131,7 @@ Matrix.prototype.updateVis = function() {
             return "translate(" +(50*index + 90) + ",100)rotate(-750)"
         });
 
+    //row labels
     vis.svg.selectAll("text.row_label")
         .data(vis.matrixData)
         .enter()
@@ -137,12 +142,11 @@ Matrix.prototype.updateVis = function() {
             return 40*index + 130;
         })
         .text(function(row){
-            console.log(row)
             return row.name;
         })
         .attr("fill", "black")
         .attr("text-anchor", "end")
-        .attr("font-size", 13)
+        .attr("font-size", 13);
 
     //code for regular rectangles
     vis.binaryData.forEach(function(row,i){
@@ -160,13 +164,9 @@ Matrix.prototype.updateVis = function() {
                 .attr("width", 30)
                 .attr("height", 30)
                 .attr("fill", function(d){
-                    if (element == 1){
-                        return "orange"
-                    }
+                    if (element == 1){ return "orange"}
                     else{ return "lightgrey"}
                 });
-
         });
-
     });
 };
