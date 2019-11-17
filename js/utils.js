@@ -1,3 +1,5 @@
+//standardize svg creation
+
 var format1d = d3.format(".1f");
 
 function makeSvg(vis, chartType) {
