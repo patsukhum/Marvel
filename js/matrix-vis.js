@@ -161,7 +161,7 @@ Matrix.prototype.updateVis = function() {
                 .attr("height", 30)
                 .attr("fill", function(d){
                     if (element == 1){
-                        return "orange"
+                        return "#a50000"
                     }
                     else{ return "lightgrey"}
                 });

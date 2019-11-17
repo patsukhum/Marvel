@@ -1,3 +1,11 @@
+body {
+    margin: 50px;
+}
+
+h1 {
+    text-align: center;
+}
+
 .vis-container {
     width: 100%;
     position: relative;
@@ -23,4 +31,8 @@ div.tooltip {
     box-shadow: 3px 3px 10px rgba(0, 0, 0, .5);
     pointer-events: none;
     color: black;
+}
+
+.row_label, .col_label {
+    font-weight:bold;
 }
