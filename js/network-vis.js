@@ -29,7 +29,7 @@ NetworkVis.prototype.initVis = function() {
 
   // Defining parameters for force simulation
   vis.strength = -300;
-  vis.distance = 150;
+  vis.distance = 110;
 
   vis.svg = makeSvg(vis, 'network-vis');
 

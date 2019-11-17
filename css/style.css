@@ -10,9 +10,10 @@ body {
 }
 }
 
-section {
+div.section {
   margin-bottom: 50px;
 }
+
 
 h1 {
   font-family: 'Bangers', cursive;
@@ -42,6 +43,22 @@ h4 {
 .vis-container {
   width: 100%;
   position: relative;
+}
+
+.legend {
+
+}
+
+.lineDC {
+    fill: none;
+    stroke: #0476F2;
+    stroke-width: 2px;
+  }
+
+.lineMarvel {
+fill: none;
+stroke: #e23636;
+stroke-width: 2px;
 }
 
 .edge {
@@ -85,11 +102,19 @@ div.tooltip {
   font-family: 'Acme', cursive;
 }
 
+.visTitle {
+    font-family: "Pangolin", cursive;
+}
+
+.xAxis, .yAxis {
+    font-family: 'Pangolin', cursive;
+}
+
+
 /* comic book box feel
 code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
 */
 .box {
-  margin: 25px;
   padding: 40px;
   background: #fff;
   border: solid black;

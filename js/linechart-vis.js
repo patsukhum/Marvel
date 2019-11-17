@@ -8,11 +8,13 @@
  * @param _data           -- Movies data
  * @constructor
  */
+
+ // line chart plotting help from: https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
+
 LineChartVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
   this.data = _data;
-  this.displayDc = null;
-  this.displayMarvel = null;
+  this.displayData = [];
 
   this.initVis();
 };
@@ -31,86 +33,174 @@ LineChartVis.prototype.initVis = function() {
 
   vis.svg = makeSvg(vis, 'linechart-vis');
 
-  // line chart plotting help from: https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
-  // parse the date / time
-  var parseTime = d3.timeParse("%Y");
 
   // create scales
-  vis.x = d3.scaleTime().range([0, width]);
-  vis.y = d3.scaleLinear().range([height, 0]);
+  vis.x = d3.scaleTime().range([0, vis.width]);
+  vis.y = d3.scaleLinear().range([vis.height, 0]);
 
-  // define the line
-  vis.line = d3.line()
-  .x(function(d) { return x(d.date); })
-  .y(function(d) { return y(d.close); });
 
   vis.wrangleData();
 };
 LineChartVis.prototype.wrangleData = function() {
   var vis = this;
 
+
   // convert strings to numerical values
-  data.forEach(movie => {
-    movie.Year = +movie.Year;
-    movie.Metascore = +movie.Metascore;
-    movie.imdbRating = +movie.imdbRating;
-    movie.imdbVotes = +movie.imdbVotes;
+  this.data.forEach(movie => {
+      movie.BoxOfficeWorldwide = +movie.BoxOfficeWorldwide;
+      movie.Year = +movie.Year;
+      //movie.Metascore = +movie.Metascore;
+      movie.imdbRating = +movie.imdbRating;
+      movie.imdbVotes = +movie.imdbVotes;
   })
 
-  // Filtering out data
+  // Reorganize data so that array contains objects, where each object looks like: 
+  // {year: 2019, revenue: {dc: 10, marvel: 100}, averageRating: {dc: X, marvel: X}, ...}
+  
+  // selections: revenue, # of movies, average imdb rating, average imdb votes
 
-  // revenue
-  // # of movies
-  // # 
+  // in the future we may add 1-year average Wikipedia pageViews for each movie
+  
+  var years = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
+  years.forEach(element => {
+    var dictionary = {};
+    dictionary.year = element;
+    dictionary.numMovies = {dc: 0, marvel: 0};
+    dictionary.boxOfficeWorldwide = {dc:0, marvel: 0};
+    dictionary.avgRating = {dc: 0, marvel: 0};
+    dictionary.avgVotes = {dc: 0, marvel: 0};
+    // dictionary.pageViews = {dc: 0, marvel: 0};
 
-  // divide up to MCU and DC films
-  var dcMovies = vis.data.filter((movie) => {
-    return movie['DC Film'] == "1";
+
+    this.data.forEach(movie => {
+
+      if(movie.Year == element) {
+
+        if(movie['DC Film'] == "1") {
+          dictionary.numMovies.dc += 1;
+          dictionary.boxOfficeWorldwide.dc += movie.BoxOfficeWorldwide;
+          dictionary.avgRating.dc += movie.imdbRating;
+          dictionary.avgVotes.dc += movie.imdbVotes;
+
+        }
+        else {
+          dictionary.numMovies.marvel += 1;
+          dictionary.boxOfficeWorldwide.marvel += movie.BoxOfficeWorldwide;
+          dictionary.avgRating.marvel += movie.imdbRating;
+          dictionary.avgVotes.marvel += movie.imdbVotes;
+        }
+
+      }
+    })
+
+    // average values
+    if(dictionary.numMovies.dc != 0) {
+      dictionary.avgRating.dc = dictionary.avgRating.dc / dictionary.numMovies.dc;
+      dictionary.avgVotes.dc = dictionary.avgVotes.dc / dictionary.numMovies.dc;
+    }
+    
+    if(dictionary.numMovies.marvel != 0) {
+      dictionary.avgRating.marvel = dictionary.avgRating.marvel / dictionary.numMovies.marvel;
+      dictionary.avgVotes.marvel = dictionary.avgVotes.marvel / dictionary.numMovies.marvel;
+    }
+
+    vis.displayData.push(dictionary);
+
   })
-  var marvelMovies = vis.data.filter((movie) => {
-    return movie['Marvel Film'] == "1";
-  })
-  console.log(dcMovies)
-  console.log(marvelMovies)
 
-  // update display data for visualization
-  vis.displayDc = dcMovies;
-  vis.displayMarvel = marvelMovies;
+  console.log(vis.displayData)
 
   vis.updateVis();
 };
+
+
 LineChartVis.prototype.updateVis = function() {
   var vis = this;
 
-  vis.scaleEdge.domain(d3.extent(vis.data.edges.map(d => d.count)));
+  selection="boxOfficeWorldwide"
+  
+  // define the lines
+  vis.lineDC = d3.line()
+  .x(function(d) { return vis.x(parseTime(d.year)); })
+  .y(function(d) { return vis.y(d[selection].dc); });
+  
+  vis.lineMarvel = d3.line()
+  .x(function(d) { return vis.x(parseTime(d.year)); })
+  .y(function(d) { return vis.y(d[selection].marvel); });
 
-  vis.force = d3.forceSimulation(vis.data.nodes)
-      .force('charge', d3.forceManyBody().strength(vis.strength))
-      .force('link', d3.forceLink(vis.data.edges).distance(vis.distance)
-          .strength(link => link.count / 100))
-      .force('center', d3.forceCenter().x(vis.width / 2).y(vis.height / 2));
 
-  var edges = vis.gEdges.selectAll('.edge')
-      .data(vis.data.edges)
-      .enter().append('line')
-        .attr('class', 'edge')
-        .style('stroke-width', d => vis.scaleEdge(d.count) + 'px');
+  // Scale the range of the data
 
-  var nodes = vis.gNodes.selectAll('.node')
-      .data(vis.data.nodes)
-      .enter().append('circle')
-        .attr('class', 'node')
-        .attr('r', 10); // For now... this will be determined by data after
+  vis.x.domain(d3.extent(vis.displayData, function(d) { return parseTime(d.year); }));
+  vis.y.domain([0, d3.max(vis.displayData, function(d) { 
+      var dcValue = d[selection].dc;
+      var marvelValue = d[selection].marvel;
+      return Math.max(dcValue, marvelValue); 
+    }) 
+  ]);
 
-  vis.force.on('tick', function() {
-    edges.attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
+  // Add the DC line.
+  this.svg.append("path")
+      .data([this.displayData])
+      .attr("class", "lineDC")
+      //.attr("data-legend", "DC Comics")
+      .attr("d", vis.lineDC);
 
-    nodes.attr('cx', d => d.x)
-        .attr('cy', d => d.y)
-  });
+  // Add the valueline path.
+  this.svg.append("path")
+      .data([this.displayData])
+      .attr("class", "lineMarvel")
+      //.attr("data-legend", "Marvel")
+      .attr("d", vis.lineMarvel);
 
-  nodes.call(vis.dragNode);
+  // axis rotation code help from: https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf
+
+  // Add the X Axis
+  this.svg.append("g")
+      .attr("transform", "translate(0," + vis.height + ")")
+      .call(d3.axisBottom(vis.x).tickFormat(d3.timeFormat("%Y")))
+      .selectAll("text")	
+        .attr("class", "xAxis")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
+
+  // Add the Y Axis
+  this.svg.append("g")
+      // tick format help from: https://stackoverflow.com/a/19908589
+      .call(d3.axisLeft(vis.y).tickFormat(function(d) {return '$' +formatValue(d).replace("G","B")}))
+      .selectAll("text")
+      .attr("class", "yAxis");
+  
+  // add title
+  this.svg.append("g")
+    .attr("class","visTitle")
+    .attr("transform", `translate(${vis.width/5},-10)`)
+    .append("text")
+      .text("Yearly Box Office Revenues")
+      .style("fill","black")
+      .style("text-anchor","center");
+
+      
+
+  // add custom legend
+  // code help from: https://www.d3-graph-gallery.com/graph/custom_legend.html
+
+  var legend = this.svg.append("g").attr("class","legend")
+        .attr("transform","translate(0,50)");
+  legend.append("circle").attr("cx",50).attr("cy",20).attr("r", 6).style("fill", "#e23636")
+  legend.append("circle").attr("cx",50).attr("cy",50).attr("r", 6).style("fill", "#0476F2")
+  legend.append("text").attr("x", 60).attr("y", 20).text("Marvel").style("font-size", "15px").attr("alignment-baseline","middle")
+  legend.append("text").attr("x", 60).attr("y", 50).text("DC Comics").style("font-size", "15px").attr("alignment-baseline","middle")
+
+
+
+  //   // add legend
+  // this.svg.append("g")
+  //   .attr("class","legend")
+  //   .attr("transform","translate(50,30)")
+  //   .style("font-size","12px")
+  //   .call(d3.legend);
+
 };

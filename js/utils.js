@@ -13,3 +13,6 @@ function makeSvg(vis, chartType) {
       .attr('transform', 'translate(' + vis.margin.left + ',' + vis.margin.top + ')');
 }
 
+// for linechart
+var parseTime = d3.timeParse("%Y");
+formatValue = d3.format(".2s");
