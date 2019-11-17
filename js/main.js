@@ -1,3 +1,10 @@
+
+// //create Vis1:
+// queue()
+//     .defer()
+//     .await()
+
+
 // create Vis2: line chart
 queue()
     .defer(d3.csv, 'data/clean/genre_and_reviews_omdb.csv')

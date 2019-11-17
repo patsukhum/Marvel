@@ -101,15 +101,12 @@ Matrix.prototype.wrangleData = function(){
         d.strength = +d.strength;
     });
 
-    // console.log(vis.characterData);
-
     // Update the visualization
     vis.updateVis();
 };
 
 Matrix.prototype.updateVis = function() {
     var vis = this;
-
 
     //column labels
     vis.svg.selectAll("text.col_label")
@@ -162,11 +159,8 @@ Matrix.prototype.updateVis = function() {
                 .attr("width", 30)
                 .attr("height", 30)
                 .attr("fill", function(d){
-                    if (element == 1){
-                        return "#a50000"
-                    }
-
-                    else{ return "lightgrey"}
+                    if (element == 1){ return "#a50000"}
+                    else { return "lightgrey"}
                 });
         });
     });
