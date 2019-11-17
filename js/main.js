@@ -1,4 +1,3 @@
-
 // //create Vis1:
 // queue()
 //  .defer(d3.csv, 'data/clean/genre_and_reviews_omdb_cleaned.csv')
@@ -40,4 +39,3 @@ function createMatrixVis(error, matrix_data, all_characters_data) {
   console.log(all_characters_data)
   var matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };
-
