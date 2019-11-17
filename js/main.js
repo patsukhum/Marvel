@@ -1,6 +1,6 @@
 // create Vis2: line chart
 queue()
-    .defer(d3.csv, 'data/clean/genre_and_reviews_ombd.csv')
+    .defer(d3.csv, 'data/clean/genre_and_reviews_omdb.csv')
     .await(createLineChartVis);
 
 function createLineChartVis(error, data) {
