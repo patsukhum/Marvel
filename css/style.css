@@ -1,3 +1,11 @@
+body {
+    margin: 50px;
+}
+
+h1 {
+    text-align: center;
+}
+
 .vis-container {
     width: 100%;
     position: relative;
@@ -60,4 +68,8 @@ div.tooltip {
 
 html {
   scroll-behavior: smooth;
+}
+
+.row_label, .col_label {
+    font-weight:bold;
 }
