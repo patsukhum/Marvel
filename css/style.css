@@ -1,9 +1,42 @@
 body {
     margin: 50px;
+    font-family: 'Pangolin', cursive;
+    font-weight: lighter;
+    font-size: 22px;
+    background-color:lightgrey;
+
+    /* comic book style dotted background adapted from: https://codepen.io/ashandrien/pen/rnzsd */
+    background-image: radial-gradient(ellipse farthest-corner, transparent 0%, transparent 35%, #fff 30%, #fff 40%, transparent 90%), radial-gradient(ellipse farthest-corner at 0px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), radial-gradient(ellipse farthest-corner at 8px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), radial-gradient(ellipse farthest-corner at 0px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 40%), radial-gradient(ellipse farthest-corner at 8px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%),  linear-gradient(40deg, darkgrey 0, lightgrey 30%, lightgray 50%, lightgrey 70%, grey 100%);
+    background-size: 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px, 100% 100%;
+  }
+}
+
+section {
+    margin-bottom: 50px;
 }
 
 h1 {
+    font-family:'Bangers', cursive;
     text-align: center;
+    font-size: 80px;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 35px;
+}
+
+h3 {
+    text-align: center;
+    font-size:50px;
+    font-family: 'Staatliches', cursive;
+    margin: 10px;
+}
+
+h4 {
+    text-align: center;
+    font-family: 'Bangers', cursive;
 }
 
 .vis-container {
@@ -15,7 +48,7 @@ h1 {
     fill: none;
 }
 .node {
-    fill: yellow;
+    fill: #518cca;
     stroke: darkgray;
     stroke-width: 2px;
 }
@@ -24,13 +57,15 @@ div.tooltip {
     background-color: white;
     width: 250px;
     height: auto;
-    padding: 1px;
+    padding: 10px;
     border-style: solid;
     border-radius: 4px;
     border-width: 1px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, .5);
     pointer-events: none;
     color: black;
+    font-family:'Pangolin', cursive;
+
 }
 
 #navbar ul {
@@ -49,27 +84,50 @@ div.tooltip {
 
 }
 
-#navbar li {
-  font-size: 15px;
-  float: left;
-}
-
-#navbar li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 5px;
-  text-decoration: none;
-}
-
-#title-div rect {
-  fill: black;
-}
-
-html {
-  scroll-behavior: smooth;
-}
 
 .row_label, .col_label {
     font-weight:bold;
+    font-family:'Pangolin', cursive;
 }
+
+
+/* comic book box feel 
+code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
+*/
+
+.box{
+    margin:25px;
+
+    padding: 40px;
+    background:#fff;
+    border: solid black;
+    border-color: black;
+    border-width: 3px 3px 5px 5px;
+    border-radius:4% 95% 2% 95%/95% 4% 92% 5%;
+   /* transform: rotate(-2deg);*/
+}
+
+.box2{
+    border-width: 5px 3px 4px 4px;
+    border-radius:8% 4% 97% 5%/4% 50% 3% 1%;
+}
+
+/* Scrollytelling CSS */
+
+#navbar li {
+    font-size: 15px;
+    float: left;
+  }
+  
+  #navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+  }
+  
+  
+  html {
+    scroll-behavior: smooth;
+  }

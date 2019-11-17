@@ -4,19 +4,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="">
-  <title>Marvel</title>
-
-  <link rel="stylesheet" href="css/style.css">
+  <title>Marvel Cinematic Universe</title>
+  <link href="https://fonts.googleapis.com/css?family=Acme|Bangers|Neucha|Pangolin|Permanent+Marker|Shadows+Into+Light+Two|Staatliches&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
+
+  <!-- Navbar section buttons -->
   <div id="navbar">
     <ul>
       <li>
-        <a href="#title-div">
+        <a href="#">
           <svg width="20" height="20">
             <rect width="20" height="20"/>
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a href="#cookiechart-sec">
+          <svg width="20" height="20">
+            <rect width="20" height="20" />
           </svg>
         </a>
       </li>
@@ -43,17 +53,80 @@
       </li>
     </ul>
   </div>
+
   <section id="title-sec">
-    <h1>Marvel</h1>
+    <h1>Marvel Cinematic Universe</h1>
+    <h2>Why are Marvel comic book superhero movies so popular?</h2>
+    <br>
   </section>
+  <section id="cookiechart-sec">
+    <div class="container box">
+        <h3>Superhero movies vs. Other Genres</h3>
+        <div class="row">
+            <div class="col">
+                <div id="cookiechart-vis" class="vis-container">
+                  <img src="img/placeholder.png" height=400 width=500>
+                </div>
+            </div>
+            <div class="col">
+                The primary goal for this project will be to create an interactive story to explore the current popularity of comic book movies, especially the Marvel Cinematic Universe (MCU) franchise of movies. It is hard to understate the dominance of MCU in the movie industry right now on a wide range of metrics. For even the casual movie-goer, MCU movies like Infinity War and Endgame, as well as the individual character movies since Iron Man are omnipresent. Along this vein, our project will tell the story of this genre.
+            </div>
+        </div>
+    </div>
+  </section>
+
   <section id="linechart-sec">
-    <div id="linechart-vis" class="vis-container"></div>
+      <div class="container box box2">
+          <h3>Marvel vs. DC Comics</h3>
+          <div class="row">
+              <div class="col">
+                  <div id="linechart-vis" class="vis-container">
+                    <img src="img/placeholder.png" height=400 width=500>
+                  </div>
+              </div>
+              <div class="col">
+                  After establishing the comic book movies are indeed dominant no matter how you slice the data, we will look at the two main franchises - DC Comics and MCU. Although DC has many fan favourites such as Batman, Superman, and Wonder Woman, in terms of sheer numbers of movies (and consequently, box office sales and fan interest), there is no question: MCU beats DC. We will transition from the first transition into a focused comparison of MCU vs DC. We will then introduce an explicit time dimension to show how both franchises have performed over time, including annotations of major releases and events in the universes of each franchise.
+              </div>
+          </div>
+      </div>
   </section>
+
   <section id="network-sec">
-    <div id="network-vis" class="vis-container"></div>
+      
+      <div class="container box">
+          <h3>Marvel Character Networks</h3>
+          <div class="row">
+              <div class="col">
+                  <div id="network-vis" class="vis-container"></div>
+              </div>
+              <div class="col">
+                  After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links between pages in the MCU.
+              </div>
+          </div>
+      </div>
+
   </section>
+  
   <section id="matrix-sec">
-    <div id="matrix-vis" class="vis-container"></div>
+
+      <div class="container box box2">
+          <h3>Marvel Characters: Who is the strongest?</h3>
+          <div class="row">
+            <div class="col">
+                <img src="img/placeholder.png" height=400 width=500>
+            </div>
+            <div class="col">
+              <div id="matrix-vis" class="vis-container"></div>
+            </div>
+
+          </div>
+          <div class="row">
+              <div class="col">
+                  After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links between pages in the MCU.
+              </div>
+          </div>
+      </div>
+
   </section>
 
   <script src="js/libraries/d3.min.js"></script>

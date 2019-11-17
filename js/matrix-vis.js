@@ -52,7 +52,7 @@ Matrix.prototype.initVis = function() {
         'right': 40
     };
     vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-    vis.height = vis.width * 2;
+    vis.height = vis.width * 2.2;
 
     vis.svg = makeSvg(vis, 'matrix-vis');
 
@@ -128,7 +128,7 @@ Matrix.prototype.updateVis = function() {
         .style("text-anchor", "start")
         .attr("font-size", 13)
         .attr("transform", function(d,index){
-            return "translate(" +(50*index + 90) + ",100)rotate(-750)"
+            return "translate(" +(35*index + 90) + ",100)rotate(-750)"
         });
 
     //row labels
@@ -139,7 +139,7 @@ Matrix.prototype.updateVis = function() {
         .attr("class", "row_label")
         .attr("x", 70)
         .attr("y", function(d,index){
-            return 40*index + 130;
+            return 40*index + 120;
         })
         .text(function(row){
             return row.name;
@@ -159,13 +159,13 @@ Matrix.prototype.updateVis = function() {
         //add rect to each row
         row.forEach(function(element, j){
             vis.rgroup.append("rect")
-                .attr("x", vis.margin.left + 50*j)
-                .attr("y",vis.margin.top + 30)
-                .attr("width", 30)
-                .attr("height", 30)
+                .attr("x", vis.margin.left + 35*j)
+                .attr("y",vis.margin.top + 25)
+                .attr("width", 25)
+                .attr("height", 25)
                 .attr("fill", function(d){
                     if (element == 1){
-                        return "#a50000"
+                        return "#e23636"
                     }
 
                     else{ return "lightgrey"}

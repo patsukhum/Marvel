@@ -28,8 +28,8 @@ NetworkVis.prototype.initVis = function() {
   vis.height = vis.width * 0.75;
 
   // Defining parameters for force simulation
-  vis.strength = -200;
-  vis.distance = 100;
+  vis.strength = -300;
+  vis.distance = 150;
 
   vis.svg = makeSvg(vis, 'network-vis');
 
@@ -147,7 +147,7 @@ NetworkVis.prototype.nodeMouseover = function(d, vis) {
   vis.tooltip.transition()
       .style('opacity', 0.8);
 
-  vis.tooltip.html(`<h3>${d.name}</h3>` +
+  vis.tooltip.html(`<h4>${d.name}</h4>` +
           `<p>Number of wikipedia pages: ${d.num_pages}</p>` +
           `<p>Average views per month: ${format1d(d.avg_monthly_views)}</p>` +
           `<p>Average references: ${format1d(d.num_refs)}</p>` +
@@ -157,9 +157,9 @@ NetworkVis.prototype.nodeMouseover = function(d, vis) {
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY + 10) + "px");
 
-  vis.edges.style('stroke', l => d === l.source || d === l.target ? 'darkred' : 'darkgray' )
+  vis.edges.style('stroke', l => d === l.source || d === l.target ? '#f78f3f' : 'darkgray' )
       .style('opacity', l => d === l.source || d === l.target ? 1.0 : vis.scaleEdgeOpacity(d.count));
-  vis.nodes.style('stroke', n => d === n ? 'darkred' : 'darkgray')
+  vis.nodes.style('stroke', n => d === n ? "#f78f3f" : 'darkgray')
       .style('stroke-width', (d, n) => d === n ? '3px' : '2px');
 };
 NetworkVis.prototype.nodeMouseout = function(d, vis) {
