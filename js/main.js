@@ -1,17 +1,18 @@
 
 // //create Vis1:
 // queue()
-//     .defer()
-//     .await()
+//  .defer(d3.csv, 'data/clean/genre_and_reviews_omdb_cleaned.csv')
+//  .await()
 
 
 // create Vis2: line chart
 queue()
-    .defer(d3.csv, 'data/clean/genre_and_reviews_omdb.csv')
+    .defer(d3.csv, 'data/clean/marvel_dc_movies.csv')
     .await(createLineChartVis);
 
 function createLineChartVis(error, data) {
   console.log(data);
+
   // var linechartVis = new LineChartVis('linechart-vis', data);
 }
 

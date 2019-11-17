@@ -11,7 +11,8 @@
 LineChartVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
   this.data = _data;
-  this.displayData = _data;
+  this.displayDc = null;
+  this.displayMarvel = null;
 
   this.initVis();
 };
@@ -29,15 +30,52 @@ LineChartVis.prototype.initVis = function() {
 
 
   vis.svg = makeSvg(vis, 'linechart-vis');
+
+  // line chart plotting help from: https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
+  // parse the date / time
+  var parseTime = d3.timeParse("%Y");
+
   // create scales
+  vis.x = d3.scaleTime().range([0, width]);
+  vis.y = d3.scaleLinear().range([height, 0]);
+
+  // define the line
+  vis.line = d3.line()
+  .x(function(d) { return x(d.date); })
+  .y(function(d) { return y(d.close); });
 
   vis.wrangleData();
 };
 LineChartVis.prototype.wrangleData = function() {
   var vis = this;
 
+  // convert strings to numerical values
+  data.forEach(movie => {
+    movie.Year = +movie.Year;
+    movie.Metascore = +movie.Metascore;
+    movie.imdbRating = +movie.imdbRating;
+    movie.imdbVotes = +movie.imdbVotes;
+  })
+
   // Filtering out data
 
+  // revenue
+  // # of movies
+  // # 
+
+  // divide up to MCU and DC films
+  var dcMovies = vis.data.filter((movie) => {
+    return movie['DC Film'] == "1";
+  })
+  var marvelMovies = vis.data.filter((movie) => {
+    return movie['Marvel Film'] == "1";
+  })
+  console.log(dcMovies)
+  console.log(marvelMovies)
+
+  // update display data for visualization
+  vis.displayDc = dcMovies;
+  vis.displayMarvel = marvelMovies;
 
   vis.updateVis();
 };
