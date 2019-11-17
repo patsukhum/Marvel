@@ -52,7 +52,7 @@ Matrix.prototype.initVis = function() {
         'right': 40
     };
     vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-    vis.height = vis.width * 2.2;
+    vis.height = vis.width * 2.1;
 
     vis.svg = makeSvg(vis, 'matrix-vis');
 
@@ -123,7 +123,7 @@ Matrix.prototype.updateVis = function() {
         .style("text-anchor", "start")
         .attr("font-size", 13)
         .attr("transform", function(d,index){
-            return "translate(" +(35*index + 90) + ",100)rotate(-750)"
+            return "translate(" +(35*index + 90) + ",50)rotate(-770)"
         });
 
     //row labels
@@ -134,7 +134,7 @@ Matrix.prototype.updateVis = function() {
         .attr("class", "row_label")
         .attr("x", 70)
         .attr("y", function(d,index){
-            return 40*index + 120;
+            return 40*index+75;
         })
         .text(function(row){
             return row.name;
@@ -149,13 +149,13 @@ Matrix.prototype.updateVis = function() {
         vis.rgroup = vis.svg.append("g")
             .attr("class", "matrix_row")
             .attr("transform", "translate(" + vis.margin.left +
-                "," + vis.margin.top * (i+1) + ")");
+                "," + vis.margin.top * (i-0.4) + ")");
 
         //add rect to each row
         row.forEach(function(element, j){
             vis.rgroup.append("rect")
                 .attr("x", vis.margin.left + 35*j)
-                .attr("y",vis.margin.top + 25)
+                .attr("y",vis.margin.top + 35)
                 .attr("width", 25)
                 .attr("height", 25)
                 .attr("fill", function(d){
