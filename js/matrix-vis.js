@@ -110,9 +110,7 @@ Matrix.prototype.wrangleData = function(){
 Matrix.prototype.updateVis = function() {
     var vis = this;
 
-    console.log(vis.matrixData);
 
-    Object.keys(vis.matrixData).forEach(function(key){console.log(key)})
     //column labels
     vis.svg.selectAll("text.col_label")
         .data(vis.matrixData)
