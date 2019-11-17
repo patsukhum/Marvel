@@ -1,4 +1,3 @@
-
 // //create Vis1:
 // queue()
 //     .defer()
@@ -39,4 +38,3 @@ function createMatrixVis(error, matrix_data, all_characters_data) {
   console.log(all_characters_data)
   var matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };
-

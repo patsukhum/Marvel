@@ -9,179 +9,153 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 
+  <link rel="stylesheet" type="text/css" href="css/fullpage.css" />
+  <script type="text/javascript" src="js/libraries/scrolloverflow.min.js"></script>
+  <script type="text/javascript" src="js/libraries/fullpage.js"></script>
+
 </head>
 
 <body>
+  
+  <div id="fullpage">
 
-  <!-- Navbar section buttons -->
-  <div id="navbar">
-    <ul>
-      <li>
-        <a href="#">
-          <svg width="20" height="20">
-            <rect width="20" height="20"/>
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="#cookiechart-sec">
-          <svg width="20" height="20">
-            <rect width="20" height="20" />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="#linechart-sec">
-          <svg width="20" height="20">
-            <rect width="20" height="20" />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="#network-sec">
-          <svg width="20" height="20">
-            <rect width="20" height="20" />
-          </svg>
-        </a>
-      </li>
-      <li>
-        <a href="#matrix-sec">
-          <svg width="20" height="20">
-            <rect width="20" height="20" />
-          </svg>
-        </a>
-      </li>
-      <li>
-          <a href="#conclusion-sec">
-            <svg width="20" height="20">
-              <rect width="20" height="20" />
-            </svg>
-          </a>
-        </li>
-    </ul>
-  </div>
-
-  <section id="title-sec">
-    <h1>Marvel Cinematic Universe</h1>
-    <h2>Why are Marvel comic book superhero movies so popular?</h2>
-    <br>
-  </section>
-  <section id="cookiechart-sec">
-    <div class="container box">
+    <div id="title-sec" class="section">
+      <h1>Marvel Cinematic Universe</h1>
+      <h2>Why are Marvel comic book superhero movies so popular?</h2>
+      <br>
+    </div>
+    <div id="cookiechart-sec" class="section">
+      <div class="container box">
         <h3>Superhero movies vs. Other Genres</h3>
         <div class="row">
-            <div class="col">
-                <div id="cookiechart-vis" class="vis-container">
-                  <img src="img/placeholder.png" height=400 width=500>
-                </div>
+          <div class="col">
+            <div id="cookiechart-vis" class="vis-container">
+              <img src="img/placeholder.png" height=400 width=500>
             </div>
-            <div class="col">
-                The primary goal for this project will be to create an interactive story to explore the current popularity of comic book movies, especially the Marvel Cinematic Universe (MCU) franchise of movies. It is hard to understate the dominance of MCU in the movie industry right now on a wide range of metrics. For even the casual movie-goer, MCU movies like Infinity War and Endgame, as well as the individual character movies since Iron Man are omnipresent. Along this vein, our project will tell the story of this genre.
-            </div>
+          </div>
+          <div class="col">
+            The primary goal for this project will be to create an interactive story to explore the current popularity of comic book movies, especially the Marvel Cinematic Universe (MCU) franchise of movies. It is hard to understate the dominance of
+            MCU in the movie industry right now on a wide range of metrics. For even the casual movie-goer, MCU movies like Infinity War and Endgame, as well as the individual character movies since Iron Man are omnipresent. Along this vein, our
+            project will tell the story of this genre.
+          </div>
         </div>
+      </div>
     </div>
-  </section>
 
-  <section id="linechart-sec">
+    <div id="linechart-sec" class="section">
       <div class="container box box2">
-          <h3>Marvel vs. DC Comics</h3>
-          <div class="row">
-              <div class="col">
-                  <div id="linechart-vis" class="vis-container">
-                    <img src="img/placeholder.png" height=400 width=500>
-                  </div>
-              </div>
-              <div class="col">
-                  After establishing the comic book movies are indeed dominant no matter how you slice the data, we will look at the two main franchises - DC Comics and MCU. Although DC has many fan favourites such as Batman, Superman, and Wonder Woman, in terms of sheer numbers of movies (and consequently, box office sales and fan interest), there is no question: MCU beats DC. We will transition from the first transition into a focused comparison of MCU vs DC. We will then introduce an explicit time dimension to show how both franchises have performed over time, including annotations of major releases and events in the universes of each franchise.
-              </div>
+        <h3>Marvel vs. DC Comics</h3>
+        <div class="row">
+          <div class="col">
+            <div id="linechart-vis" class="vis-container">
+              <img src="img/placeholder.png" height=400 width=500>
+            </div>
           </div>
+          <div class="col">
+            After establishing the comic book movies are indeed dominant no matter how you slice the data, we will look at the two main franchises - DC Comics and MCU. Although DC has many fan favourites such as Batman, Superman, and Wonder Woman, in
+            terms of sheer numbers of movies (and consequently, box office sales and fan interest), there is no question: MCU beats DC. We will transition from the first transition into a focused comparison of MCU vs DC. We will then introduce an
+            explicit time dimension to show how both franchises have performed over time, including annotations of major releases and events in the universes of each franchise.
+          </div>
+        </div>
       </div>
-  </section>
+    </div>
 
-  <section id="network-sec">
-      
+    <div id="network-sec" class="section">
+
       <div class="container box">
-          <h3>Marvel Character Networks</h3>
-          <div class="row">
-              <div class="col">
-                  <div id="network-vis" class="vis-container"></div>
-              </div>
-              <div class="col">
-                  After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links between pages in the MCU.
-              </div>
+        <h3>Marvel Character Networks</h3>
+        <div class="row">
+          <div class="col">
+            <div id="network-vis" class="vis-container"></div>
           </div>
+          <div class="col">
+            After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are
+            so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to
+            refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links
+            between pages in the MCU.
+          </div>
+        </div>
       </div>
 
-  </section>
-  
-  <section id="matrix-sec">
+    </div>
+
+    <div id="matrix-sec" class="section">
       <div class="container box box2">
-          <h3>Marvel Characters: Who is the strongest?</h3>
-          <div class="row">
-            <div class="col">
-                <img src="img/placeholder.png" height=400 width=500>
-            </div>
-            <div class="col">
-              <div id="matrix-vis" class="vis-container"></div>
-            </div>
+        <h3>Marvel Characters: Who is the strongest?</h3>
+        <div class="row">
+          <div class="col">
+            <img src="img/placeholder.png" height=400 width=500>
+          </div>
+          <div class="col">
+            <div id="matrix-vis" class="vis-container"></div>
+          </div>
 
+        </div>
+        <div class="row">
+          <div class="col">
+            After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are
+            so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to
+            refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links
+            between pages in the MCU.
           </div>
-          <div class="row">
-              <div class="col">
-                  After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links between pages in the MCU.
-              </div>
-          </div>
+        </div>
       </div>
-  </section>
+    </div>
 
-  <section id="conclusion-sec">
+    <div id="conclusion-sec" class="section">
       <div class="container box box2">
-          <h3>Thank you!</h3>
-          <div class="row">
-              <div class="col">
-                  Thank you for checking out our visualization.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu vero, inquam, ducas licet, si sequetur; Quid igitur, inquit, eos responsuros putas? Duo Reges: constructio interrete. Roges enim Aristonem, bonane ei videantur haec: vacuitas doloris, divitiae, valitudo; Tum Lucius: Mihi vero ista valde probata sunt, quod item fratri puto. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret?
-              </div>
+        <h3>Thank you!</h3>
+        <div class="row">
+          <div class="col">
+            Thank you for checking out our visualization.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu
+            vero, inquam, ducas licet, si sequetur; Quid igitur, inquit, eos responsuros putas? Duo Reges: constructio interrete. Roges enim Aristonem, bonane ei videantur haec: vacuitas doloris, divitiae, valitudo; Tum Lucius: Mihi vero ista valde
+            probata sunt, quod item fratri puto. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret?
           </div>
-          <br>
-          <h3 style="font-size:35px">The Team</h3>
-          <div class="row">
-              <div class="col">
-                  We are a group of undergraduate and graduate students at Harvard University. This project was for <a href="https://www.cs171.org/2019/">CS171:Visualization</a> course in Fall 2019.  
-              </div>
+        </div>
+        <br>
+        <h3 style="font-size:35px">The Team</h3>
+        <div class="row">
+          <div class="col">
+            We are a group of undergraduate and graduate students at Harvard University. This project was for <a href="https://www.cs171.org/2019/">CS171:Visualization</a> course in Fall 2019.
           </div>
-          <div class="row">
-              <div class="col profile">
-                <img src="img/placeholder.png" height=150 width=120><br>
-                <span class="name">Benjamin Levy</span><br>
-                <span style="font-size:18px;">M.Sc in Data Science</span>
-              </div>
-              <div class="col profile">
-                <img src="img/placeholder.png" height=150 width=120><br>
-                <span class="name">Rachel Moon</span><br>
-                <span style="font-size:18px;">M.Sc in Data Science</span>
-              </div>
-              <div class="col profile">
-                <img src="img/placeholder.png" height=150 width=120><br>
-                <span class="name">Pat Sukhum</span><br>
-                <span style="font-size:18px;">M.Sc in Data Science</span>
-              </div>
-              <div class="col profile">
-                <img src="img/placeholder.png" height=150 width=120><br>
-                <span class="name">Kevin Yoon</span><br>
-                <span style="font-size:18px;">B.Sc in Electrical Engineering</span>
-              </div>
+        </div>
+        <div class="row">
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Benjamin Levy</span><br>
+            <span style="font-size:18px;">M.Sc in Data Science</span>
           </div>
-          <br>
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Rachel Moon</span><br>
+            <span style="font-size:18px;">M.Sc in Data Science</span>
+          </div>
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Pat Sukhum</span><br>
+            <span style="font-size:18px;">M.Sc in Data Science</span>
+          </div>
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Kevin Yoon</span><br>
+            <span style="font-size:18px;">B.Sc in Electrical Engineering</span>
+          </div>
+        </div>
+        <br>
 
-          <h3 style="font-size:35px">Data Sources and Methods</h3>
-          <div class="row">
-              <div class="col">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu vero, inquam, ducas licet, si sequetur; Quid igitur, inquit, eos responsuros putas? Duo Reges: constructio interrete. Roges enim Aristonem, bonane ei videantur haec: vacuitas doloris, divitiae, valitudo; Tum Lucius: Mihi vero ista valde probata sunt, quod item fratri puto. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret?
-              </div>
+        <h3 style="font-size:35px">Data Sources and Methods</h3>
+        <div class="row">
+          <div class="col">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu
+            vero, inquam, ducas licet, si sequetur; Quid igitur, inquit, eos responsuros putas? Duo Reges: constructio interrete. Roges enim Aristonem, bonane ei videantur haec: vacuitas doloris, divitiae, valitudo; Tum Lucius: Mihi vero ista valde
+            probata sunt, quod item fratri puto. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret?
           </div>
+        </div>
       </div>
-  </section>
+    </div>
+  </div>
+
 
   <script src="js/libraries/d3.min.js"></script>
   <script src="js/libraries/popper.min.js"></script>
@@ -196,6 +170,13 @@
   <script src="js/matrix-vis.js"></script>
 
   <script src="js/main.js"></script>
+  <script type="text/javascript">
+    var myFullpage = new fullpage('#fullpage', {
+      navigation: true,
+	    navigationPosition: 'right',
+      scrollOverflow: true,
+    });
+  </script>
 </body>
 
 </html>
