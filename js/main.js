@@ -1,8 +1,12 @@
 // //create Vis1:
-// queue()
-//  .defer(d3.csv, 'data/clean/genre_and_reviews_omdb_cleaned.csv')
-//  .await()
+queue()
+ // .defer(d3.csv, 'data/clean/genre_and_reviews_omdb_cleaned.csv')
+ .defer(d3.json, 'js/flare-2.json')
+ .await(createCookieVis)
 
+function createCookieVis(error, data) {
+  var cookiechartVis = new CookieChartVis('cookechart-vis', data);
+}
 
 // create Vis2: line chart
 queue()
