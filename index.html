@@ -25,6 +25,24 @@
       <h2>Why are Marvel comic book superhero movies so popular?</h2>
       <br>
     </div>
+
+    <div id="intro-sec" class="section">
+      <div class="container box">
+        <p>
+          In April 2019, Marvel’s most recent film, Avengers: Endgame came out, promptly smashing just about every
+          box office record there is to smash (as well as much of [INSERT CITY HERE]). Not only did Endgame snag
+          the record of <a target="_blank" href="https://www.vox.com/2019/7/22/20703487/avengers-endgame-avatar-biggest-movie-all-time-box-office">hugest opening weekend in the
+          world at $1.2 billion</a>, but It blew past Avatar’s previous record of total box office revenue, reaching a
+          new record of $2.79 billion in July.
+        </p>
+        <p>
+          In fact, setting aside some notable exceptions like Avatar, it seems as though almost all the biggest
+          movies these days are action-packed comic book stories adapted for the big screen. Let’s look at some data
+          to see if this is really the case:
+        </p>
+      </div>
+    </div>
+
     <div id="cookiechart-sec" class="section">
       <div class="container box">
         <h3>Superhero movies vs. Other Genres</h3>
@@ -35,9 +53,11 @@
             </div>
           </div>
           <div class="col">
-            The primary goal for this project will be to create an interactive story to explore the current popularity of comic book movies, especially the Marvel Cinematic Universe (MCU) franchise of movies. It is hard to understate the dominance of
-            MCU in the movie industry right now on a wide range of metrics. For even the casual movie-goer, MCU movies like Infinity War and Endgame, as well as the individual character movies since Iron Man are omnipresent. Along this vein, our
-            project will tell the story of this genre.
+            <p>
+              Breaking down box office revenue by genre, one thing becomes apparent: comic book movies are truly
+              dominant. [More remarks on trends that are apparent in the visualization, specific movies that should be
+              highlighted in both the comic book and non-comic book genres].
+            </p>
           </div>
         </div>
       </div>
@@ -51,16 +71,62 @@
             <div id="linechart-vis" class="vis-container"></div>
           </div>
           <div class="col">
-            After establishing the comic book movies are indeed dominant no matter how you slice the data, we will look at the two main franchises - DC Comics and MCU. Although DC has many fan favourites such as Batman, Superman, and Wonder Woman, in
-            terms of sheer numbers of movies (and consequently, box office sales and fan interest), there is no question: MCU beats DC. We will transition from the first transition into a focused comparison of MCU vs DC. We will then introduce an
-            explicit time dimension to show how both franchises have performed over time, including annotations of major releases and events in the universes of each franchise.
+            <p>
+              Without a doubt, the most dominant franchises in the comic book movie genre are Marvel and DC. Both the
+              Marvel Cinematic Universe (MCU) and DC Extended Universe (DCEU) have been churning out huge numbers of
+              successful (and not so successful) movies, ever since Iron Man came out in 2008. Both stayed neck-and-neck
+              in terms of yearly box office revenues until the mid 2010’s, after MCU’s [MOVIE] came out. After that,
+              it’s simply no contest: MCU is the dominant comic book movie franchise (sorry DC fans).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mcu-intro-sec" class="section">
+      <div class="container box">
+        <h3>The Marvel Cinematic Universe</h3>
+        <div class="row">
+          <div class="col">
+            <p>
+              One of the defining features (one might say, 'superpowers') of the MCU is the sheer number of characters
+              and stories that have been woven into its single timeline.
+              Beginning with Iron Man in 2008, MCU began producing movies with increasing frequency and increasing success.
+              Now in 2019, there have been a total of [NUMBER] MCU movies from [NUMBER] different series, with plans for
+              [NUMBER] more.
+            </p>
+
+          </div>
+          <div class="col">
+            <div id="linear-timeline-vis" class="vis-container">
+              <img src="img/placeholder.png" height=400 width=500>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="branching-timeline-sec" class="section">
+      <div class="container box">
+        <div class="row">
+          <div class="col">
+            <p>
+              However, a linear timeline hides the strength of MCU: the complexity of how the movies and characters
+              interact with one another. The story of MCU is not linear, but is highly complex and branching. If you
+              were watching all the MCU movies in one go (likely over many sittings - for your health!), you might do it
+              in this order
+            </p>
+          </div>
+          <div class="col">
+            <div id="branching-timeline-vis" class="vis-container">
+              <img src="img/placeholder.png" height=400 width=500>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <div id="network-sec" class="section">
-
       <div class="container box">
         <h3>Marvel Character Networks</h3>
         <div class="row">
@@ -68,14 +134,27 @@
             <div id="network-vis" class="vis-container"></div>
           </div>
           <div class="col">
-            After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are
-            so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to
-            refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links
-            between pages in the MCU.
+            <p>
+              And the complexity doesn’t end at the movie level! The relations between each of the many main characters
+              in MCU are highly complex. To get a sense of this, we downloaded the Wikipedia pages of each MCU main
+              character using the Wikimedia API and extracted the links between character pages. Each link feasibly
+              represents some sort of relation between the two characters. For example, if Hawkeye links to Thor, then
+              somewhere on Hawkeye’s page is a reference to Thor, meaning that the two characters did something
+              together.
+            </p>
+            <p>We can analyze this graph to determine who the most “central” or “important” character is in the MCU[1].
+              Based on Wikipedia links the most important character is… [drumroll please]
+            </p>
+            <p>
+              Captain America!
+            </p>
+            <p>
+              Surprising right! We thought it would be Iron Man, but it seems that Wikipedia had a different idea. Try
+              hovering over the character bubbles to see more statistics grabbed from Wikipedia
+            </p>
           </div>
         </div>
       </div>
-
     </div>
 
     <div id="matrix-sec" class="section">
@@ -83,21 +162,33 @@
         <h3>Marvel Characters: Who is the strongest?</h3>
         <div class="row">
           <div class="col">
-            <img src="img/placeholder.png" height=400 width=500>
-          </div>
-          <div class="col">
             <div id="matrix-vis" class="vis-container"></div>
           </div>
-
-        </div>
-        <div class="row">
           <div class="col">
-            After establishing that MCU is more worth our time than DC (sorry Superman fans), we will transition to diving deep into the MCU. Of course, the sheer number of characters in the MCU is one of its “super-powers” (pun intended). There are
-            so many heroes and villains that it can almost be hard to keep track of them all. This is what piqued our interest in Wikipedia data originally: people tend to check Wikipedia pages in huge numbers when movies are released in order to
-            refresh their memories of important plot points in previous movies. By using data from the Wikipedia open API and scraped from the article pages directly, we can explore which movies tend to get the most page views, as well as the links
-            between pages in the MCU.
+            <p>
+              Of course, the relationships between characters are only part of the story. These are superheros after
+              all - what about their powers? We can look at two kinds of data: abilities (quantitative traits such as
+              speed, strength, etc) and powers (specific superpowers such as healing, flight, etc.). We’ve also included
+              columns for if their powers were acquired or innate, as well as one for gender (red means male) Looking
+              down the columns, we can see that super strength, speed, intelligence, and flight are much more common
+              than, say, healing or magical powers. It seems as though the characters with the largest influence -
+              Captain America, Iron Man, Thor – tend to also have a similar set of powers – super-strength, speed,
+              intelligence – as well as a distinctive weapon and perhaps flight. On the other hand, characters with
+              lower influence tend to be equipped with a different suite of powers and abilities.
+            </p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div id="future-sec" class="section">
+      <div class="container box">
+        <h3>The future of the MCU?</h3>
+        <p>
+          After Endgame, it’s hard to imagine where the MCU might go next. Yet, many more movies are in the works - the
+          so-called “Phase 4” of the MCU - including Black Widow, Spider-Man III, Black Panther II, and many more. With
+          this next set of movies, only one thing is certain: comic book movies and the MCU are not going anywhere.
+        </p>
       </div>
     </div>
 
@@ -106,17 +197,16 @@
         <h3>Thank you!</h3>
         <div class="row">
           <div class="col">
-            Thank you for checking out our visualization.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu
-            vero, inquam, ducas licet, si sequetur; Quid igitur, inquit, eos responsuros putas? Duo Reges: constructio interrete. Roges enim Aristonem, bonane ei videantur haec: vacuitas doloris, divitiae, valitudo; Tum Lucius: Mihi vero ista valde
-            probata sunt, quod item fratri puto. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret?
+            Thank you for checking out our visualization. Whether you have posters of all Marvel characters in your
+            bedroom or have never seen a single comic book movie in your life, we hope you enjoyed exploring the
+            rich data of the Marvel Cinematic Universe with us!
           </div>
         </div>
         <br>
         <h3 style="font-size:35px">The Team</h3>
         <div class="row">
           <div class="col">
-            We are a group of undergraduate and graduate students at Harvard University. This project was for <a href="https://www.cs171.org/2019/">CS171:Visualization</a> course in Fall 2019.
+            We are a group of undergraduate and graduate students at Harvard University. This project was for the <a href="https://www.cs171.org/2019/">CS171:Visualization</a> course in Fall 2019.
           </div>
         </div>
         <div class="row">
@@ -143,7 +233,7 @@
         </div>
         <br>
 
-        <h3 style="font-size:35px">Data Sources and Methods</h3>
+        <h3 style="font-size:35px">Data Sources and Methods [coming soon]</h3>
         <div class="row">
           <div class="col">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu
