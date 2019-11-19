@@ -132,3 +132,8 @@ code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
 html {
   scroll-behavior: smooth;
 }
+
+.brain {
+  background-color: red;
+  
+}
