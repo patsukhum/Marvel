@@ -54,13 +54,13 @@ LineChartVis.prototype.wrangleData = function() {
       movie.imdbVotes = +movie.imdbVotes;
   })
 
-  // Reorganize data so that array contains objects, where each object looks like: 
+  // Reorganize data so that array contains objects, where each object looks like:
   // {year: 2019, revenue: {dc: 10, marvel: 100}, averageRating: {dc: X, marvel: X}, ...}
-  
+
   // selections: revenue, # of movies, average imdb rating, average imdb votes
 
   // in the future we may add 1-year average Wikipedia pageViews for each movie
-  
+
   var years = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
   years.forEach(element => {
     var dictionary = {};
@@ -98,7 +98,7 @@ LineChartVis.prototype.wrangleData = function() {
       dictionary.avgRating.dc = dictionary.avgRating.dc / dictionary.numMovies.dc;
       dictionary.avgVotes.dc = dictionary.avgVotes.dc / dictionary.numMovies.dc;
     }
-    
+
     if(dictionary.numMovies.marvel != 0) {
       dictionary.avgRating.marvel = dictionary.avgRating.marvel / dictionary.numMovies.marvel;
       dictionary.avgVotes.marvel = dictionary.avgVotes.marvel / dictionary.numMovies.marvel;
@@ -118,12 +118,12 @@ LineChartVis.prototype.updateVis = function() {
   var vis = this;
 
   selection="boxOfficeWorldwide"
-  
+
   // define the lines
   vis.lineDC = d3.line()
   .x(function(d) { return vis.x(parseTime(d.year)); })
   .y(function(d) { return vis.y(d[selection].dc); });
-  
+
   vis.lineMarvel = d3.line()
   .x(function(d) { return vis.x(parseTime(d.year)); })
   .y(function(d) { return vis.y(d[selection].marvel); });
@@ -132,11 +132,11 @@ LineChartVis.prototype.updateVis = function() {
   // Scale the range of the data
 
   vis.x.domain(d3.extent(vis.displayData, function(d) { return parseTime(d.year); }));
-  vis.y.domain([0, d3.max(vis.displayData, function(d) { 
+  vis.y.domain([0, d3.max(vis.displayData, function(d) {
       var dcValue = d[selection].dc;
       var marvelValue = d[selection].marvel;
-      return Math.max(dcValue, marvelValue); 
-    }) 
+      return Math.max(dcValue, marvelValue);
+    })
   ]);
 
   // Add the DC line.
@@ -159,7 +159,7 @@ LineChartVis.prototype.updateVis = function() {
   this.svg.append("g")
       .attr("transform", "translate(0," + vis.height + ")")
       .call(d3.axisBottom(vis.x).tickFormat(d3.timeFormat("%Y")))
-      .selectAll("text")	
+      .selectAll("text")
         .attr("class", "xAxis")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
@@ -172,7 +172,7 @@ LineChartVis.prototype.updateVis = function() {
       .call(d3.axisLeft(vis.y).tickFormat(function(d) {return '$' +formatValue(d).replace("G","B")}))
       .selectAll("text")
       .attr("class", "yAxis");
-  
+
   // add title
   this.svg.append("g")
     .attr("class","visTitle")
@@ -182,7 +182,7 @@ LineChartVis.prototype.updateVis = function() {
       .style("fill","black")
       .style("text-anchor","center");
 
-      
+
 
   // add custom legend
   // code help from: https://www.d3-graph-gallery.com/graph/custom_legend.html

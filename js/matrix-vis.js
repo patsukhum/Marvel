@@ -70,7 +70,6 @@ Matrix.prototype.initVis = function() {
       9: baseDir+"brain.svg",
       10: baseDir+"brain.svg",
   };
-  console.log(vis.svgImagesMapping[0])
 
   vis.wrangleData();
 };
