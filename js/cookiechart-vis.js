@@ -1,7 +1,7 @@
 /**
  * CookieChartVis - Object constructor function
  *
- * Cookie Chart (officially called Circle Packing Chart) showing revenues of
+ * Cookie Chart (Force Layout Graph) showing revenues of
  * movies by genre data
  *
  * @param _parentElement  -- ID of HTML element that will contain the vis
@@ -53,8 +53,9 @@ CookieChartVis.prototype.wrangleData = function() {
 
   vis.genreToIdx = {};
   vis.idxToGenre = [];
-  var idx = 0;
 
+  // Need to create idx for the loop b/c looping through set
+  var idx = 0;
   allGenres.forEach((d) => {
     vis.genreToIdx[d] = idx;
     vis.idxToGenre.push(d);
@@ -73,6 +74,7 @@ CookieChartVis.prototype.updateVis = function() {
 
   var colorScale = ['pink', 'darkred', 'black', 'lightblue', 'green', 'orange', 'red', 'gray', 'blue'];
 
+  // Generate x and y center locations for clusters
   var xCenter = []
   for (var i = 0; i < 3; i++) {
     var init = 100;
@@ -140,6 +142,8 @@ CookieChartVis.prototype.updateVis = function() {
     u.exit().remove();
   }
 
+  var xOffsetText = 100;
+  var yOffsetText = 150;
   var texts = vis.svg.selectAll("text")
     .data(vis.idxToGenre);
 
@@ -148,10 +152,10 @@ CookieChartVis.prototype.updateVis = function() {
     .attr("class", "texts")
     .merge(texts)
     .attr("x", (d, i) => {
-      return xCenter[i] - 80;
+      return xCenter[i] - xOffsetText;
     })
     .attr("y", (d, i) => {
-      return yCenter[i] - 120;
+      return yCenter[i] - yOffsetText;
     })
     .text((d, i) => {
       return d;
@@ -173,10 +177,6 @@ CookieChartVis.prototype.nodeMouseout = function(d, vis) {
   vis.tooltip.transition()
     .duration(100)
     .style("opacity", 0);
-};
-CookieChartVis.prototype.nodeMousemove = function(d, vis) {
-  vis.tooltip.style("left", (d3.event.pageX) + "px")
-    .style("top", (d3.event.pageY + 10) + "px");
 };
 
 function formatMillions(num) {
