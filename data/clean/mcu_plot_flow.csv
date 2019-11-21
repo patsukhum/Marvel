@@ -1,24 +1,24 @@
-movie,flows_into,year
-Iron Man,Iron Man 2,2008
-Iron Man 2,The Avengers,2010
-Iron Man 3,Avengers: Age of Ultron,2015
-The Incredible Hulk,The Avengers,2008
-Thor,The Avengers,2011
-Thor: The Dark World,Avengers: Age of Ultron,2013
-Thor: Ragnarok,Avengers: Infinity War,2017
-Captain America: The First Avenger,The Avengers,2011
-Captain America: The Winter Soldier,Avengers: Age of Ultron,2014
-Captain America: Civil War,"Spider-Man: Homecoming, Black Panther",2018
-The Avengers,"Iron Man 3, Thor: The Dark World, Captain America: The Winter Soldier",2012
-Avengers: Age of Ultron,"Thor: Ragnarok, Ant-Man, Captain America: Civil War",2015
-Avengers: Infinity War,Avengers: Endgame,2018
-Avengers: Endgame,,2019
-Guardians of the Galaxy,Guardians of the Galaxy Vol. 2,2014
-Guardians of the Galaxy Vol. 2,Avengers: Infinity War,2018
-Ant-Man,Captain America: Civil War,2015
-Ant-Man and the Wasp,,
-Doctor Strange,Thor: Ragnarok,2016
-Spider-Man: Homecoming,Avengers: Infinity War,2018
-Spider-Man: Far from Home,,
-Black Panther,Avengers: Infinity War,2018
-Captain Marvel,Avengers: Endgame,
+movie,flows_into,year,group
+Iron Man,Iron Man 2,2008,iron_man
+Iron Man 2,The Avengers,2010,iron_man
+Iron Man 3,Avengers: Age of Ultron,2015,iron_man
+The Incredible Hulk,The Avengers,2008,hulk
+Thor,The Avengers,2011,thor
+Thor: The Dark World,Avengers: Age of Ultron,2013,thor
+Thor: Ragnarok,Avengers: Infinity War,2017,thor
+Captain America: The First Avenger,The Avengers,2011,captain_america
+Captain America: The Winter Soldier,Avengers: Age of Ultron,2014,captain_america
+Captain America: Civil War,"Spider-Man: Homecoming, Black Panther",2018,captain_america
+The Avengers,"Iron Man 3, Thor: The Dark World, Captain America: The Winter Soldier",2012,avengers
+Avengers: Age of Ultron,"Thor: Ragnarok, Ant-Man, Captain America: Civil War",2015,avengers
+Avengers: Infinity War,Avengers: Endgame,2018,avengers
+Avengers: Endgame,,2019,avengers
+Guardians of the Galaxy,Guardians of the Galaxy Vol. 2,2014,guardians
+Guardians of the Galaxy Vol. 2,Avengers: Infinity War,2018,guardians
+Ant-Man,Captain America: Civil War,2015,ant_man
+Ant-Man and the Wasp,Avengers: Endgame,2018,ant_man
+Doctor Strange,Thor: Ragnarok,2016,doctor_strange
+Spider-Man: Homecoming,Avengers: Infinity War,2018,spider_man
+Spider-Man: Far from Home,2019,spider_man
+Black Panther,Avengers: Infinity War,2018,black_panther
+Captain Marvel,Avengers: Endgame,2019,captain_marvel
