@@ -139,3 +139,9 @@ html {
   background-color: red;
 
 }
+
+.mapPath {
+  paint-order: stroke fill;
+  stroke-width: 1.8;
+  stroke: black;
+}

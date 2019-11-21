@@ -18,6 +18,18 @@ function createLineChartVis(error, data) {
   var linechartVis = new LineChartVis('linechart-vis', data);
 }
 
+// create Vis2.5: map chart
+queue()
+    .defer(d3.csv, 'data/clean/endgame_clean.csv')
+    .defer(d3.json, 'data/clean/world-110m.json')
+    .defer(d3.json, 'data/clean/slim-2.json')
+    .await(createMapVis);
+
+function createMapVis(error, data1, data2, data3) {
+
+  var mapVis = new MapVis('map-vis', data1, data2, data3);
+}
+
 // create Vis3: network chart
 queue()
     .defer(d3.json, 'data/clean/all_character_nodes_centrality.json')
