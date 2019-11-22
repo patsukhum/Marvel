@@ -19,7 +19,7 @@ PlotFlowVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 40,
+    'top': 10,
     'bottom': 40,
     'left': 40,
     'right': 40
@@ -30,12 +30,12 @@ PlotFlowVis.prototype.initVis = function() {
   vis.svg = makeSvg(vis, 'plot-flow-vis');
 
   vis.rectHeight = 25;
-  vis.rectWidth = 65;
+  vis.rectWidth = 75;
 
   // Parsing data
   var yearCounts = {};
   vis.data.forEach((d) => {
-    d.flows_into = d.flows_into.split(", ");
+    d.flows_into = d.flows_into.split(", ").filter(s => s !== "");
     d.year = new Date(+d.year, 0, 1);
     if (d.year in yearCounts) {
       d.yearCount = yearCounts[d.year];
@@ -50,6 +50,19 @@ PlotFlowVis.prototype.initVis = function() {
     d.yearFrac = (d.yearCount + 1) / d.yearTotal;
     d.allFrac = (d.yearCount + 1) / d3.max(Object.values(yearCounts));
   });
+
+  vis.yMax = d3.max(vis.data.map(d => d.y));
+
+  // Creating an object for the arrows
+  vis.edges = vis.data.map(d => {
+    if (d.flows_into.length > 0) {
+      return d.flows_into.map(e => {
+        var target = vis.data.find(a => a.movie === e);
+        return [d, target];
+      });
+    }
+  }).flat().filter(d => d !== undefined);
+  console.log(vis.edges);
 
   // Set up scales
   vis.x = d3.scalePoint()
@@ -71,6 +84,14 @@ PlotFlowVis.prototype.initVis = function() {
   vis.gFilms = vis.svg.append('g')
       .attr('class', 'films');
 
+  // Group for arrows
+  vis.gArrows = vis.svg.append('g')
+      .attr('class', 'arrows');
+
+  // Line generator function
+  vis.line = d3.line()
+      .curve(d3.curveCardinal);
+
   vis.wrangleData();
 };
 PlotFlowVis.prototype.wrangleData = function() {
@@ -84,8 +105,6 @@ PlotFlowVis.prototype.wrangleData = function() {
 };
 PlotFlowVis.prototype.updateVis = function() {
   var vis = this;
-
-  console.log(vis.displayData);
 
   vis.x.domain(vis.displayData.map(d => d.year).sort((a, b) => a - b));
   vis.y.domain(vis.displayData.map(d => d.yearFrac).sort((a, b) => a - b));
@@ -116,12 +135,33 @@ PlotFlowVis.prototype.updateVis = function() {
   d3.selectAll('.film-title')
       .call(wrap, vis.rectWidth - 2);
 
+  // Drawing arrows
+  if (vis.branching) {
+    var arrows = vis.gArrows.selectAll('path')
+        .data(vis.edges);
+    arrows.enter()
+        .append('path')
+        .attr('d', d => {
+          var res = [[], []];
+          console.log(d);
+          res[0][0] = vis.x(d[0].year) + vis.rectWidth / 2;
+          res[0][1] = vis.scaleY(d[0], vis) + vis.rectHeight / 2;
+          res[1][0] = vis.x(d[1].year) - vis.rectWidth / 2;
+          res[1][1] = vis.scaleY(d[1], vis) + vis.rectHeight / 2;
+          console.log(res);
+          return vis.line(res);
+        })
+        .attr('class', 'arrow');
+  } else {
+    vis.gArrows.selectAll('path').remove();
+  }
+
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
 };
 PlotFlowVis.prototype.scaleY = function(d, vis) {
   if (vis.branching) {
-    return vis.y(d.yearFrac) - vis.rectHeight / 2 + vis.height / (2 * d.yearTotal);
+    return vis.y(d.y) - vis.rectHeight / 2 + vis.height / (2 * vis.yMax);
   } else {
     return vis.y(d.allFrac) - vis.rectHeight / 2;
   }
