@@ -111,12 +111,6 @@
 
     <div id="mcu-intro-sec" class="section">
       <div class="container box">
-        <h3>The Marvel Cinematic Universe</h3>
-        <div class="row">
-          <div class="col">
-            <div id="plot-flow-vis" class="vis-container"></div>
-          </div>
-        </div>
         <div class="row">
           <div class="col">
             <p>
@@ -127,6 +121,23 @@
               Now in 2019, there have been a total of [NUMBER] MCU movies from [NUMBER] different series, with plans for
               [NUMBER] more.
             </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="plot-flow-sec" class="section">
+      <div class="container box">
+        <h3>The Marvel Cinematic Universe</h3>
+        <div class="row">
+          <div class="col">
+            <div id="plot-flow-vis" class="vis-container"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" id="plot-flow-text">
+            This is a linear timeline of movies as they were released. However this only says part of the story.
+            <button type="button" class="btn btn-danger" id="btn-branching">Click me!</button>
           </div>
         </div>
       </div>
@@ -269,6 +280,7 @@
   <script src="js/linechart-vis.js"></script>
   <script src="js/matrix-vis.js"></script>
   <script src="js/plot-flow-vis.js"></script>
+  <script src="js/dynamics.js"></script>
 
   <script src="js/main.js"></script>
 

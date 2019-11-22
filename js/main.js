@@ -1,3 +1,6 @@
+// Globals
+var plotVis;
+
 // //create Vis1:
 queue()
  .defer(d3.csv, 'data/clean/genre_revenue.csv')
@@ -32,9 +35,7 @@ function createMapVis(error, data1, data2, data3) {
 
 // create Vis2.7: movie flow chart
 d3.csv('data/clean/mcu_plot_flow.csv', function(data) {
-
-
-  var plotVis = new PlotFlowVis('plot-flow-vis', data);
+  plotVis = new PlotFlowVis('plot-flow-vis', data);
 });
 
 // create Vis3: network chart

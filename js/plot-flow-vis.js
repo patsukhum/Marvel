@@ -12,6 +12,7 @@ PlotFlowVis = function(_parentElement, _data) {
   this.data = _data;
   this.displayData = _data;
   this.branching = false;
+  this.selected = {x: 'year', y: 'allFrac'};
 
   this.initVis();
 };
@@ -25,11 +26,11 @@ PlotFlowVis.prototype.initVis = function() {
     'right': 40
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.25;
+  vis.height = vis.width * 0.23;
 
   vis.svg = makeSvg(vis, 'plot-flow-vis');
 
-  vis.rectHeight = 25;
+  vis.rectHeight = 35;
   vis.rectWidth = 75;
 
   // Parsing data
@@ -98,98 +99,156 @@ PlotFlowVis.prototype.wrangleData = function() {
   // Nothing for now...
   vis.displayData = vis.data;
 
-  vis.updateVis()
+  vis.drawVis()
 
 };
-PlotFlowVis.prototype.updateVis = function() {
+PlotFlowVis.prototype.drawVis = function() {
   var vis = this;
 
-  var xSelected, ySelected;
-  if (vis.branching) {
-    xSelected = 'x';
-    ySelected = 'y';
-  } else {
-    xSelected = 'year';
-    ySelected = 'allFrac';
-  }
-  vis.x.domain(vis.displayData.map(d => d[xSelected]).sort((a, b) => a - b));
-  vis.y.domain(vis.displayData.map(d => d[ySelected]).sort((a, b) => a - b));
+  vis.updateScales();
 
   var films = vis.gFilms.selectAll('rect')
-      .data(vis.displayData);
+      .data(vis.displayData, d => d.movie);
 
-  var filmsEnter = films.enter()
+  films.enter()
       .append('rect')
         .attr('class', 'rect-film')
         .attr('height', vis.rectHeight)
         .attr('width', vis.rectWidth)
-        .attr('opacity', 0);
-
-  filmsEnter.transition()
-      .on('start', function() {
-        d3.select(this).style('opacity', 0);
-      })
-      .delay(d => (d.year.getFullYear() - 2008) * 1000 + 1000)
-      .duration(200)
-      .style('opacity', 1)
-      .selection()
-      .merge(films)
-        .attr('x', d => vis.x(d[xSelected]) - vis.rectWidth / 2)
-        .attr('y', d => vis.y(d[ySelected]) - vis.rectHeight / 2);
-
-  var titles = vis.gFilms.selectAll('text')
-      .data(vis.displayData);
-
-  var titlesEnter = titles.enter()
-      .append('text')
-        .text(d => d.movie)
-        .attr('class', 'film-title')
-        .style('opacity', 0);
-
-  titlesEnter
+        .attr('opacity', 0)
       .transition()
         .on('start', function() {
           d3.select(this).style('opacity', 0);
         })
-        .delay(d => (d.year.getFullYear() - 2008) * 1000 + 1000)
-        .duration(200)
+        .delay(vis.delayEnter)
+        .duration(400)
         .style('opacity', 1)
-        .selection()
-      .merge(titles)
-        .attr('x', d => vis.x(d[xSelected]))
-        .attr('y', d => vis.y(d[ySelected]));
+      .selection()
+        .call(vis.drawRect, vis);
 
-  d3.selectAll('.film-title')
-      .call(wrap, vis.rectWidth - 2);
+  var titles = vis.gFilms.selectAll('text')
+      .data(vis.displayData, d => d.movie);
+
+  titles.enter()
+      .append('text')
+        .text(d => d.movie)
+        .attr('class', 'film-title')
+        .style('opacity', 0)
+      .transition()
+        .on('start', function() {
+          d3.select(this).style('opacity', 0);
+        })
+        .delay(vis.delayEnter)
+        .duration(400)
+        .style('opacity', 1)
+      .selection()
+        .call(vis.drawLab, vis)
+        .call(wrap, vis.rectWidth - 3);
+
+  // d3.selectAll('.film-title').call(wrap, vis.rectWidth - 3);
+
+  vis.xAxis.scale(vis.x);
+  vis.gX.call(vis.xAxis);
+
+};
+
+
+PlotFlowVis.prototype.toggleBranching = function() {
+  var vis = this;
+
+  vis.branching = !vis.branching;
+  if (vis.branching) {
+    vis.selected.x = 'x';
+    vis.selected.y = 'y';
+  } else {
+    vis.selected.x = 'year';
+    vis.selected.y = 'allFrac';
+  }
+
+  var films = vis.gFilms.selectAll('rect')
+      .data(vis.displayData, d => d.movie);
+  var titles = vis.gFilms.selectAll('text')
+      .data(vis.displayData, d => d.movie);
+
+  vis.updateScales();
+
+  films.transition()
+      .duration(200)
+      .call(vis.drawRect, vis);
+
+  titles.transition()
+      .duration(200)
+      .call(vis.drawLab, vis);
 
   // Drawing arrows
+  // TODO: Get the arrows to fade in (ideally draw themselves using attrTween)
   if (vis.branching) {
     var arrows = vis.gArrows.selectAll('path')
-        .data(vis.edges);
-    arrows.enter()
+        .data(vis.edges)
+        .enter()
         .append('path')
-        .attr('d', d => vis.drawArrow(d, vis))
-        .attr('class', 'arrow');
+          .attr('class', 'arrow')
+          .style('opacity', 0)
+          .call(vis.drawArrow, vis)
+        .transition()
+          .on('start', function() {
+            d3.select(this).style('opacity', 0)
+          })
+          .delay(d => 200 + d[0].year * 100)
+          .duration(200)
+          .style('opacity', 1)
   } else {
-    vis.gArrows.selectAll('path').remove();
+    vis.gArrows.selectAll('path')
+        .transition()
+        .style('opacity', 0)
+        .remove();
   }
+
+
+
   if (!vis.branching) {
     vis.xAxis.scale(vis.x);
     vis.gX.call(vis.xAxis);
   } else {
-    vis.gX.selectAll('.tick').transition().remove();
+    vis.gX.selectAll('.tick')
+        .transition()
+        .duration(1000)
+        .style('opacity', 0)
+        .remove();
   }
 };
-PlotFlowVis.prototype.scaleY = function(d, vis) {
-  if (vis.branching) {
-    return vis.y(d.y) - vis.rectHeight / 2 + vis.height / (2 * vis.yMax);
-  } else {
-    return vis.y(d.allFrac) - vis.rectHeight / 2;
-  }
+
+PlotFlowVis.prototype.drawRect = function(elem, vis) {
+  elem.attr('x', d => vis.x(d[vis.selected.x]) - vis.rectWidth / 2)
+      .attr('y', d => vis.y(d[vis.selected.y]) - vis.rectHeight / 2);
 };
-PlotFlowVis.prototype.drawArrow = function(d, vis) {
-  return vis.line({
+PlotFlowVis.prototype.drawLab = function(elem, vis) {
+  elem.attr('x', function(d) {
+    d3.select(this).selectAll('tspan')
+        .transition()
+        .duration(200)
+        .attr('x', vis.x(d[vis.selected.x]))
+        .attr('y', vis.y(d[vis.selected.y]));
+    return vis.x(d[vis.selected.x])
+  })
+      .attr('y', d => vis.y(d[vis.selected.y]));
+};
+// Need to add arrowheads
+PlotFlowVis.prototype.drawArrow = function(elem, vis) {
+  elem.attr('d', d => {
+    return vis.line({
       source: [vis.x(d[0].x) + vis.rectWidth / 2, vis.y(d[0].y)],
       target: [vis.x(d[1].x) - vis.rectWidth / 2, vis.y(d[1].y)]
+    });
   });
+};
+
+PlotFlowVis.prototype.delayEnter = function(d) {
+  return (d.year.getFullYear() - 2008) * 1000 + 300 * d.yearCount;
+};
+PlotFlowVis.prototype.updateScales = function() {
+  var vis = this;
+
+  vis.x.domain(vis.displayData.map(d => d[vis.selected.x]).sort((a, b) => a - b));
+  vis.y.domain(vis.displayData.map(d => d[vis.selected.y]).sort((a, b) => a - b));
 };
