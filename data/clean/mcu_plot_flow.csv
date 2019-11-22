@@ -11,7 +11,7 @@ Captain America: The Winter Soldier,Avengers: Age of Ultron,2014,captain_america
 Captain America: Civil War,"Spider-Man: Homecoming, Black Panther",2018,captain_america
 The Avengers,"Iron Man 3, Thor: The Dark World, Captain America: The Winter Soldier",2012,avengers
 Avengers: Age of Ultron,"Thor: Ragnarok, Ant-Man, Captain America: Civil War",2015,avengers
-Avengers: Infinity War,Avengers: Endgame,2018,avengers
+Avengers: Infinity War,"Cptain Marvel, Avengers: Endgame",2018,avengers
 Avengers: Endgame,,2019,avengers
 Guardians of the Galaxy,Guardians of the Galaxy Vol. 2,2014,guardians
 Guardians of the Galaxy Vol. 2,Avengers: Infinity War,2018,guardians
@@ -19,6 +19,6 @@ Ant-Man,Captain America: Civil War,2015,ant_man
 Ant-Man and the Wasp,Avengers: Endgame,2018,ant_man
 Doctor Strange,Thor: Ragnarok,2016,doctor_strange
 Spider-Man: Homecoming,Avengers: Infinity War,2018,spider_man
-Spider-Man: Far from Home,2019,spider_man
+Spider-Man: Far from Home,,2019,spider_man
 Black Panther,Avengers: Infinity War,2018,black_panther
 Captain Marvel,Avengers: Endgame,2019,captain_marvel

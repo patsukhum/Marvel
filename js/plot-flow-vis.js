@@ -11,6 +11,7 @@ PlotFlowVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.displayData = _data;
+  this.branching = true;
 
   this.initVis();
 };
@@ -35,7 +36,7 @@ PlotFlowVis.prototype.initVis = function() {
   var yearCounts = {};
   vis.data.forEach((d) => {
     d.flows_into = d.flows_into.split(", ");
-    d.year = new Date(d.year);
+    d.year = new Date(+d.year, 0, 1);
     if (d.year in yearCounts) {
       d.yearCount = yearCounts[d.year];
       yearCounts[d.year]++;
@@ -43,6 +44,11 @@ PlotFlowVis.prototype.initVis = function() {
       yearCounts[d.year] = 1;
       d.yearCount = 0;
     }
+  });
+  vis.data.forEach(d => {
+    d.yearTotal = yearCounts[d.year];
+    d.yearFrac = (d.yearCount + 1) / d.yearTotal;
+    d.allFrac = (d.yearCount + 1) / d3.max(Object.values(yearCounts));
   });
 
   // Set up scales
@@ -82,7 +88,7 @@ PlotFlowVis.prototype.updateVis = function() {
   console.log(vis.displayData);
 
   vis.x.domain(vis.displayData.map(d => d.year).sort((a, b) => a - b));
-  vis.y.domain(vis.displayData.map(d => d.yearCount).sort((a, b) => a - b));
+  vis.y.domain(vis.displayData.map(d => d.yearFrac).sort((a, b) => a - b));
 
   var films = vis.gFilms.selectAll('rect')
       .data(vis.displayData);
@@ -94,7 +100,7 @@ PlotFlowVis.prototype.updateVis = function() {
         .attr('width', vis.rectWidth)
       .merge(films)
         .attr('x', d => vis.x(d.year) - vis.rectWidth / 2)
-        .attr('y', d => vis.y(d.yearCount));
+        .attr('y', d => vis.scaleY(d, vis));
 
   var titles = vis.gFilms.selectAll('text')
       .data(vis.displayData);
@@ -105,11 +111,18 @@ PlotFlowVis.prototype.updateVis = function() {
         .text(d => d.movie)
         .attr('class', 'film-title')
       .attr('x', d => vis.x(d.year))
-      .attr('y', d => vis.y(d.yearCount) + vis.rectHeight / 2);
+      .attr('y', d => vis.scaleY(d, vis) + vis.rectHeight / 2);
 
   d3.selectAll('.film-title')
-      .call(wrap, vis.rectWidth);
+      .call(wrap, vis.rectWidth - 2);
 
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
+};
+PlotFlowVis.prototype.scaleY = function(d, vis) {
+  if (vis.branching) {
+    return vis.y(d.yearFrac) - vis.rectHeight / 2 + vis.height / (2 * d.yearTotal);
+  } else {
+    return vis.y(d.allFrac) - vis.rectHeight / 2;
+  }
 };
