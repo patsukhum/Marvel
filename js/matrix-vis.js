@@ -11,31 +11,31 @@
 
 Matrix = function(_parentElement, _matrix_data, _all_characters_data) {
   this.parentElement = _parentElement;
-  // this.binaryData = [
-  //   [1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1],
-  //   [1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1],
-  //   [1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1],
-  //   [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-  //   [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1],
-  //   [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-  //   [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-  //   [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1],
-  //   [1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0],
-  //   [0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1],
-  //   [0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1],
-  //   [0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
-  //   [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-  //   [1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1],
-  //   [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-  //   [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-  //   [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-  //   [1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1],
-  //   [1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1],
-  //   [1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0],
-  //   [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
-  //   [0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1]
-  // ];
-  //
+  this.originalData = [
+    [1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1],
+    [1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1],
+    [1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1],
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1],
+    [1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0],
+    [0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1],
+    [0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1],
+    [0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1],
+    [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1],
+    [1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1],
+    [1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+    [0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1]
+  ];
+
   this.binaryData = [[1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0],
     [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1],
     [1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1],
@@ -79,8 +79,8 @@ Matrix.prototype.initVis = function() {
       6: baseDir+"weapons.svg",
       7: baseDir+"flight.svg",
       8: baseDir+"magic.svg",
-      9: baseDir+"brain.svg",
-      10: baseDir+"brain.svg",
+      9: baseDir+"chemistry.svg",
+      10: baseDir+"male.svg",
   };
   var iconDir = 'img/characters/';
   vis.svgCharactersMapping = {
@@ -166,7 +166,7 @@ Matrix.prototype.updateVis = function() {
         .attr('xlink:href', (d) => {
           return vis.svgCharactersMapping[j];
         })
-        .attr("x", vis.margin.left + 40 * j + 50)
+        .attr("x", vis.margin.left + 40 * j + 40)
         .attr("y", vis.margin.top)
         .attr("width", 40)
         .attr("height", 40)
@@ -179,14 +179,15 @@ Matrix.prototype.updateVis = function() {
     .enter()
     .append("text")
     .attr("class", "row_label")
-    .attr("x", -40)
+    // .attr("x", -40)
+    .attr("x", vis.margin.left +30)
     .attr("y", function(d, index) {
       return 30 * index + 70;
     })
     .text(function(col) {
       return col.power;
     })
-    .style("text-anchor", "start")
+    .style("text-anchor", "end")
     .attr("font-size", 13);
 
 
@@ -212,13 +213,13 @@ Matrix.prototype.updateVis = function() {
     //group to each row
     vis.rgroup = vis.svg.append("g")
       .attr("class", "matrix_row")
-      .attr("transform", "translate(" + vis.margin.left +
-        "," + vis.margin.top * (i - 0.4) + ")");
+      .attr("transform", "translate(" + (vis.margin.left + 10) +
+        "," + (vis.margin.top + 31*i + 10) + ")");
 
     //add rect to each row
     row.forEach(function(element, j) {
       vis.rgroup.append("rect")
-        .attr("x", vis.margin.left + 35 * j)
+        .attr("x", vis.margin.left + 40 * j)
         .attr("y", vis.margin.top + 35)
         .attr("width", 25)
         .attr("height", 25)
@@ -238,16 +239,15 @@ Matrix.prototype.updateVis = function() {
 
     //add SVG to each row
     row.forEach(function(element, j) {
+      // console.log(j)
       vis.rgroup.append("image")
         .attr('xlink:href', (d) => {
-          return vis.svgImagesMapping[j];
+          return vis.svgImagesMapping[i];
         })
-        // .attr("x", vis.margin.left + 35 * j)
-        // .attr("y", vis.margin.top + 35)
-        .attr("x", vis.margin.left + 40 * j + 50)
-        .attr("y", vis.margin.top)
-        .attr("width", 40)
-        .attr("height", 40)
+        .attr("x", vis.margin.left + 40 * j -5)
+        .attr("y", vis.margin.top + 35)
+        .attr("width", 35)
+        .attr("height", 35)
         .attr("opacity", (d) => {
           if (element === 1) {
             return 1;
@@ -255,14 +255,6 @@ Matrix.prototype.updateVis = function() {
             return 0;
           }
         })
-        .attr("fill", function(d) {
-          // console.log(d);
-          if (element == 1) {
-            return "#e23636"
-          } else {
-            return "lightgrey"
-          }
-        });
     });
   });
 };
