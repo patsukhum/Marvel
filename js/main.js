@@ -30,6 +30,13 @@ function createMapVis(error, data1, data2, data3) {
   var mapVis = new MapVis('map-vis', data1, data2, data3);
 }
 
+// create Vis2.7: movie flow chart
+d3.csv('data/clean/mcu_plot_flow.csv', function(data) {
+
+
+  var plotVis = new PlotFlowVis('plot-flow-vis', data);
+});
+
 // create Vis3: network chart
 queue()
     .defer(d3.json, 'data/clean/all_character_nodes_centrality.json')
@@ -41,7 +48,7 @@ function createNetworkVis(error, nodes, edges) {
   console.log(edges);
   var data = {'nodes': nodes, 'edges': edges};
   var networkVis = new NetworkVis('network-vis', data);
-};
+}
 
 //create Vis4: matrix
 queue()

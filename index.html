@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="description" content="">
   <title>Marvel Cinematic Universe</title>
-  <link href="https://fonts.googleapis.com/css?family=Acme|Bangers|Pangolin|Permanent+Marker|Staatliches&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme|Bangers|Pangolin|Permanent+Marker|Roboto|Staatliches&display=swap" rel="stylesheet">
   <!--<link href="https://fonts.googleapis.com/css?family=Acme|Bangers|Neucha|Pangolin|Permanent+Marker|Shadows+Into+Light+Two|Staatliches&display=swap" rel="stylesheet">-->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -114,6 +114,11 @@
         <h3>The Marvel Cinematic Universe</h3>
         <div class="row">
           <div class="col">
+            <div id="plot-flow-vis" class="vis-container"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
             <p>
               One of the defining features (one might say, 'superpowers') of the MCU is the sheer number of characters
               and stories that have been woven into its single timeline.
@@ -122,32 +127,6 @@
               Now in 2019, there have been a total of [NUMBER] MCU movies from [NUMBER] different series, with plans for
               [NUMBER] more.
             </p>
-
-          </div>
-          <div class="col">
-            <div id="linear-timeline-vis" class="vis-container">
-              <img src="img/placeholder.png" height=400 width=500>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="branching-timeline-sec" class="section">
-      <div class="container box">
-        <div class="row">
-          <div class="col">
-            <p>
-              However, a linear timeline hides the strength of MCU: the complexity of how the movies and characters
-              interact with one another. The story of MCU is not linear, but is highly complex and branching. If you
-              were watching all the MCU movies in one go (likely over many sittings - for your health!), you might do it
-              in this order
-            </p>
-          </div>
-          <div class="col">
-            <div id="branching-timeline-vis" class="vis-container">
-              <img src="img/placeholder.png" height=400 width=500>
-            </div>
           </div>
         </div>
       </div>
@@ -283,14 +262,15 @@
   <script src="js/topojson.min.js"></script>
   <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
-  <script src="js/main.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/cookiechart-vis.js"></script>
   <script src="js/map-vis.js"></script>
   <script src="js/network-vis.js"></script>
   <script src="js/linechart-vis.js"></script>
   <script src="js/matrix-vis.js"></script>
+  <script src="js/plot-flow-vis.js"></script>
 
+  <script src="js/main.js"></script>
 
 
 

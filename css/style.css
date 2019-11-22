@@ -145,3 +145,20 @@ html {
   stroke-width: 1.8;
   stroke: black;
 }
+
+/* plot flow */
+.rect-film {
+  fill: none;
+  stroke: black;
+}
+.film-title {
+  fill: black;
+  font-size: 9px;
+  alignment-baseline: middle;
+  text-anchor: middle;
+  font-family: Roboto;
+}
+.arrow {
+  stroke: black;
+  fill: none;
+}
