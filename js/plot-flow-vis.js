@@ -11,7 +11,7 @@ PlotFlowVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.displayData = _data;
-  this.branching = true;
+  this.branching = false;
 
   this.initVis();
 };
@@ -62,7 +62,6 @@ PlotFlowVis.prototype.initVis = function() {
       });
     }
   }).flat().filter(d => d !== undefined);
-  console.log(vis.edges);
 
   // Set up scales
   vis.x = d3.scalePoint()
@@ -89,8 +88,7 @@ PlotFlowVis.prototype.initVis = function() {
       .attr('class', 'arrows');
 
   // Line generator function
-  vis.line = d3.line()
-      .curve(d3.curveCardinal);
+  vis.line = d3.linkHorizontal();
 
   vis.wrangleData();
 };
@@ -106,31 +104,60 @@ PlotFlowVis.prototype.wrangleData = function() {
 PlotFlowVis.prototype.updateVis = function() {
   var vis = this;
 
-  vis.x.domain(vis.displayData.map(d => d.year).sort((a, b) => a - b));
-  vis.y.domain(vis.displayData.map(d => d.yearFrac).sort((a, b) => a - b));
+  var xSelected, ySelected;
+  if (vis.branching) {
+    xSelected = 'x';
+    ySelected = 'y';
+  } else {
+    xSelected = 'year';
+    ySelected = 'allFrac';
+  }
+  vis.x.domain(vis.displayData.map(d => d[xSelected]).sort((a, b) => a - b));
+  vis.y.domain(vis.displayData.map(d => d[ySelected]).sort((a, b) => a - b));
 
   var films = vis.gFilms.selectAll('rect')
       .data(vis.displayData);
 
-  films.enter()
+  var filmsEnter = films.enter()
       .append('rect')
         .attr('class', 'rect-film')
         .attr('height', vis.rectHeight)
         .attr('width', vis.rectWidth)
+        .attr('opacity', 0);
+
+  filmsEnter.transition()
+      .on('start', function() {
+        d3.select(this).style('opacity', 0);
+      })
+      .delay(d => (d.year.getFullYear() - 2008) * 1000 + 1000)
+      .duration(200)
+      .style('opacity', 1)
+      .selection()
       .merge(films)
-        .attr('x', d => vis.x(d.year) - vis.rectWidth / 2)
-        .attr('y', d => vis.scaleY(d, vis));
+        .attr('x', d => vis.x(d[xSelected]) - vis.rectWidth / 2)
+        .attr('y', d => vis.y(d[ySelected]) - vis.rectHeight / 2);
 
   var titles = vis.gFilms.selectAll('text')
       .data(vis.displayData);
 
-  titles.enter()
+  var titlesEnter = titles.enter()
       .append('text')
-      .merge(titles)
         .text(d => d.movie)
         .attr('class', 'film-title')
-      .attr('x', d => vis.x(d.year))
-      .attr('y', d => vis.scaleY(d, vis) + vis.rectHeight / 2);
+        .style('opacity', 0);
+
+  titlesEnter
+      .transition()
+        .on('start', function() {
+          d3.select(this).style('opacity', 0);
+        })
+        .delay(d => (d.year.getFullYear() - 2008) * 1000 + 1000)
+        .duration(200)
+        .style('opacity', 1)
+        .selection()
+      .merge(titles)
+        .attr('x', d => vis.x(d[xSelected]))
+        .attr('y', d => vis.y(d[ySelected]));
 
   d3.selectAll('.film-title')
       .call(wrap, vis.rectWidth - 2);
@@ -141,23 +168,17 @@ PlotFlowVis.prototype.updateVis = function() {
         .data(vis.edges);
     arrows.enter()
         .append('path')
-        .attr('d', d => {
-          var res = [[], []];
-          console.log(d);
-          res[0][0] = vis.x(d[0].year) + vis.rectWidth / 2;
-          res[0][1] = vis.scaleY(d[0], vis) + vis.rectHeight / 2;
-          res[1][0] = vis.x(d[1].year) - vis.rectWidth / 2;
-          res[1][1] = vis.scaleY(d[1], vis) + vis.rectHeight / 2;
-          console.log(res);
-          return vis.line(res);
-        })
+        .attr('d', d => vis.drawArrow(d, vis))
         .attr('class', 'arrow');
   } else {
     vis.gArrows.selectAll('path').remove();
   }
-
-  vis.xAxis.scale(vis.x);
-  vis.gX.call(vis.xAxis);
+  if (!vis.branching) {
+    vis.xAxis.scale(vis.x);
+    vis.gX.call(vis.xAxis);
+  } else {
+    vis.gX.selectAll('.tick').transition().remove();
+  }
 };
 PlotFlowVis.prototype.scaleY = function(d, vis) {
   if (vis.branching) {
@@ -165,4 +186,10 @@ PlotFlowVis.prototype.scaleY = function(d, vis) {
   } else {
     return vis.y(d.allFrac) - vis.rectHeight / 2;
   }
+};
+PlotFlowVis.prototype.drawArrow = function(d, vis) {
+  return vis.line({
+      source: [vis.x(d[0].x) + vis.rectWidth / 2, vis.y(d[0].y)],
+      target: [vis.x(d[1].x) - vis.rectWidth / 2, vis.y(d[1].y)]
+  });
 };
