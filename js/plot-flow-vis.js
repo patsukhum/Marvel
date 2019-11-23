@@ -194,18 +194,23 @@ PlotFlowVis.prototype.drawVis = function() {
   var characterEnter = characters.enter()
       .append('g')
       .attr('class', 'character')
-      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-20)')
+      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-30)')
       .on('mouseover', function() {
         d3.select(this).select('circle')
-            .style('fill', '#f78f3f')
-            .style('stroke', '#f78f3f');
+            .call(focus);
       })
-      .on('mouseout', function() {
+      .on('mouseout', function(d) {
+        if (vis.groupSelected !== d) {
+          d3.select(this).select('circle')
+              .call(unfocus);
+        }
+      })
+      .on('click', function(d) {
+        unfocusAll(vis);
         d3.select(this).select('circle')
-            .style('fill', 'none')
-            .style('stroke', 'darkgray');
-      })
-      .on('click', function(d) { charboxClick(d, vis); });
+            .call(focus);
+        charboxClick(d, vis);
+      });
 
   characterEnter.append('circle')
       .attr('class', 'node')
@@ -218,6 +223,13 @@ PlotFlowVis.prototype.drawVis = function() {
       .attr('width', 2 * radius)
       .attr('height', 2 * radius)
       .attr('y', 4);
+
+  characterEnter.append('text')
+      .attr('x', radius)
+      .attr('y', 2 * radius + 10)
+      .text(d => titleCase(d))
+      .attr('class', 'film-title')
+      .call(wrap, 2 * radius);
 
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
@@ -368,4 +380,18 @@ function resetSelected(vis) {
       .style('stroke', 'black')
       .style('stroke-width', 1)
       .attr('marker-end', 'url(#arrowhead)');
+  unfocusAll(vis);
+}
+function focus(elem) {
+  elem.style('fill', '#f78f3f')
+      .style('stroke', '#f78f3f');
+}
+
+function unfocus(elem) {
+  elem.style('fill', 'none')
+      .style('stroke', 'darkgray');
+}
+function unfocusAll(vis) {
+  vis.svg.selectAll('.character circle')
+      .call(unfocus);
 }
