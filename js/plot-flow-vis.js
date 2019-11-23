@@ -194,7 +194,7 @@ PlotFlowVis.prototype.drawVis = function() {
   var characterEnter = characters.enter()
       .append('g')
       .attr('class', 'character')
-      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-20)')
+      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-30)')
       .on('mouseover', function() {
         d3.select(this).select('circle')
             .call(focus);
@@ -223,6 +223,13 @@ PlotFlowVis.prototype.drawVis = function() {
       .attr('width', 2 * radius)
       .attr('height', 2 * radius)
       .attr('y', 4);
+
+  characterEnter.append('text')
+      .attr('x', radius)
+      .attr('y', 2 * radius + 10)
+      .text(d => titleCase(d))
+      .attr('class', 'film-title')
+      .call(wrap, 2 * radius);
 
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);

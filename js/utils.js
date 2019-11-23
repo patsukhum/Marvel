@@ -104,3 +104,11 @@ function unique(value, index, self) {
 function clamp(n, min, max) {
   return Math.min(Math.max(n, min), max);
 }
+
+function titleCase(string) {
+  var sentence = string.toLowerCase().split(/[ _]/);
+  for(var i = 0; i< sentence.length; i++){
+    sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+  }
+  return sentence.join(" ");
+}

@@ -177,15 +177,19 @@ NetworkVis.prototype.nodeMouseover = function(d, vis) {
       .style('stroke-width', (d, n) => d === n ? '3px' : '2px');
 };
 NetworkVis.prototype.nodeMouseout = function(d, vis) {
-  vis.tooltip.transition()
-      .duration(100)
-      .style("opacity", 0);
-  vis.edges.style('stroke', 'darkgray')
-      .style('opacity', l => vis.scaleEdgeOpacity(l.count));
-  vis.nodes.style('stroke', 'darkgray')
-      .style('stroke-width', '2px');
+  if (!vis.hideTooltip) {
+    vis.tooltip.transition()
+        .duration(100)
+        .style("opacity", 0);
+    vis.edges.style('stroke', 'darkgray')
+        .style('opacity', l => vis.scaleEdgeOpacity(l.count));
+    vis.nodes.style('stroke', 'darkgray')
+        .style('stroke-width', '2px');
+  }
 };
 NetworkVis.prototype.nodeMousemove = function(d, vis) {
-  vis.tooltip.style("left", (d3.event.pageX) + "px")
-      .style("top", (d3.event.pageY + 10) + "px");
+  if (!vis.hideTooltip) {
+    vis.tooltip.style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY + 10) + "px");
+  }
 };
