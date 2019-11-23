@@ -146,6 +146,21 @@
       </div>
     </div>
 
+    <div id="character-intro-sec" class="section">
+      <div class="container box">
+        <div class="row">
+          <div class="col">
+            And the complexity doesn’t end at the movie level! The relations between each of the many main characters
+            in MCU are highly complex. To get a sense of this, we downloaded the Wikipedia pages of each MCU main
+            character using the Wikimedia API and extracted the links between character pages. Each link feasibly
+            represents some sort of relation between the two characters. For example, if Hawkeye links to Thor, then
+            somewhere on Hawkeye’s page is a reference to Thor, meaning that the two characters did something
+            together.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="network-sec" class="section">
       <div class="container box">
         <h3>Marvel Character Networks</h3>
@@ -155,12 +170,7 @@
           </div>
           <div class="col">
             <p>
-              And the complexity doesn’t end at the movie level! The relations between each of the many main characters
-              in MCU are highly complex. To get a sense of this, we downloaded the Wikipedia pages of each MCU main
-              character using the Wikimedia API and extracted the links between character pages. Each link feasibly
-              represents some sort of relation between the two characters. For example, if Hawkeye links to Thor, then
-              somewhere on Hawkeye’s page is a reference to Thor, meaning that the two characters did something
-              together.
+
             </p>
             <p>We can analyze this graph to determine who the most “central” or “important” character is in the MCU[1].
               Based on Wikipedia links the most important character is… [drumroll please]
@@ -279,7 +289,7 @@
   <script src="js/libraries/queue.v1.min.js"></script>
   <script src="js/libraries/d3-tip.js"></script>
   <script src="js/d3-legend.min.js"></script>
-  <script src="js/topojson.min.js"></script>
+  <script src="js/libraries/topojson.min.js"></script>
   <script src="js/libraries/d3-scale-chromatic.min.js"></script>
 
   <script src="js/utils.js"></script>

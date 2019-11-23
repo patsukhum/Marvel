@@ -47,7 +47,7 @@ function wrap(text, width) {
 
 var heroColors = {
   avengers: '2C2A89',
-  guardians_of_the_galaxy: '369F4D',
+  guardians: '369F4D',
   black_panther: '0C0B13',
   captain_america: '000042',
   thor: '03ADE9',

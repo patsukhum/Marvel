@@ -120,7 +120,7 @@ PlotFlowVis.prototype.drawVis = function() {
         .attr('height', vis.rectHeight)
         .attr('width', vis.rectWidth)
         .attr('opacity', 0)
-        .style('stroke', d => vis.color(d.group))
+        .style('stroke', d => heroColors[d.group])
       .transition()
         .on('start', function() {
           d3.select(this).style('opacity', 0);
