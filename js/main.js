@@ -25,7 +25,8 @@ function createLineChartVis(error, data) {
 
 // create Vis2.5: map chart
 queue()
-    .defer(d3.csv, 'data/clean/endgame_clean.csv')
+    // .defer(d3.csv, 'data/clean/endgame_clean.csv')
+    .defer(d3.csv, 'data/clean/map-data-all.csv')
     .defer(d3.json, 'data/clean/world-110m.json')
     .defer(d3.json, 'data/clean/slim-2.json')
     .await(createMapVis);
