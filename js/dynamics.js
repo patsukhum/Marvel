@@ -8,18 +8,28 @@ var myFullpage = new fullpage('#fullpage', {
     secId = destination.item.getAttribute('id');
     switch(secId) {
       case 'plot-flow-sec':
-        $(`#${secId} .caption span`).each(function(index) {
-          $(this).delay(1000 + 3000 * (index)).fadeTo(2000, 1);
-        });
-        $(`#${secId} .caption button`).delay(6000).fadeTo(1000, 1);
-        if (!plotVis.drawn) {
-          plotVis.drawVis();
-        }
+        drawPlotVis();
+        break;
+      case 'network-intro-vis':
+        drawNetworkIntroVis();
+        break;
+      case 'network-vis':
+        drawNetworkVis();
+        break;
     }
   }
 });
 
 // ********** Plot plot ********** //
+function drawPlotVis() {
+  $(`#${secId} .caption span`).each(function(index) {
+    $(this).delay(1000 + 3000 * (index)).fadeTo(2000, 1);
+  });
+  $(`#${secId} .caption button`).delay(6000).fadeTo(1000, 1);
+  if (!plotVis.drawn) {
+    plotVis.drawVis();
+  }
+}
 $('#plot-flow-sec .caption').children().css('opacity', 0);
 $('#plot-flow-sec button').on('click', function(event) {
 
@@ -29,7 +39,7 @@ $('#plot-flow-sec button').on('click', function(event) {
         .fadeOut(1000, function() { $(this).remove() })
         .end()
         .append('span')
-        .text("This is the timeline in the MCU universe. Click to toggle between the linear and branching timeline")
+        .text("This is the timeline in the MCU universe. The plot flows from left to right along the lines. Click to toggle between the linear and branching timeline")
         .css('opacity', 0)
         .fadeTo(500, 1);
   }
@@ -37,3 +47,12 @@ $('#plot-flow-sec button').on('click', function(event) {
   plotVis.toggleBranching();
 });
 
+// ********** Network intro ********** //
+function drawNetworkIntroVis() {
+  
+}
+
+// ********** Network vis ********** //
+function drawNetworkVis() {
+
+}
