@@ -17,6 +17,7 @@ function makeSvg(vis, chartType) {
 // for linechart
 var parseTime = d3.timeParse("%Y");
 formatValue = d3.format(".2s");
+formatComma = d3.format(",") // formating help from http://bl.ocks.org/mstanaland/6106487
 
 // For plot flow chart
 function wrap(text, width) {
@@ -92,7 +93,6 @@ function getSvgIcon(charName) {
     rocketraccoon: "rocket",
     draxthedestroyer: "drax"
   };
-  console.log(iconName);
   iconName = replacements[iconName] || iconName;
   return iconDir + iconName + '.svg';
 }
