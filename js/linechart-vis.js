@@ -39,8 +39,22 @@ LineChartVis.prototype.initVis = function() {
   vis.y = d3.scaleLinear().range([vis.height, 0]);
 
 
+  // add custom legend
+  // code help from: https://www.d3-graph-gallery.com/graph/custom_legend.html
+
+  var legend = this.svg.append("g").attr("class","legend")
+        .attr("transform","translate(0,50)");
+  legend.append("circle").attr("cx",50).attr("cy",20).attr("r", 6).style("fill", "#e23636")
+  legend.append("circle").attr("cx",50).attr("cy",50).attr("r", 6).style("fill", "#0476F2")
+  legend.append("text").attr("x", 60).attr("y", 20).text("Marvel").style("font-size", "15px").attr("alignment-baseline","middle")
+  legend.append("text").attr("x", 60).attr("y", 50).text("DC Comics").style("font-size", "15px").attr("alignment-baseline","middle")
+
+
+
   vis.wrangleData();
 };
+
+
 LineChartVis.prototype.wrangleData = function() {
   var vis = this;
 
@@ -114,10 +128,12 @@ LineChartVis.prototype.wrangleData = function() {
 };
 
 
-LineChartVis.prototype.updateVis = function() {
+LineChartVis.prototype.updateVis = function(selection=null) {
   var vis = this;
 
-  selection="boxOfficeWorldwide"
+  if(!selection){
+      selection="boxOfficeWorldwide";
+  }
 
   // define the lines
   vis.lineDC = d3.line()
@@ -139,28 +155,40 @@ LineChartVis.prototype.updateVis = function() {
     })
   ]);
 
-  // Add the DC line.
-  this.svg.append("path")
-      .data([this.displayData])
-      .attr("class", "lineDC")
-      //.attr("data-legend", "DC Comics")
-      .attr("d", vis.lineDC);
 
-  // Add the valueline path.
-  this.svg.append("path")
+  // var DCPath = vis.svg.selectAll(".lineDC").data([vis.displayData]);
+
+  // DCPath.enter().append("path").attr("class", "lineDC linechart").attr("d", vis.lineDC);
+
+  // //DCPath.transition().duration().attr("d", vis.lineDC).attr("class", "lineDC linechart");
+  // DCPath.exit().remove();
+
+
+  this.svg.selectAll(".linechart").remove();
+
+  // Add DC line path.
+  var DCPath = vis.svg.append("path")
+          .data([this.displayData])
+          .attr("class", "lineDC linechart")
+          .attr("d", vis.lineDC);
+
+  // Add Marvel line path.
+  vis.svg.append("path")
       .data([this.displayData])
-      .attr("class", "lineMarvel")
-      //.attr("data-legend", "Marvel")
+      .attr("class", "lineMarvel linechart")
       .attr("d", vis.lineMarvel);
 
-  // axis rotation code help from: https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf
+  
 
+  vis.svg.selectAll(".axis").remove();
+
+  // axis rotation code help from: https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf
   // Add the X Axis
-  this.svg.append("g")
+  vis.svg.append("g")
       .attr("transform", "translate(0," + vis.height + ")")
       .call(d3.axisBottom(vis.x).tickFormat(d3.timeFormat("%Y")))
       .selectAll("text")
-        .attr("class", "xAxis")
+        .attr("class", "xAxis axis")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
@@ -171,36 +199,17 @@ LineChartVis.prototype.updateVis = function() {
       // tick format help from: https://stackoverflow.com/a/19908589
       .call(d3.axisLeft(vis.y).tickFormat(function(d) {return '$' +formatValue(d).replace("G","B")}))
       .selectAll("text")
-      .attr("class", "yAxis");
+      .attr("class", "yAxis axis");
 
   // add title
   this.svg.append("g")
     .attr("class","visTitle")
-    .attr("transform", `translate(${vis.width/5},-10)`)
+    .attr("transform", `translate(${vis.width/7},-10)`)
     .append("text")
-      .text("Yearly Box Office Revenues")
+      .text("Yearly Worldwide Box Office Revenues")
       .style("fill","black")
       .style("text-anchor","center");
 
 
-
-  // add custom legend
-  // code help from: https://www.d3-graph-gallery.com/graph/custom_legend.html
-
-  var legend = this.svg.append("g").attr("class","legend")
-        .attr("transform","translate(0,50)");
-  legend.append("circle").attr("cx",50).attr("cy",20).attr("r", 6).style("fill", "#e23636")
-  legend.append("circle").attr("cx",50).attr("cy",50).attr("r", 6).style("fill", "#0476F2")
-  legend.append("text").attr("x", 60).attr("y", 20).text("Marvel").style("font-size", "15px").attr("alignment-baseline","middle")
-  legend.append("text").attr("x", 60).attr("y", 50).text("DC Comics").style("font-size", "15px").attr("alignment-baseline","middle")
-
-
-
-  //   // add legend
-  // this.svg.append("g")
-  //   .attr("class","legend")
-  //   .attr("transform","translate(50,30)")
-  //   .style("font-size","12px")
-  //   .call(d3.legend);
 
 };
