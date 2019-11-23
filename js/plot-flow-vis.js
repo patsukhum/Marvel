@@ -22,7 +22,7 @@ PlotFlowVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 10,
+    'top': 50,
     'bottom': 40,
     'left': 40,
     'right': 40
@@ -166,7 +166,37 @@ PlotFlowVis.prototype.drawVis = function() {
         .call(vis.drawLab, vis)
         .call(wrap, vis.rectWidth - 3);
 
-  // d3.selectAll('.film-title').call(wrap, vis.rectWidth - 3);
+  // Drawing character selectbox
+  vis.characters = vis.svg.append('g');
+  var radius = 20,
+      charData = vis.displayData.map(d => d.group).filter(unique).filter(d => d !== 'avengers');
+
+  // vis.characters.append('rect')
+  //     .attr('width', charboxWidth)
+  //     .attr('height', charboxHeight)
+  //     .attr('rx', 15)
+  //     .style('stroke', 'black')
+  //     .style('fill', 'none');
+
+  var characters = vis.characters.selectAll('g.character')
+      .data(charData);
+
+  var characterEnter = characters.enter()
+      .append('g')
+      .attr('class', 'character')
+      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-20)');
+
+  characterEnter.append('circle')
+      .attr('class', 'node')
+      .attr('r', radius)
+      .attr('cx', radius)
+      .attr('cy', radius);
+
+  characterEnter.append('image')
+      .attr('xlink:href', d => getSvgIcon(d))
+      .attr('width', 2 * radius)
+      .attr('height', 2 * radius)
+      .attr('y', 5);
 
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);

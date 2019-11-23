@@ -87,7 +87,7 @@ var svgCharactersMapping = {
 };
 
 function getSvgIcon(charName) {
-  var iconName = charName.toLowerCase().replace(/[\s\-]/g, '');
+  var iconName = charName.toLowerCase().replace(/[\s\-_]/g, '');
   replacements = {
     rocketraccoon: "rocket",
     draxthedestroyer: "drax"
@@ -95,4 +95,8 @@ function getSvgIcon(charName) {
   console.log(iconName);
   iconName = replacements[iconName] || iconName;
   return iconDir + iconName + '.svg';
+}
+
+function unique(value, index, self) {
+  return self.indexOf(value) === index;
 }
