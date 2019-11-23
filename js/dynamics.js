@@ -26,10 +26,12 @@ $('#plot-flow-sec button').on('click', function(event) {
   if (!plotVis.toggledBefore) {
     $("#plot-flow-sec .caption.text")
         .children('span')
-        .fadeOut(500, function() { $(this).remove() })
+        .fadeOut(1000, function() { $(this).remove() })
         .end()
         .append('span')
-        .text("Click to toggle between the linear and branching timeline");
+        .text("This is the timeline in the MCU universe. Click to toggle between the linear and branching timeline")
+        .css('opacity', 0)
+        .fadeTo(500, 1);
   }
 
   plotVis.toggleBranching();

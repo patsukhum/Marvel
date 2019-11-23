@@ -73,6 +73,8 @@ PlotFlowVis.prototype.initVis = function() {
       .paddingInner(10)
       .paddingOuter(10)
       .range([vis.height, 0]);
+  vis.color = d3.scaleOrdinal(d3.schemeSet1)
+      .domain(vis.data.map(d => d.group));
 
   // Set up x axis
   vis.xAxis = d3.axisBottom()
@@ -118,6 +120,7 @@ PlotFlowVis.prototype.drawVis = function() {
         .attr('height', vis.rectHeight)
         .attr('width', vis.rectWidth)
         .attr('opacity', 0)
+        .style('stroke', d => vis.color(d.group))
       .transition()
         .on('start', function() {
           d3.select(this).style('opacity', 0);

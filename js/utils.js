@@ -43,3 +43,18 @@ function wrap(text, width) {
     }
   });
 }
+
+
+var heroColors = {
+  avengers: '2C2A89',
+  guardians_of_the_galaxy: '369F4D',
+  black_panther: '0C0B13',
+  captain_america: '000042',
+  thor: '03ADE9',
+  iron_man: 'E30022',
+  hulk: 'A2CD48',
+  captain_marvel: 'F3D403',
+  doctor_strange: '454253',
+  ant_man: '5E6674',
+  spider_man: '7E1F27'
+};
