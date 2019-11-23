@@ -85,3 +85,14 @@ var svgCharactersMapping = {
   20: iconDir+"thanos.svg",
   21: iconDir+"loki.svg",
 };
+
+function getSvgIcon(charName) {
+  var iconName = charName.toLowerCase().replace(/[\s\-]/g, '');
+  replacements = {
+    rocketraccoon: "rocket",
+    draxthedestroyer: "drax"
+  };
+  console.log(iconName);
+  iconName = replacements[iconName] || iconName;
+  return iconDir + iconName + '.svg';
+}

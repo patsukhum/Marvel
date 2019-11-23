@@ -113,6 +113,11 @@ NetworkVis.prototype.updateVis = function() {
         .on('mouseout', d => vis.nodeMouseout(d, vis))
         .on('mousemove', d => vis.nodeMousemove(d, vis));
 
+  vis.nodes.append('image')
+      .attr('xlink:href', d => getSvgIcon(d.name))
+      .attr('width', 40)
+      .attr('height', 40);
+
   vis.force.on('tick', function() {
     vis.edges.attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
@@ -121,10 +126,6 @@ NetworkVis.prototype.updateVis = function() {
 
     vis.nodes.attr('cx', d => d.x)
         .attr('cy', d => d.y);
-
-    vis.nodes.append('text')
-        .text(d => d.name);
-
   });
 
   vis.nodes.call(vis.dragNode);
