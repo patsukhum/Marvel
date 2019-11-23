@@ -197,15 +197,20 @@ PlotFlowVis.prototype.drawVis = function() {
       .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-20)')
       .on('mouseover', function() {
         d3.select(this).select('circle')
-            .style('fill', '#f78f3f')
-            .style('stroke', '#f78f3f');
+            .call(focus);
       })
-      .on('mouseout', function() {
+      .on('mouseout', function(d) {
+        if (vis.groupSelected !== d) {
+          d3.select(this).select('circle')
+              .call(unfocus);
+        }
+      })
+      .on('click', function(d) {
+        unfocusAll(vis);
         d3.select(this).select('circle')
-            .style('fill', 'none')
-            .style('stroke', 'darkgray');
-      })
-      .on('click', function(d) { charboxClick(d, vis); });
+            .call(focus);
+        charboxClick(d, vis);
+      });
 
   characterEnter.append('circle')
       .attr('class', 'node')
@@ -368,4 +373,18 @@ function resetSelected(vis) {
       .style('stroke', 'black')
       .style('stroke-width', 1)
       .attr('marker-end', 'url(#arrowhead)');
+  unfocusAll(vis);
+}
+function focus(elem) {
+  elem.style('fill', '#f78f3f')
+      .style('stroke', '#f78f3f');
+}
+
+function unfocus(elem) {
+  elem.style('fill', 'none')
+      .style('stroke', 'darkgray');
+}
+function unfocusAll(vis) {
+  vis.svg.selectAll('.character circle')
+      .call(unfocus);
 }
