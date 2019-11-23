@@ -9,6 +9,13 @@ var myFullpage = new fullpage('#fullpage', {
     switch(secId) {
       case 'plot-flow-sec':
         drawPlotVis();
+        break;
+      case 'network-intro-vis':
+        drawNetworkIntroVis();
+        break;
+      case 'network-vis':
+        drawNetworkVis();
+        break;
     }
   }
 });
@@ -40,3 +47,12 @@ $('#plot-flow-sec button').on('click', function(event) {
   plotVis.toggleBranching();
 });
 
+// ********** Network intro ********** //
+function drawNetworkIntroVis() {
+  
+}
+
+// ********** Network vis ********** //
+function drawNetworkVis() {
+
+}
