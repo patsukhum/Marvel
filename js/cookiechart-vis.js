@@ -44,7 +44,6 @@ CookieChartVis.prototype.wrangleData = function() {
 
   var allGenres = new Set();
 
-  console.log('vis.data')
   console.log(vis.data)
   vis.data.forEach((d) => {
     d.revenues = +d.revenues;
