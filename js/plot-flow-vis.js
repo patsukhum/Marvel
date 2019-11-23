@@ -15,6 +15,7 @@ PlotFlowVis = function(_parentElement, _data) {
   this.drawn = false;
   this.toggledBefore = false;
   this.selected = {x: 'year', y: 'allFrac'};
+  this.groupSelected = null;
 
   this.initVis();
 };
@@ -67,8 +68,9 @@ PlotFlowVis.prototype.initVis = function() {
 
   // Arrowhead markers
   // Per-type markers, as they don't inherit styles.
-  vis.svg.append("defs")
-      .append("marker")
+  var defs = vis.svg.append("defs");
+
+  defs.append("marker")
       .attr("id", "arrowhead")
       .attr("viewBox", "0 -5 10 10")
       .attr("refX", 1)
@@ -78,6 +80,18 @@ PlotFlowVis.prototype.initVis = function() {
       .attr("orient", "auto")
       .append("path")
       .attr("d", "M0,-5L10,0L0,5");
+
+  defs.append('marker')
+      .attr("id", "selected")
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 1)
+      .attr("refY", 0)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M0,-5L10,0L0,5")
+      .attr('transform', 'scale(0.25)');
 
 
   // Set up scales
@@ -127,10 +141,10 @@ PlotFlowVis.prototype.drawVis = function() {
 
   vis.updateScales();
 
-  var films = vis.gFilms.selectAll('rect')
+  vis.films = vis.gFilms.selectAll('rect')
       .data(vis.displayData, d => d.movie);
 
-  films.enter()
+  vis.films.enter()
       .append('rect')
         .attr('class', 'rect-film')
         .attr('height', vis.rectHeight)
@@ -147,10 +161,10 @@ PlotFlowVis.prototype.drawVis = function() {
       .selection()
         .call(vis.drawRect, vis);
 
-  var titles = vis.gFilms.selectAll('text')
+  vis.titles = vis.gFilms.selectAll('text')
       .data(vis.displayData, d => d.movie);
 
-  titles.enter()
+  vis.titles.enter()
       .append('text')
         .text(d => d.movie)
         .attr('class', 'film-title')
@@ -167,24 +181,31 @@ PlotFlowVis.prototype.drawVis = function() {
         .call(wrap, vis.rectWidth - 3);
 
   // Drawing character selectbox
-  vis.characters = vis.svg.append('g');
+  vis.gCharacters = vis.svg.append('g');
   var radius = 20,
-      charData = vis.displayData.map(d => d.group).filter(unique).filter(d => d !== 'avengers');
+      charData = vis.displayData
+          .map(d => d.group)
+          .filter(unique).sort((a, b) => a === 'avengers' ? -1 : b === 'avengers' ? 1 : 0)
+          .concat(['reset']);
 
-  // vis.characters.append('rect')
-  //     .attr('width', charboxWidth)
-  //     .attr('height', charboxHeight)
-  //     .attr('rx', 15)
-  //     .style('stroke', 'black')
-  //     .style('fill', 'none');
-
-  var characters = vis.characters.selectAll('g.character')
+  var characters = vis.gCharacters.selectAll('g.character')
       .data(charData);
 
   var characterEnter = characters.enter()
       .append('g')
       .attr('class', 'character')
-      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-20)');
+      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-20)')
+      .on('mouseover', function() {
+        d3.select(this).select('circle')
+            .style('fill', '#f78f3f')
+            .style('stroke', '#f78f3f');
+      })
+      .on('mouseout', function() {
+        d3.select(this).select('circle')
+            .style('fill', 'none')
+            .style('stroke', 'darkgray');
+      })
+      .on('click', function(d) { charboxClick(d, vis); });
 
   characterEnter.append('circle')
       .attr('class', 'node')
@@ -196,14 +217,67 @@ PlotFlowVis.prototype.drawVis = function() {
       .attr('xlink:href', d => getSvgIcon(d))
       .attr('width', 2 * radius)
       .attr('height', 2 * radius)
-      .attr('y', 5);
+      .attr('y', 4);
 
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
 
   vis.drawn = true;
 };
+PlotFlowVis.prototype.updateVis = function() {
+  var vis = this;
 
+  vis.films = vis.gFilms.selectAll('rect')
+      .data(vis.displayData, d => d.movie);
+  vis.titles = vis.gFilms.selectAll('text')
+      .data(vis.displayData, d => d.movie);
+  vis.arrows = vis.gArrows.selectAll('path')
+      .data(vis.edges);
+
+  vis.updateScales();
+
+  var delay = (d, i) => vis.branching ? i * 50 : 200 + i * 50;
+
+  vis.films.transition()
+      .delay(delay)
+      .duration(200)
+      .call(vis.drawRect, vis);
+
+  vis.titles.transition()
+      .delay(delay)
+      .duration(200)
+      .call(vis.drawLab, vis, delay);
+
+  // Drawing arrows
+  // TODO: Get the arrows to fade in (ideally draw themselves using attrTween)
+  if (vis.branching) {
+    vis.arrows.enter()
+        .append('path')
+        .attr('class', 'arrow')
+        .style('opacity', 0)
+        .call(vis.drawArrow, vis)
+        .transition()
+        .delay(d => vis.toggledBefore ? 1000 : 200 + d[0].x * 400 + d[0].y * 100)
+        .duration(200)
+        .style('opacity', 1)
+  } else {
+    vis.arrows.transition()
+        .duration(200)
+        .style('opacity', 0)
+        .remove();
+  }
+
+  if (!vis.branching) {
+    vis.xAxis.scale(vis.x);
+    vis.gX.call(vis.xAxis);
+  } else {
+    vis.gX.selectAll('.tick')
+        .transition()
+        .duration(1000)
+        .style('opacity', 0)
+        .remove();
+  }
+};
 
 PlotFlowVis.prototype.toggleBranching = function() {
   var vis = this;
@@ -218,59 +292,7 @@ PlotFlowVis.prototype.toggleBranching = function() {
     vis.selected.y = 'allFrac';
   }
 
-  var films = vis.gFilms.selectAll('rect')
-      .data(vis.displayData, d => d.movie);
-  var titles = vis.gFilms.selectAll('text')
-      .data(vis.displayData, d => d.movie);
-
-  vis.updateScales();
-
-  var delay = (d, i) => vis.branching ? i * 50 : 200 + i * 50;
-
-  films.transition()
-      .delay(delay)
-      .duration(200)
-      .call(vis.drawRect, vis);
-
-  titles.transition()
-      .delay(delay)
-      .duration(200)
-      .call(vis.drawLab, vis, delay);
-
-  // Drawing arrows
-  // TODO: Get the arrows to fade in (ideally draw themselves using attrTween)
-  if (vis.branching) {
-    var arrows = vis.gArrows.selectAll('path')
-        .data(vis.edges)
-        .enter()
-        .append('path')
-          .attr('class', 'arrow')
-          .style('opacity', 0)
-          .call(vis.drawArrow, vis)
-        .transition()
-          .delay(d => vis.toggledBefore ? 1000 : 200 + d[0].x * 400 + d[0].y * 100)
-          .duration(200)
-          .style('opacity', 1)
-  } else {
-    vis.gArrows.selectAll('path')
-        .transition()
-        .duration(200)
-        .style('opacity', 0)
-        .remove();
-  }
-
-
-
-  if (!vis.branching) {
-    vis.xAxis.scale(vis.x);
-    vis.gX.call(vis.xAxis);
-  } else {
-    vis.gX.selectAll('.tick')
-        .transition()
-        .duration(1000)
-        .style('opacity', 0)
-        .remove();
-  }
+  vis.updateVis();
 
   vis.toggledBefore = true;
 };
@@ -317,3 +339,33 @@ PlotFlowVis.prototype.updateScales = function() {
   vis.x.domain(vis.displayData.map(d => d[vis.selected.x]).sort((a, b) => a - b));
   vis.y.domain(vis.displayData.map(d => d[vis.selected.y]).sort((a, b) => a - b));
 };
+function charboxClick(d, vis) {
+  if (d === 'reset') {
+    resetSelected(vis);
+  } else {
+    vis.groupSelected = d;
+
+    vis.films
+        .style('fill', e => e.group === d ? heroColors[e.group] : 'none');
+
+    vis.svg.select('defs > marker#selected path')
+        .style('stroke', heroColors[d])
+        .style('fill', heroColors[d]);
+    vis.gArrows.selectAll('path')
+        .data(vis.edges)
+        .style('stroke', e => {
+          return [e[0].group, e[1].group].includes(d) ? heroColors[d] : 'darkgray';
+        })
+        .style('stroke-width', e => [e[0].group, e[1].group].includes(d) ? 4 : 1)
+        .attr('marker-end', e => [e[0].group, e[1].group].includes(d) ? 'url(#selected)' : 'url(#arrowhead)');
+  }
+}
+function resetSelected(vis) {
+  vis.groupSelected = null;
+  vis.films
+      .style('fill', d => heroColors[d.group]);
+  vis.gArrows.selectAll('path')
+      .style('stroke', 'black')
+      .style('stroke-width', 1)
+      .attr('marker-end', 'url(#arrowhead)');
+}
