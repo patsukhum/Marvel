@@ -59,5 +59,11 @@ queue()
 function createMatrixVis(error, matrix_data, all_characters_data) {
   console.log(matrix_data)
   console.log(all_characters_data)
-  var matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
+  matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };
+
+d3.select('#sort').on('change', function() {
+  choice = d3.select('#sort').property('value');
+  console.log(choice);
+  matrixVis.sortMatrix();
+})
