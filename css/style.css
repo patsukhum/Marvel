@@ -154,6 +154,7 @@ html {
 /* plot flow */
 .rect-film {
   fill: none;
+  stroke: black;
 }
 .film-title {
   fill: black;

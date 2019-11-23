@@ -84,4 +84,4 @@ var svgCharactersMapping = {
   19: iconDir+"captainmarvel.svg",
   20: iconDir+"thanos.svg",
   21: iconDir+"loki.svg",
-}
+};
