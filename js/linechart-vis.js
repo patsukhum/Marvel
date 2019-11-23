@@ -39,6 +39,20 @@ LineChartVis.prototype.initVis = function() {
   vis.y = d3.scaleLinear().range([vis.height, 0]);
 
 
+  // initialize tooltip
+
+  // code help from: http://bl.ocks.org/Caged/6476579
+  vis.tipDC = d3.tip()
+    .attr('class', 'd3-tip d3-tipDC')
+    .offset([-10, 0]);
+
+  vis.tipMarvel = d3.tip()
+    .attr('class', 'd3-tip d3-tipMarvel')
+    .offset([-10, 0]);
+
+
+
+
   vis.wrangleData();
 };
 
@@ -158,14 +172,36 @@ LineChartVis.prototype.updateVis = function() {
       .attr("class", "lineMarvel linechart")
       .attr("d", vis.lineMarvel);
   
+  // add circles to graph
+	// codes adapted from: https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
+	var circle = this.svg.selectAll("circle").data(vis.displayData, function(d) { return parseTime(d.year); });
+	
+
+    circle.enter().append("circle")
+		.attr("class", "tooltip-circle lineDC-circle") // Assign a class for styling
+		.attr("cx", function(d) { return vis.x(parseTime(d.year)) })
+		.attr("cy", function(d) { return vis.y(d[selection].dc) })
+		.attr("r", 5)
+		.on("mouseover", vis.tipDC.show)
+    .on("mouseout", vis.tipDC.hide);
+    
+    circle.enter().append("circle")
+		.attr("class", "tooltip-circle lineMarvel-circle") // Assign a class for styling
+		.attr("cx", function(d) { return vis.x(parseTime(d.year)) })
+		.attr("cy", function(d) { return vis.y(d[selection].marvel) })
+		.attr("r", 5)
+		.on("mouseover", vis.tipMarvel.show)
+		.on("mouseout", vis.tipMarvel.hide);
+
+	
 
   // drawing line chart effect help from: http://bl.ocks.org/markmarkoh/8700606
   /* Add 'curtain' rectangle to hide entire graph */
   var curtain = vis.svg.append('rect')
-  .attr('x', -1 * vis.width)
-  .attr('y', -1 * vis.height)
-  .attr('height', vis.height)
-  .attr('width', vis.width)
+  .attr('x', -1 * (vis.width+5))
+  .attr('y', -1 * (vis.height+5))
+  .attr('height', vis.height+10)
+  .attr('width', vis.width+10)
   .attr('class', 'curtain')
   .attr('transform', 'rotate(180)')
   .style('fill', '#ffffff')
@@ -180,13 +216,12 @@ LineChartVis.prototype.updateVis = function() {
     .attr('width', 0);
   
 
-
   //vis.svg.selectAll(".axis").remove();
 
   // axis rotation code help from: https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf
   // Add the X Axis
   vis.svg.append("g")
-      .attr("transform", "translate(0," + vis.height + ")")
+      .attr("transform", `translate(0, ${vis.height+5})`)
       .call(d3.axisBottom(vis.x).tickFormat(d3.timeFormat("%Y")))
       .selectAll("text")
         .attr("class", "xAxis axis")
@@ -197,6 +232,7 @@ LineChartVis.prototype.updateVis = function() {
 
   // Add the Y Axis
   this.svg.append("g")
+      .attr("transform", `translate(-5, 0)`)
       // tick format help from: https://stackoverflow.com/a/19908589
       .call(d3.axisLeft(vis.y).tickFormat(function(d) {return '$' +formatValue(d).replace("G","B")}))
       .selectAll("text")
@@ -221,5 +257,14 @@ LineChartVis.prototype.updateVis = function() {
   legend.append("text").attr("x", 60).attr("y", 20).text("Marvel").style("font-size", "15px").attr("alignment-baseline","middle")
   legend.append("text").attr("x", 60).attr("y", 50).text("DC Comics").style("font-size", "15px").attr("alignment-baseline","middle")
 
-
+	// update tooltip
+	vis.tipDC.html(function(d) { 
+		return `${d.year} <br> $${formatComma(d[selection].dc)}`; 
+	})
+  vis.svg.call(vis.tipDC);
+  
+ 	vis.tipMarvel.html(function(d) { 
+		return `${d.year} <br> $${formatComma(d[selection].marvel)}`; 
+	})
+	vis.svg.call(vis.tipMarvel);
 };
