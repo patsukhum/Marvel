@@ -1,8 +1,8 @@
 body {
-  margin: 50px;
+  margin: 30px;
   font-family: 'Pangolin', cursive;
   font-weight: lighter;
-  font-size: 22px;
+  font-size: 21px;
   background-color: lightgrey;
   /* comic book style dotted background adapted from: https://codepen.io/ashandrien/pen/rnzsd */
   background-image: radial-gradient(ellipse farthest-corner, transparent 0%, transparent 35%, #fff 30%, #fff 40%, transparent 90%), radial-gradient(ellipse farthest-corner at 0px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), radial-gradient(ellipse farthest-corner at 8px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), radial-gradient(ellipse farthest-corner at 0px 8px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 40%), radial-gradient(ellipse farthest-corner at 8px 0px, transparent 0%, transparent 20%, #fff 15%, #fff 20%, transparent 50%), linear-gradient(40deg, darkgrey 0, lightgrey 30%, lightgray 50%, lightgrey 70%, grey 100%);
@@ -31,8 +31,7 @@ h3 {
   text-align: center;
   font-size: 50px;
   font-family: 'Staatliches', cursive;
-  margin: 10px;
-  margin-bottom: 30px;
+  margin: 20px;
 }
 
 h4 {
@@ -48,6 +47,11 @@ h4 {
 .legend {
 
 }
+
+select {
+  font-size: 15px;
+}
+
 
 .lineDC {
     fill: none;
@@ -67,7 +71,7 @@ stroke-width: 2px;
 }
 
 .node {
-  fill: #518cca;
+  fill: white;
   stroke: darkgray;
   stroke-width: 2px;
 }
@@ -115,20 +119,26 @@ div.tooltip {
 code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
 */
 .box {
-  margin-top: 150px;
-  margin-bottom: 150px;
-  padding: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 1200px;
+  max-height: 650px;
+  padding: 50px;
   background: #fff;
   border: solid black;
   border-color: black;
   border-width: 3px 3px 5px 5px;
-  border-radius: 4% 95% 2% 95%/95% 4% 92% 5%;
+  border-radius: 4% 20% 2% 95%/95% 4% 92% 2%;
   /* transform: rotate(-2deg);*/
 }
 
 .box2 {
   border-width: 5px 3px 4px 4px;
   border-radius: 8% 4% 97% 5%/4% 50% 3% 1%;
+}
+
+.white {
+  background-color: white;
 }
 
 html {
@@ -161,4 +171,15 @@ html {
 .arrow {
   stroke: black;
   fill: none;
+}
+
+/* character colors */
+.iron-man {
+  color: #E30022;
+}
+.black-widow {
+  color: #000000;
+}
+.hulk {
+  color: #A2CD48;
 }

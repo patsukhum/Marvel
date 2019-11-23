@@ -58,31 +58,6 @@ Matrix.prototype.initVis = function() {
       8: baseDir+"magic.svg",
       9: baseDir+"chemistry.svg"
   };
-  var iconDir = 'img/characters/';
-  vis.svgCharactersMapping = {
-      0: iconDir+"ironman.svg",
-    1: iconDir+"captainamerica.svg",
-    2: iconDir+"thor.svg",
-    3: iconDir+"blackwidow.svg",
-    4: iconDir+"hulk.svg",
-    5: iconDir+"hawkeye.svg",
-    6: iconDir+"antman.svg",
-    7: iconDir+"vision.svg",
-    8: iconDir+"scarletwitch.svg",
-    9: iconDir+"falcon.svg",
-    10: iconDir+"starlord.svg",
-    11: iconDir+"rocket.svg",
-    12: iconDir+"groot.svg",
-    13: iconDir+"doctorstrange.svg",
-    14: iconDir+"gamora.svg",
-    15: iconDir+"drax.svg",
-    16: iconDir+"nickfury.svg",
-    17: iconDir+"spiderman.svg",
-    18: iconDir+"blackpanther.svg",
-    19: iconDir+"captainmarvel.svg",
-    20: iconDir+"thanos.svg",
-    21: iconDir+"loki.svg",
-  }
 
   vis.wrangleData();
 };
@@ -138,8 +113,8 @@ Matrix.prototype.updateVis = function() {
   //column character icons
   vis.matrixData.forEach(function(d,j){
     vis.svg.append("image")
-        .attr('xlink:href', (d) => {
-          return vis.svgCharactersMapping[j];
+        .attr('xlink:href', () => {
+          return svgCharactersMapping[j];
         })
         .attr("x", vis.margin.left + 40 * j + 40)
         .attr("y", vis.margin.top)

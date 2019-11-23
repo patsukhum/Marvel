@@ -43,3 +43,56 @@ function wrap(text, width) {
     }
   });
 }
+
+
+var heroColors = {
+  avengers: 'rgba(85,46,137,0.35)',
+  guardians: 'rgba(54,159,77,0.23)',
+  black_panther: 'rgba(12,11,19,0.24)',
+  captain_america: 'rgba(0,0,255, 0.25)',
+  thor: 'rgba(3,173,233,0.14)',
+  iron_man: 'rgba(227,0,34,0.18)',
+  hulk: 'rgba(162,205,72,0.18)',
+  captain_marvel: 'rgba(243,212,3,0.24)',
+  doctor_strange: 'rgba(202,116,27,0.29)',
+  ant_man: 'rgba(94,102,116,0.34)',
+  spider_man: 'rgba(126,31,39,0.25)',
+  black_widow: 'rgba(0,0,0,0.19)'
+};
+
+var iconDir = 'img/characters/';
+var svgCharactersMapping = {
+  0: iconDir+"ironman.svg",
+  1: iconDir+"captainamerica.svg",
+  2: iconDir+"thor.svg",
+  3: iconDir+"blackwidow.svg",
+  4: iconDir+"hulk.svg",
+  5: iconDir+"hawkeye.svg",
+  6: iconDir+"antman.svg",
+  7: iconDir+"vision.svg",
+  8: iconDir+"scarletwitch.svg",
+  9: iconDir+"falcon.svg",
+  10: iconDir+"starlord.svg",
+  11: iconDir+"rocket.svg",
+  12: iconDir+"groot.svg",
+  13: iconDir+"doctorstrange.svg",
+  14: iconDir+"gamora.svg",
+  15: iconDir+"drax.svg",
+  16: iconDir+"nickfury.svg",
+  17: iconDir+"spiderman.svg",
+  18: iconDir+"blackpanther.svg",
+  19: iconDir+"captainmarvel.svg",
+  20: iconDir+"thanos.svg",
+  21: iconDir+"loki.svg",
+};
+
+function getSvgIcon(charName) {
+  var iconName = charName.toLowerCase().replace(/[\s\-]/g, '');
+  replacements = {
+    rocketraccoon: "rocket",
+    draxthedestroyer: "drax"
+  };
+  console.log(iconName);
+  iconName = replacements[iconName] || iconName;
+  return iconDir + iconName + '.svg';
+}

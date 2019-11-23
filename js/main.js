@@ -1,3 +1,9 @@
+// Globals
+var plotVis,
+    linechartVis,
+    networkIntroVis,
+    networkVis;
+
 // //create Vis1:
 queue()
  .defer(d3.csv, 'data/clean/genre_revenue.csv')
@@ -13,10 +19,9 @@ queue()
     .await(createLineChartVis);
 
 function createLineChartVis(error, data) {
-  console.log(data);
-
-  var linechartVis = new LineChartVis('linechart-vis', data);
+  linechartVis = new LineChartVis('linechart-vis', data);
 }
+
 
 // create Vis2.5: map chart
 queue()
@@ -32,23 +37,42 @@ function createMapVis(error, data1, data2, data3) {
 
 // create Vis2.7: movie flow chart
 d3.csv('data/clean/mcu_plot_flow.csv', function(data) {
-
-
-  var plotVis = new PlotFlowVis('plot-flow-vis', data);
+  plotVis = new PlotFlowVis('plot-flow-vis', data);
 });
 
 // create Vis3: network chart
 queue()
     .defer(d3.json, 'data/clean/all_character_nodes_centrality.json')
     .defer(d3.json, 'data/clean/all_character_links.json')
-    .await(createNetworkVis);
+    .await((error, nodes, edges) => { createNetworkVis(error, nodes, edges); createNetworkIntroVis(error, nodes, edges); });
 
 function createNetworkVis(error, nodes, edges) {
-  console.log(nodes);
-  console.log(edges);
   var data = {'nodes': nodes, 'edges': edges};
-  var networkVis = new NetworkVis('network-vis', data);
+  var config = {
+    minNodeRadius: 10,
+    maxNodeRadius: 30,
+    strength: -400,
+    distance: 100
+  };
+  networkVis = new NetworkVis('network-vis', data, config);
 }
+function createNetworkIntroVis(error, nodes, edges) {
+  var namesToKeep = ['Iron Man', 'Hulk'];
+  var nodesFilt = nodes.filter(d => namesToKeep.includes(d.name));
+  var edgesFilt = edges.filter(d => namesToKeep.includes(d.source.name) && namesToKeep.includes(d.target.name));
+  var data = {'nodes': nodesFilt, 'edges': edgesFilt};
+  var config = {
+    height: 300,
+    margin: { top: 10, bottom: 10, left: 10, right: 10},
+    strength: -50,
+    distance: 100,
+    minNodeRadius: 20,
+    maxNodeRadius: 20,
+    hideTooltip: true
+  };
+  networkIntroVis = new NetworkVis('network-intro-vis', data, config);
+}
+
 
 //create Vis4: matrix
 queue()
