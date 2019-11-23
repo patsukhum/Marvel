@@ -50,7 +50,6 @@ PlotFlowVis.prototype.initVis = function() {
   });
   vis.data.forEach(d => {
     d.yearTotal = yearCounts[d.year];
-    d.yearFrac = (d.yearCount + 1) / d.yearTotal;
     d.allFrac = (d.yearCount + 1) / d3.max(Object.values(yearCounts));
   });
 
@@ -65,6 +64,21 @@ PlotFlowVis.prototype.initVis = function() {
       });
     }
   }).flat().filter(d => d !== undefined);
+
+  // Arrowhead markers
+  // Per-type markers, as they don't inherit styles.
+  vis.svg.append("defs")
+      .append("marker")
+      .attr("id", "arrowhead")
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 1)
+      .attr("refY", 0)
+      .attr("markerWidth", 6)
+      .attr("markerHeight", 6)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M0,-5L10,0L0,5");
+
 
   // Set up scales
   vis.x = d3.scalePoint()
@@ -101,7 +115,9 @@ PlotFlowVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Nothing for now...
-  vis.displayData = vis.data;
+  vis.displayData = vis.data.sort((a, b) => {
+    return (a.year * 100 + a.yearCount) - (b.year * 100 + b.yearCount);
+  });
 
   // vis.drawVis()
 
@@ -120,7 +136,6 @@ PlotFlowVis.prototype.drawVis = function() {
         .attr('height', vis.rectHeight)
         .attr('width', vis.rectWidth)
         .attr('opacity', 0)
-        .style('stroke', d => vis.color(d.group))
       .transition()
         .on('start', function() {
           d3.select(this).style('opacity', 0);
@@ -256,13 +271,14 @@ PlotFlowVis.prototype.drawArrow = function(elem, vis) {
   elem.attr('d', d => {
     return vis.line({
       source: [vis.x(d[0].x) + vis.rectWidth / 2, vis.y(d[0].y)],
-      target: [vis.x(d[1].x) - vis.rectWidth / 2, vis.y(d[1].y)]
+      target: [vis.x(d[1].x) - vis.rectWidth / 2 - 5, vis.y(d[1].y)]
     });
-  });
+  })
+      .attr('marker-end', 'url(#arrowhead)');
 };
 
-PlotFlowVis.prototype.delayEnter = function(d) {
-  return (d.year.getFullYear() - 2008) * 500 + 200 * d.yearCount;
+PlotFlowVis.prototype.delayEnter = function(d, i) {
+  return (i * 300);
 };
 PlotFlowVis.prototype.updateScales = function() {
   var vis = this;

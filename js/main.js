@@ -1,6 +1,8 @@
 // Globals
-var plotVis;
-var linechartVis;
+var plotVis,
+    linechartVis,
+    networkIntroVis,
+    networkVis;
 
 // //create Vis1:
 queue()
@@ -51,14 +53,29 @@ d3.csv('data/clean/mcu_plot_flow.csv', function(data) {
 queue()
     .defer(d3.json, 'data/clean/all_character_nodes_centrality.json')
     .defer(d3.json, 'data/clean/all_character_links.json')
-    .await(createNetworkVis);
+    .await((error, nodes, edges) => { createNetworkVis(error, nodes, edges); createNetworkIntroVis(error, nodes, edges); });
 
 function createNetworkVis(error, nodes, edges) {
-  console.log(nodes);
-  console.log(edges);
   var data = {'nodes': nodes, 'edges': edges};
-  var networkVis = new NetworkVis('network-vis', data);
+  networkVis = new NetworkVis('network-vis', data, {});
 }
+function createNetworkIntroVis(error, nodes, edges) {
+  var namesToKeep = ['Iron Man', 'Hulk'];
+  var nodesFilt = nodes.filter(d => namesToKeep.includes(d.name));
+  var edgesFilt = edges.filter(d => namesToKeep.includes(d.source.name) && namesToKeep.includes(d.target.name));
+  var data = {'nodes': nodesFilt, 'edges': edgesFilt};
+  var config = {
+    height: 300,
+    margin: { top: 10, bottom: 10, left: 10, right: 10},
+    strength: -50,
+    distance: 100,
+    minNodeRadius: 20,
+    maxNodeRadius: 20,
+    hideTooltip: true
+  };
+  networkIntroVis = new NetworkVis('network-intro-vis', data, config);
+}
+
 
 //create Vis4: matrix
 queue()
@@ -67,7 +84,7 @@ queue()
     .await(createMatrixVis);
 
 function createMatrixVis(error, matrix_data, all_characters_data) {
-  console.log(matrix_data)
-  console.log(all_characters_data)
+  console.log(matrix_data);
+  console.log(all_characters_data);
   var matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };
