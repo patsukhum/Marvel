@@ -48,7 +48,13 @@ queue()
 
 function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
-  networkVis = new NetworkVis('network-vis', data, {});
+  var config = {
+    minNodeRadius: 10,
+    maxNodeRadius: 30,
+    strength: -400,
+    distance: 100
+  };
+  networkVis = new NetworkVis('network-vis', data, config);
 }
 function createNetworkIntroVis(error, nodes, edges) {
   var namesToKeep = ['Iron Man', 'Hulk'];

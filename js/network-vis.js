@@ -104,19 +104,26 @@ NetworkVis.prototype.updateVis = function() {
         .style('stroke-width', d => vis.scaleEdgeWidth(d.count) + 'px')
         .style('opacity', d => vis.scaleEdgeOpacity(d.count));
 
-  vis.nodes = vis.gNodes.selectAll('.node')
-      .data(vis.displayData.nodes)
-      .enter().append('circle')
-        .attr('class', 'node')
-        .attr('r', d => vis.scaleNodeRadius(d.centrality))
-        .on('mouseover', d => vis.nodeMouseover(d, vis))
-        .on('mouseout', d => vis.nodeMouseout(d, vis))
-        .on('mousemove', d => vis.nodeMousemove(d, vis));
+  vis.nodes = vis.gNodes.selectAll('g.node')
+      .data(vis.displayData.nodes);
 
-  vis.nodes.append('image')
+  var nodeEnter = vis.nodes.enter()
+      .append('g')
+      .attr('class', 'node')
+      .call(vis.dragNode)
+      .on('mouseover', d => vis.nodeMouseover(d, vis))
+      .on('mouseout', d => vis.nodeMouseout(d, vis))
+      .on('mousemove', d => vis.nodeMousemove(d, vis));
+
+  nodeEnter.append('circle')
+      .attr('r', d => vis.scaleNodeRadius(d.centrality));
+
+  nodeEnter.append('image')
       .attr('xlink:href', d => getSvgIcon(d.name))
-      .attr('width', 40)
-      .attr('height', 40);
+      .attr('width', d => 2 * vis.scaleNodeRadius(d.centrality))
+      .attr('height', d => 2 * vis.scaleNodeRadius(d.centrality))
+      .attr('x', d => -vis.scaleNodeRadius(d.centrality))
+      .attr('y', d => -vis.scaleNodeRadius(d.centrality) * 0.8);
 
   vis.force.on('tick', function() {
     vis.edges.attr('x1', d => d.source.x)
@@ -124,8 +131,7 @@ NetworkVis.prototype.updateVis = function() {
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y);
 
-    vis.nodes.attr('cx', d => d.x)
-        .attr('cy', d => d.y);
+    nodeEnter.attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
   });
 
   vis.nodes.call(vis.dragNode);

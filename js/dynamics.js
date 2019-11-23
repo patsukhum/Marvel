@@ -23,9 +23,9 @@ var myFullpage = new fullpage('#fullpage', {
 // ********** Plot plot ********** //
 function drawPlotVis() {
   $(`#${secId} .caption span`).each(function(index) {
-    $(this).delay(1000 + 3000 * (index)).fadeTo(2000, 1);
+    $(this).delay(1000 + 2000 * (index)).fadeTo(1000, 1);
   });
-  $(`#${secId} .caption button`).delay(6000).fadeTo(1000, 1);
+  $(`#${secId} .caption button`).delay(4000).fadeTo(1000, 1);
   if (!plotVis.drawn) {
     plotVis.drawVis();
   }
