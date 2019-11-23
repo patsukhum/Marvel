@@ -3,11 +3,11 @@ Iron Man,Iron Man 2,2008,iron_man,0,0
 Iron Man 2,The Avengers,2010,iron_man,1,0
 Iron Man 3,Avengers: Age of Ultron,2015,iron_man,3,0
 The Incredible Hulk,The Avengers,2008,hulk,1,3
-Thor,The Avengers,2011,thor,1,1
-Thor: The Dark World,Avengers: Age of Ultron,2013,thor,3,1
+Thor,The Avengers,2011,thor,1,2
+Thor: The Dark World,Avengers: Age of Ultron,2013,thor,3,2
 Thor: Ragnarok,Avengers: Infinity War,2017,thor,7,2
-Captain America: The First Avenger,The Avengers,2011,captain_america,1,2
-Captain America: The Winter Soldier,Avengers: Age of Ultron,2014,captain_america,3,2
+Captain America: The First Avenger,The Avengers,2011,captain_america,1,1
+Captain America: The Winter Soldier,Avengers: Age of Ultron,2014,captain_america,3,1
 Captain America: Civil War,"Spider-Man: Homecoming, Black Panther",2018,captain_america,6,1
 The Avengers,"Iron Man 3, Thor: The Dark World, Captain America: The Winter Soldier",2012,avengers,2,1
 Avengers: Age of Ultron,"Thor: Ragnarok, Ant-Man, Captain America: Civil War",2015,avengers,4,1
@@ -16,9 +16,9 @@ Avengers: Endgame,,2019,avengers,10,1
 Guardians of the Galaxy,Guardians of the Galaxy Vol. 2,2014,guardians,6,4
 Guardians of the Galaxy Vol. 2,Avengers: Infinity War,2018,guardians,7,4
 Ant-Man,Captain America: Civil War,2015,ant_man,5,0
-Ant-Man and the Wasp,Avengers: Endgame,2018,ant_man,9,2
+Ant-Man and the Wasp,Avengers: Endgame,2018,ant_man,9,0
 Doctor Strange,Thor: Ragnarok,2016,doctor_strange,6,3
-Spider-Man: Homecoming,Avengers: Infinity War,2018,spider_man,7,1
+Spider-Man: Homecoming,Avengers: Infinity War,2018,spider_man,7,0
 Spider-Man: Far from Home,,2019,spider_man,10,0
-Black Panther,Avengers: Infinity War,2018,black_panther,7,0
-Captain Marvel,Avengers: Endgame,2019,captain_marvel,9,0
+Black Panther,Avengers: Infinity War,2018,black_panther,7,1
+Captain Marvel,Avengers: Endgame,2019,captain_marvel,9,2

@@ -135,13 +135,14 @@ PlotFlowVis.prototype.drawVis = function() {
         .attr('class', 'rect-film')
         .attr('height', vis.rectHeight)
         .attr('width', vis.rectWidth)
-        .attr('opacity', 0)
+        .style('opacity', 0)
+        .style('fill', d => heroColors[d.group])
       .transition()
         .on('start', function() {
           d3.select(this).style('opacity', 0);
         })
         .delay(vis.delayEnter)
-        .duration(400)
+        .duration(300)
         .style('opacity', 1)
       .selection()
         .call(vis.drawRect, vis);
@@ -159,7 +160,7 @@ PlotFlowVis.prototype.drawVis = function() {
           d3.select(this).style('opacity', 0);
         })
         .delay(vis.delayEnter)
-        .duration(400)
+        .duration(300)
         .style('opacity', 1)
       .selection()
         .call(vis.drawLab, vis)
@@ -278,7 +279,7 @@ PlotFlowVis.prototype.drawArrow = function(elem, vis) {
 };
 
 PlotFlowVis.prototype.delayEnter = function(d, i) {
-  return (i * 300);
+  return (i * 200);
 };
 PlotFlowVis.prototype.updateScales = function() {
   var vis = this;

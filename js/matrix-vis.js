@@ -138,7 +138,7 @@ Matrix.prototype.updateVis = function() {
   //column character icons
   vis.matrixData.forEach(function(d,j){
     vis.svg.append("image")
-        .attr('xlink:href', (d) => {
+        .attr('xlink:href', () => {
           return svgCharactersMapping[j];
         })
         .attr("x", vis.margin.left + 40 * j + 40)
