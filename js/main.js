@@ -22,15 +22,6 @@ function createLineChartVis(error, data) {
   linechartVis = new LineChartVis('linechart-vis', data);
 }
 
-// When the button is changed, run the updateChart function
-// code help from: https://www.d3-graph-gallery.com/graph/line_select.html
-d3.select("#linechart-selectbox").on("change", function(d) {
-  // recover the option that has been chosen
-  var linechartSelection = d3.select(this).property("value")
-  console.log(linechartSelection)
-  // run the updateChart function with this selected option
-  linechartVis.updateVis(linechartSelection);
-})
 
 // create Vis2.5: map chart
 queue()

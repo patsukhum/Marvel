@@ -39,18 +39,6 @@ LineChartVis.prototype.initVis = function() {
   vis.y = d3.scaleLinear().range([vis.height, 0]);
 
 
-  // add custom legend
-  // code help from: https://www.d3-graph-gallery.com/graph/custom_legend.html
-
-  var legend = this.svg.append("g").attr("class","legend")
-        .attr("transform","translate(0,50)");
-  legend.append("circle").attr("cx",50).attr("cy",20).attr("r", 6).style("fill", "#e23636")
-  legend.append("circle").attr("cx",50).attr("cy",50).attr("r", 6).style("fill", "#0476F2")
-  legend.append("text").attr("x", 60).attr("y", 20).text("Marvel").style("font-size", "15px").attr("alignment-baseline","middle")
-  legend.append("text").attr("x", 60).attr("y", 50).text("DC Comics").style("font-size", "15px").attr("alignment-baseline","middle")
-
-
-
   vis.wrangleData();
 };
 
@@ -124,16 +112,14 @@ LineChartVis.prototype.wrangleData = function() {
 
   console.log(vis.displayData)
 
-  vis.updateVis();
+  //vis.updateVis();
 };
 
 
-LineChartVis.prototype.updateVis = function(selection=null) {
+LineChartVis.prototype.updateVis = function() {
   var vis = this;
 
-  if(!selection){
-      selection="boxOfficeWorldwide";
-  }
+    selection="boxOfficeWorldwide";
 
   // define the lines
   vis.lineDC = d3.line()
@@ -155,16 +141,10 @@ LineChartVis.prototype.updateVis = function(selection=null) {
     })
   ]);
 
-
-  // var DCPath = vis.svg.selectAll(".lineDC").data([vis.displayData]);
-
-  // DCPath.enter().append("path").attr("class", "lineDC linechart").attr("d", vis.lineDC);
-
-  // //DCPath.transition().duration().attr("d", vis.lineDC).attr("class", "lineDC linechart");
-  // DCPath.exit().remove();
+  
 
 
-  this.svg.selectAll(".linechart").remove();
+  //  this.svg.selectAll(".linechart").remove();
 
   // Add DC line path.
   var DCPath = vis.svg.append("path")
@@ -177,10 +157,31 @@ LineChartVis.prototype.updateVis = function(selection=null) {
       .data([this.displayData])
       .attr("class", "lineMarvel linechart")
       .attr("d", vis.lineMarvel);
-
   
 
-  vis.svg.selectAll(".axis").remove();
+  // drawing line chart effect help from: http://bl.ocks.org/markmarkoh/8700606
+  /* Add 'curtain' rectangle to hide entire graph */
+  var curtain = vis.svg.append('rect')
+  .attr('x', -1 * vis.width)
+  .attr('y', -1 * vis.height)
+  .attr('height', vis.height)
+  .attr('width', vis.width)
+  .attr('class', 'curtain')
+  .attr('transform', 'rotate(180)')
+  .style('fill', '#ffffff')
+
+  /* Create a shared transition for anything we're animating */
+  var t = vis.svg.transition()
+    .delay(750)
+    .duration(4000)
+    .ease(d3.easeLinear)
+
+  t.select('rect.curtain')
+    .attr('width', 0);
+  
+
+
+  //vis.svg.selectAll(".axis").remove();
 
   // axis rotation code help from: https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf
   // Add the X Axis
@@ -210,6 +211,15 @@ LineChartVis.prototype.updateVis = function(selection=null) {
       .style("fill","black")
       .style("text-anchor","center");
 
+  // add custom legend
+  // code help from: https://www.d3-graph-gallery.com/graph/custom_legend.html
+
+  var legend = this.svg.append("g").attr("class","legend")
+        .attr("transform","translate(0,50)");
+  legend.append("circle").attr("cx",50).attr("cy",20).attr("r", 6).style("fill", "#e23636")
+  legend.append("circle").attr("cx",50).attr("cy",50).attr("r", 6).style("fill", "#0476F2")
+  legend.append("text").attr("x", 60).attr("y", 20).text("Marvel").style("font-size", "15px").attr("alignment-baseline","middle")
+  legend.append("text").attr("x", 60).attr("y", 50).text("DC Comics").style("font-size", "15px").attr("alignment-baseline","middle")
 
 
 };
