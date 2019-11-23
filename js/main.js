@@ -49,7 +49,13 @@ queue()
 
 function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
-  networkVis = new NetworkVis('network-vis', data, {});
+  var config = {
+    minNodeRadius: 10,
+    maxNodeRadius: 30,
+    strength: -400,
+    distance: 100
+  };
+  networkVis = new NetworkVis('network-vis', data, config);
 }
 function createNetworkIntroVis(error, nodes, edges) {
   var namesToKeep = ['Iron Man', 'Hulk'];
@@ -76,7 +82,13 @@ queue()
     .await(createMatrixVis);
 
 function createMatrixVis(error, matrix_data, all_characters_data) {
-  console.log(matrix_data);
-  console.log(all_characters_data);
-  var matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
+  console.log(matrix_data)
+  console.log(all_characters_data)
+  matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };
+
+d3.select('#sort').on('change', function() {
+  choice = d3.select('#sort').property('value');
+  console.log(choice);
+  matrixVis.sortMatrix();
+})

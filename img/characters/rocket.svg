@@ -3,7 +3,6 @@
         #contour {
             fill: black;
             stroke: #808080;
-            fill-rule: nonzero;
         }
     </style>
     <g>

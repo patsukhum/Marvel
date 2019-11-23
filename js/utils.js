@@ -17,6 +17,7 @@ function makeSvg(vis, chartType) {
 // for linechart
 var parseTime = d3.timeParse("%Y");
 formatValue = d3.format(".2s");
+formatComma = d3.format(",") // formating help from http://bl.ocks.org/mstanaland/6106487
 
 // For plot flow chart
 function wrap(text, width) {
@@ -46,18 +47,18 @@ function wrap(text, width) {
 
 
 var heroColors = {
-  avengers: '2C2A89',
-  guardians: '369F4D',
-  black_panther: '0C0B13',
-  captain_america: '000042',
-  thor: '03ADE9',
-  iron_man: 'E30022',
-  hulk: 'A2CD48',
-  captain_marvel: 'F3D403',
-  doctor_strange: '454253',
-  ant_man: '5E6674',
-  spider_man: '7E1F27',
-  black_widow: '000000'
+  avengers: 'rgba(85,46,137,0.35)',
+  guardians: 'rgba(54,159,77,0.23)',
+  black_panther: 'rgba(12,11,19,0.24)',
+  captain_america: 'rgba(0,0,255, 0.25)',
+  thor: 'rgba(3,173,233,0.14)',
+  iron_man: 'rgba(227,0,34,0.18)',
+  hulk: 'rgba(162,205,72,0.18)',
+  captain_marvel: 'rgba(243,212,3,0.24)',
+  doctor_strange: 'rgba(202,116,27,0.29)',
+  ant_man: 'rgba(94,102,116,0.34)',
+  spider_man: 'rgba(126,31,39,0.25)',
+  black_widow: 'rgba(0,0,0,0.19)'
 };
 
 var iconDir = 'img/characters/';
@@ -85,3 +86,17 @@ var svgCharactersMapping = {
   20: iconDir+"thanos.svg",
   21: iconDir+"loki.svg",
 };
+
+function getSvgIcon(charName) {
+  var iconName = charName.toLowerCase().replace(/[\s\-_]/g, '');
+  replacements = {
+    rocketraccoon: "rocket",
+    draxthedestroyer: "drax"
+  };
+  iconName = replacements[iconName] || iconName;
+  return iconDir + iconName + '.svg';
+}
+
+function unique(value, index, self) {
+  return self.indexOf(value) === index;
+}
