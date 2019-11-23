@@ -167,3 +167,13 @@ html {
   fill: none;
 }
 
+/* character colors */
+.iron-man {
+  color: #E30022;
+}
+.black-widow {
+  color: #000000;
+}
+.hulk {
+  color: #A2CD48;
+}

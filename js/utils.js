@@ -56,5 +56,6 @@ var heroColors = {
   captain_marvel: 'F3D403',
   doctor_strange: '454253',
   ant_man: '5E6674',
-  spider_man: '7E1F27'
+  spider_man: '7E1F27',
+  black_widow: '000000'
 };
