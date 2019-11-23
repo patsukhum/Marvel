@@ -251,3 +251,9 @@ fill: #e23636;
   top: 100%;
   left: 0;
 }
+
+/* Image stuff */
+.img-max-height {
+  height: 100%;
+  width: auto;
+}

@@ -281,9 +281,21 @@ PlotFlowVis.prototype.updateVis = function() {
 
   if (!vis.branching) {
     vis.xAxis.scale(vis.x);
-    vis.gX.call(vis.xAxis);
+    vis.gX.call(vis.xAxis)
+        .style('opacity', 0)
+        .transition()
+        .on('start', function() {
+          d3.select(this).style('opacity', 0)
+        })
+        .duration(1000)
+        .style('opacity', 1);
   } else {
     vis.gX.selectAll('.tick')
+        .transition()
+        .duration(1000)
+        .style('opacity', 0)
+        .remove();
+    vis.gX.select('path')
         .transition()
         .duration(1000)
         .style('opacity', 0)
