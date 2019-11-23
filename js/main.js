@@ -52,7 +52,7 @@ function createNetworkVis(error, nodes, edges) {
     minNodeRadius: 10,
     maxNodeRadius: 30,
     strength: -400,
-    distance: 100
+    distance: 150
   };
   networkVis = new NetworkVis('network-vis', data, config);
 }

@@ -100,3 +100,7 @@ function getSvgIcon(charName) {
 function unique(value, index, self) {
   return self.indexOf(value) === index;
 }
+
+function clamp(n, min, max) {
+  return Math.min(Math.max(n, min), max);
+}

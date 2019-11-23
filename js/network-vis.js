@@ -95,7 +95,8 @@ NetworkVis.prototype.updateVis = function() {
           .strength(link => link.count / 100))
       .force('center', d3.forceCenter()
           .x(vis.width / 2)
-          .y(vis.height / 2));
+          .y(vis.height / 2))
+      .alphaDecay(0);
 
   vis.edges = vis.gEdges.selectAll('.edge')
       .data(vis.displayData.edges)
@@ -126,12 +127,12 @@ NetworkVis.prototype.updateVis = function() {
       .attr('y', d => -vis.scaleNodeRadius(d.centrality) * 0.8);
 
   vis.force.on('tick', function() {
-    vis.edges.attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
+    vis.edges.attr('x1', d => clamp(d.source.x, 0, vis.width))
+        .attr('y1', d => clamp(d.source.y, 0, vis.height))
+        .attr('x2', d => clamp(d.target.x, 0, vis.width))
+        .attr('y2', d => clamp(d.target.y, 0, vis.height));
 
-    nodeEnter.attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
+    nodeEnter.attr('transform', d => 'translate(' + clamp(d.x, 0, vis.width) + ',' + clamp(d.y, 0, vis.height) + ')');
   });
 
   vis.nodes.call(vis.dragNode);
