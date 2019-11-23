@@ -12,6 +12,8 @@ PlotFlowVis = function(_parentElement, _data) {
   this.data = _data;
   this.displayData = _data;
   this.branching = false;
+  this.drawn = false;
+  this.toggledBefore = false;
   this.selected = {x: 'year', y: 'allFrac'};
 
   this.initVis();
@@ -26,7 +28,7 @@ PlotFlowVis.prototype.initVis = function() {
     'right': 40
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.23;
+  vis.height = vis.width * 0.30;
 
   vis.svg = makeSvg(vis, 'plot-flow-vis');
 
@@ -99,7 +101,7 @@ PlotFlowVis.prototype.wrangleData = function() {
   // Nothing for now...
   vis.displayData = vis.data;
 
-  vis.drawVis()
+  // vis.drawVis()
 
 };
 PlotFlowVis.prototype.drawVis = function() {
@@ -150,6 +152,7 @@ PlotFlowVis.prototype.drawVis = function() {
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
 
+  vis.drawn = true;
 };
 
 
@@ -157,6 +160,7 @@ PlotFlowVis.prototype.toggleBranching = function() {
   var vis = this;
 
   vis.branching = !vis.branching;
+
   if (vis.branching) {
     vis.selected.x = 'x';
     vis.selected.y = 'y';
@@ -172,13 +176,17 @@ PlotFlowVis.prototype.toggleBranching = function() {
 
   vis.updateScales();
 
+  var delay = (d, i) => vis.branching ? i * 50 : 200 + i * 50;
+
   films.transition()
+      .delay(delay)
       .duration(200)
       .call(vis.drawRect, vis);
 
   titles.transition()
+      .delay(delay)
       .duration(200)
-      .call(vis.drawLab, vis);
+      .call(vis.drawLab, vis, delay);
 
   // Drawing arrows
   // TODO: Get the arrows to fade in (ideally draw themselves using attrTween)
@@ -191,15 +199,13 @@ PlotFlowVis.prototype.toggleBranching = function() {
           .style('opacity', 0)
           .call(vis.drawArrow, vis)
         .transition()
-          .on('start', function() {
-            d3.select(this).style('opacity', 0)
-          })
-          .delay(d => 200 + d[0].year * 100)
+          .delay(d => vis.toggledBefore ? 1000 : 200 + d[0].x * 400 + d[0].y * 100)
           .duration(200)
           .style('opacity', 1)
   } else {
     vis.gArrows.selectAll('path')
         .transition()
+        .duration(200)
         .style('opacity', 0)
         .remove();
   }
@@ -216,16 +222,25 @@ PlotFlowVis.prototype.toggleBranching = function() {
         .style('opacity', 0)
         .remove();
   }
+
+  vis.toggledBefore = true;
 };
 
 PlotFlowVis.prototype.drawRect = function(elem, vis) {
   elem.attr('x', d => vis.x(d[vis.selected.x]) - vis.rectWidth / 2)
       .attr('y', d => vis.y(d[vis.selected.y]) - vis.rectHeight / 2);
 };
-PlotFlowVis.prototype.drawLab = function(elem, vis) {
-  elem.attr('x', function(d) {
+PlotFlowVis.prototype.drawLab = function(elem, vis, delay) {
+  elem.attr('x', function(d, i) {
+    var del;
+    if (delay === undefined) {
+      del = 200;
+    } else {
+      del = delay(d, i);
+    }
     d3.select(this).selectAll('tspan')
         .transition()
+        .delay(del)
         .duration(200)
         .attr('x', vis.x(d[vis.selected.x]))
         .attr('y', vis.y(d[vis.selected.y]));
@@ -244,7 +259,7 @@ PlotFlowVis.prototype.drawArrow = function(elem, vis) {
 };
 
 PlotFlowVis.prototype.delayEnter = function(d) {
-  return (d.year.getFullYear() - 2008) * 1000 + 300 * d.yearCount;
+  return (d.year.getFullYear() - 2008) * 500 + 200 * d.yearCount;
 };
 PlotFlowVis.prototype.updateScales = function() {
   var vis = this;
