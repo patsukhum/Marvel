@@ -1,5 +1,6 @@
 // Globals
 var plotVis,
+    linechartVis,
     networkIntroVis,
     networkVis;
 
@@ -18,10 +19,9 @@ queue()
     .await(createLineChartVis);
 
 function createLineChartVis(error, data) {
-  console.log(data);
-
-  var linechartVis = new LineChartVis('linechart-vis', data);
+  linechartVis = new LineChartVis('linechart-vis', data);
 }
+
 
 // create Vis2.5: map chart
 queue()

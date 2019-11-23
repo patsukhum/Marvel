@@ -7,6 +7,9 @@ var myFullpage = new fullpage('#fullpage', {
   afterLoad: function(origin, destination, direction) {
     secId = destination.item.getAttribute('id');
     switch(secId) {
+      case 'linechart-sec':
+          drawLineChartVis();
+          break;
       case 'plot-flow-sec':
         drawPlotVis();
         break;
@@ -55,4 +58,9 @@ function drawNetworkIntroVis() {
 // ********** Network vis ********** //
 function drawNetworkVis() {
 
+}
+
+// ********** linechart vis ********** //
+function drawLineChartVis() {
+    linechartVis.updateVis();
 }
