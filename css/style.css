@@ -158,7 +158,12 @@ html {
 }
 .film-title {
   fill: black;
-  font-size: 8px;
+  font-size: 9px;
   alignment-baseline: middle;
   text-anchor: middle;
+  font-family: Roboto;
+}
+.arrow {
+  stroke: black;
+  fill: none;
 }

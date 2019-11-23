@@ -11,7 +11,7 @@
 
 Matrix = function(_parentElement, _matrix_data, _all_characters_data) {
   this.parentElement = _parentElement;
-  this.binaryData = [
+  this.originalData = [
     [1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1],
     [1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1],
     [1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1],
@@ -35,6 +35,18 @@ Matrix = function(_parentElement, _matrix_data, _all_characters_data) {
     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
     [0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1]
   ];
+
+  this.binaryData = [[1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0],
+    [1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1],
+    [1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+    [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
+    [1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+    [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+    [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1]]
   this.matrixData = _matrix_data;
   this.allCharactersData = _all_characters_data;
   this.displayData = [];
@@ -47,7 +59,7 @@ Matrix.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 40,
+    'top': 0,
     'bottom': 40,
     'left': 40,
     'right': 40
@@ -67,9 +79,34 @@ Matrix.prototype.initVis = function() {
       6: baseDir+"weapons.svg",
       7: baseDir+"flight.svg",
       8: baseDir+"magic.svg",
-      9: baseDir+"brain.svg",
-      10: baseDir+"brain.svg",
+      9: baseDir+"chemistry.svg",
+      10: baseDir+"male.svg",
   };
+  var iconDir = 'img/characters/';
+  vis.svgCharactersMapping = {
+      0: iconDir+"ironman.svg",
+    1: iconDir+"captainamerica.svg",
+    2: iconDir+"thor.svg",
+    3: iconDir+"blackwidow.svg",
+    4: iconDir+"hulk.svg",
+    5: iconDir+"hawkeye.svg",
+    6: iconDir+"antman.svg",
+    7: iconDir+"vision.svg",
+    8: iconDir+"scarletwitch.svg",
+    9: iconDir+"falcon.svg",
+    10: iconDir+"starlord.svg",
+    11: iconDir+"rocket.svg",
+    12: iconDir+"groot.svg",
+    13: iconDir+"doctorstrange.svg",
+    14: iconDir+"gamora.svg",
+    15: iconDir+"drax.svg",
+    16: iconDir+"nickfury.svg",
+    17: iconDir+"spiderman.svg",
+    18: iconDir+"blackpanther.svg",
+    19: iconDir+"captainmarvel.svg",
+    20: iconDir+"thanos.svg",
+    21: iconDir+"loki.svg",
+  }
 
   vis.wrangleData();
 };
@@ -123,53 +160,66 @@ Matrix.prototype.wrangleData = function() {
 Matrix.prototype.updateVis = function() {
   var vis = this;
 
-  //column labels
-  vis.svg.selectAll("text.col_label")
-    .data(vis.matrixData)
-    .enter()
-    .append("text")
-    .attr("class", "col_label")
-    .attr("x", 0)
-    .attr("y", 0)
-    .text(function(col) {
-      return col.power;
-    })
-    .attr("fill", "black")
-    .style("text-anchor", "start")
-    .attr("font-size", 13)
-    .attr("transform", function(d, index) {
-      return "translate(" + (35 * index + 90) + ",50)rotate(-770)"
-    });
+  //column character icons
+  vis.matrixData.forEach(function(d,j){
+    vis.svg.append("image")
+        .attr('xlink:href', (d) => {
+          return vis.svgCharactersMapping[j];
+        })
+        .attr("x", vis.margin.left + 40 * j + 40)
+        .attr("y", vis.margin.top)
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("opacity", 1)
+  });
 
-  //row labels
+  //row power labels
   vis.svg.selectAll("text.row_label")
     .data(vis.matrixData)
     .enter()
     .append("text")
     .attr("class", "row_label")
-    .attr("x", 70)
+    // .attr("x", -40)
+    .attr("x", vis.margin.left +30)
     .attr("y", function(d, index) {
-      return 40 * index + 75;
+      return 30 * index + 70;
     })
-    .text(function(row) {
-      return row.name;
+    .text(function(col) {
+      return col.power;
     })
-    .attr("fill", "black")
-    .attr("text-anchor", "end")
+    .style("text-anchor", "end")
     .attr("font-size", 13);
+
+
+  // //row labels
+  // vis.svg.selectAll("text.row_label")
+  //   .data(vis.matrixData)
+  //   .enter()
+  //   .append("text")
+  //   .attr("class", "row_label")
+  //   .attr("x", 70)
+  //   .attr("y", function(d, index) {
+  //     return 40 * index + 75;
+  //   })
+  //   .text(function(row) {
+  //     return row.name;
+  //   })
+  //   .attr("fill", "black")
+  //   .attr("text-anchor", "end")
+  //   .attr("font-size", 13);
 
   //code for regular rectangles
   vis.binaryData.forEach(function(row, i) {
     //group to each row
     vis.rgroup = vis.svg.append("g")
       .attr("class", "matrix_row")
-      .attr("transform", "translate(" + vis.margin.left +
-        "," + vis.margin.top * (i - 0.4) + ")");
+      .attr("transform", "translate(" + (vis.margin.left + 10) +
+        "," + (vis.margin.top + 31*i + 10) + ")");
 
     //add rect to each row
     row.forEach(function(element, j) {
       vis.rgroup.append("rect")
-        .attr("x", vis.margin.left + 35 * j)
+        .attr("x", vis.margin.left + 40 * j)
         .attr("y", vis.margin.top + 35)
         .attr("width", 25)
         .attr("height", 25)
@@ -184,20 +234,20 @@ Matrix.prototype.updateVis = function() {
         })
         .attr("fill", function(d) {
           return "lightgrey"
-
         });
     });
 
     //add SVG to each row
     row.forEach(function(element, j) {
+      // console.log(j)
       vis.rgroup.append("image")
         .attr('xlink:href', (d) => {
-          return vis.svgImagesMapping[j];
+          return vis.svgImagesMapping[i];
         })
-        .attr("x", vis.margin.left + 35 * j)
+        .attr("x", vis.margin.left + 40 * j -5)
         .attr("y", vis.margin.top + 35)
-        .attr("width", 25)
-        .attr("height", 25)
+        .attr("width", 35)
+        .attr("height", 35)
         .attr("opacity", (d) => {
           if (element === 1) {
             return 1;
@@ -205,15 +255,6 @@ Matrix.prototype.updateVis = function() {
             return 0;
           }
         })
-        .attr("fill", function(d) {
-          // console.log(d);
-          if (element == 1) {
-            return "#e23636"
-          } else {
-            return "lightgrey"
-          }
-
-        });
     });
   });
 };
