@@ -21,7 +21,7 @@ NetworkVis.prototype.initVis = function() {
 
   vis.margin = vis.config.margin || {'top': 40, 'bottom': 80, 'left': 40, 'right': 40};
   vis.width = vis.config.width || $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.config.height || vis.width * 0.75;
+  vis.height = vis.config.height || vis.width * 0.7;
 
   // Defining parameters for force simulation
   vis.strength = vis.config.strength || -300;
