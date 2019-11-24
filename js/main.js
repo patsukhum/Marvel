@@ -67,7 +67,7 @@ function createNetworkIntroVis(error, nodes, edges) {
   var edgesFilt = edges.filter(d => namesToKeep.includes(d.source.name) && namesToKeep.includes(d.target.name));
   var data = {'nodes': nodesFilt, 'edges': edgesFilt};
   var config = {
-    height: 400,
+    height: 370,
     margin: { top: 10, bottom: 10, left: 10, right: 10},
     strength: -100,
     distance: 120,
