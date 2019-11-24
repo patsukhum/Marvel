@@ -59,6 +59,11 @@ Matrix.prototype.initVis = function() {
       9: baseDir+"chemistry.svg"
   };
 
+  vis.tooltip = d3.select('body').append('g')
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0);
+
   vis.wrangleData();
 };
 
@@ -110,24 +115,31 @@ Matrix.prototype.wrangleData = function() {
 Matrix.prototype.updateVis = function() {
   var vis = this;
 
-  //column character icons
-  vis.matrixData.forEach(function(d,j){
-    vis.svg.append("image")
-        .attr('xlink:href', () => {
-          return svgCharactersMapping[j];
-        })
-        .attr("x", vis.margin.left + 40 * j + 40)
-        .attr("y", vis.margin.top)
-        .attr("width", 40)
-        .attr("height", 40)
-        .attr("opacity", 1)
-        .on('click', function(d,index){
-          console.log("character clicked")
-        });
-  });
+  var u = vis.svg.append("g")
+      .selectAll("image")
+      .data(vis.matrixData);
 
+  u.enter()
+      .append('image')
+      .attr('xlink:href', (d,j) => {
+        return svgCharactersMapping[j];
+      })
+      .attr("x", (d,j) => {
+          return vis.margin.left + 40 * j + 40
+      })
+      .attr("y", vis.margin.top)
+      .attr("width", 40)
+      .attr("height", 40)
+      .attr("opacity", 1)
+      .on('click', function(d,index){
+        console.log("character clicked")
 
+      })
+      // .on('mouseover', function(d){console.log(d)})
+      .on('mouseover', d => vis.showDetail(d, vis))
+      .on('mouseout', d => vis.hideDetail(d, vis))
 
+  u.exit().remove();
 
   // vis.rgroup = vis.svg.selectAll(".matrix_row")
   //     .data(vis.displayData, function(d), )
@@ -209,24 +221,39 @@ Matrix.prototype.updateVis = function() {
   });
 };
 
+Matrix.prototype.showDetail = function(d, vis) {
+  vis.tooltip.transition()
+      .style('opacity', 0.8);
+
+  vis.tooltip.html(`<h4>${d.name}</h4>`)
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY + 10) + "px");
+};
+
+Matrix.prototype.hideDetail = function(d, vis) {
+  vis.tooltip.transition()
+      .duration(100)
+      .style("opacity", 0);
+};
+
 Matrix.prototype.sortMatrix = function(field) {
   var vis = this;
 
-  vis.displayData.sort(function(a,b){
-    return a[field] - b[field]
+  vis.matrixData.sort(function(a,b){
+    console.log(a)
+    return b[field] - a[field]
   });
-  console.log(field);
-  var rgroup = vis.svg.selectAll('.matrix_row')
-      .data(vis.matrixData, function(d){
-        console.log(d)
-        // return d.power
-      })
+  // console.log(field);
+  console.log(vis.matrixData)
+  // var rgroup = vis.svg.selectAll('.matrix_row')
+  //     .data(vis.matrixData, function(d){
+  //       // console.log(d)
+  //       return d.name
+  //     })
 
-  // console.log(rgroup)
-
-  rgroup.transition().duration(1000)
-      .attr("transform", function(d,i){
-        return "translate(" + (vis.margin.left + 10) +
-            "," + (vis.margin.top + 31*i + 10) + ")";
-      });
+  // rgroup.transition().duration(1000)
+  //     .attr("transform", function(d,i){
+  //       return "translate(" + (vis.margin.left + 10) +
+  //           "," + (vis.margin.top + 31*i + 10) + ")";
+  //     });
 };
