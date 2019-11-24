@@ -307,15 +307,15 @@ fill: #e23636;
 
 .stars-imdb {
   position: absolute;
-  top: 120px;
+  top: 140px;
   right: -770px;
   color: #F7BC06;
 }
 
 .stars-meta {
   position: absolute;
-  top: 140px;
-  right: -665px;
+  top: 130px;
+  right: -770px;
   color: #F7BC06;
 }
 
