@@ -45,7 +45,7 @@ $('#plot-flow-sec button').on('click', function(event) {
         .fadeOut(1000, function() { $(this).remove() })
         .end()
         .append('span')
-        .html("This is the timeline in the MCU universe. The plot flows from left to right along the lines.<br/>Click to toggle between the linear and branching timeline.")
+        .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.<br/>Click to toggle between the linear and branching timeline.")
         .css('opacity', 0)
         .fadeTo(500, 1);
   }
