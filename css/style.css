@@ -12,6 +12,7 @@ body {
 
 div.section {
   margin-bottom: 50px;
+  opacity: 0.9;
 }
 
 
@@ -31,7 +32,7 @@ h3 {
   text-align: center;
   font-size: 50px;
   font-family: 'Staatliches', cursive;
-  margin: 10px;
+  margin-bottom: 20px;
 }
 
 h4 {
@@ -42,6 +43,20 @@ h4 {
 .vis-container {
   width: 100%;
   position: relative;
+}
+
+#poster {
+  box-shadow: 10px 10px 5px grey;
+
+  -webkit-transform:rotate(-4deg);
+  -moz-transform: rotate(-4deg);
+  -ms-transform: rotate(-4deg);
+  -o-transform: rotate(-4deg);
+  transform: rotate(-4deg);
+}
+
+.characters-background {
+  background-image: url("../img/marvel_characters_80.jpg");
 }
 
 
@@ -88,17 +103,9 @@ div.tooltip {
 
 .row_label, .col_label {
   font-weight: bold;
-  font-size: 15px;
   font-family: 'Acme', cursive;
 }
 
-.visTitle {
-    font-family: "Pangolin", cursive;
-}
-
-.xAxis, .yAxis {
-    font-family: 'Pangolin', cursive;
-}
 
 
 /* comic book box feel
@@ -171,8 +178,19 @@ html {
 }
 
 
-
+/* #################### */
 /* for vis2: line chart */
+
+.visTitle {
+  font-family: "Acme", cursive;
+  font-size: 23px;
+}
+
+.xAxis, .yAxis {
+  font-family: 'Pangolin', cursive;
+  font-size: 15px;
+}
+
 .lineDC {
   fill: none;
   stroke: #0476F2;
@@ -250,6 +268,23 @@ fill: #e23636;
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
+}
+
+/** Image stuff **/
+.half-height {
+  display: inline-block;
+  height: 400px;
+  overflow: hidden;
+  width:100%;
+}
+.img-max-height {
+  width: 100%;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
 }
 
 .stars-outer {

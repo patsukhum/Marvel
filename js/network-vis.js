@@ -19,9 +19,9 @@ NetworkVis = function(_parentElement, _data, _config) {
 NetworkVis.prototype.initVis = function() {
   var vis = this;
 
-  vis.margin = vis.config.margin || {'top': 40, 'bottom': 40, 'left': 40, 'right': 40};
+  vis.margin = vis.config.margin || {'top': 40, 'bottom': 80, 'left': 40, 'right': 40};
   vis.width = vis.config.width || $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.config.height || vis.width * 0.75;
+  vis.height = vis.config.height || vis.width * 0.7;
 
   // Defining parameters for force simulation
   vis.strength = vis.config.strength || -300;
@@ -95,7 +95,8 @@ NetworkVis.prototype.updateVis = function() {
           .strength(link => link.count / 100))
       .force('center', d3.forceCenter()
           .x(vis.width / 2)
-          .y(vis.height / 2));
+          .y(vis.height / 2))
+      .alphaDecay(0);
 
   vis.edges = vis.gEdges.selectAll('.edge')
       .data(vis.displayData.edges)
@@ -126,12 +127,12 @@ NetworkVis.prototype.updateVis = function() {
       .attr('y', d => -vis.scaleNodeRadius(d.centrality) * 0.8);
 
   vis.force.on('tick', function() {
-    vis.edges.attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
+    vis.edges.attr('x1', d => clamp(d.source.x, 0, vis.width))
+        .attr('y1', d => clamp(d.source.y, 0, vis.height))
+        .attr('x2', d => clamp(d.target.x, 0, vis.width))
+        .attr('y2', d => clamp(d.target.y, 0, vis.height));
 
-    nodeEnter.attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
+    nodeEnter.attr('transform', d => 'translate(' + clamp(d.x, 0, vis.width) + ',' + clamp(d.y, 0, vis.height) + ')');
   });
 
   vis.nodes.call(vis.dragNode);
@@ -176,15 +177,19 @@ NetworkVis.prototype.nodeMouseover = function(d, vis) {
       .style('stroke-width', (d, n) => d === n ? '3px' : '2px');
 };
 NetworkVis.prototype.nodeMouseout = function(d, vis) {
-  vis.tooltip.transition()
-      .duration(100)
-      .style("opacity", 0);
-  vis.edges.style('stroke', 'darkgray')
-      .style('opacity', l => vis.scaleEdgeOpacity(l.count));
-  vis.nodes.style('stroke', 'darkgray')
-      .style('stroke-width', '2px');
+  if (!vis.hideTooltip) {
+    vis.tooltip.transition()
+        .duration(100)
+        .style("opacity", 0);
+  }
+    vis.edges.style('stroke', 'darkgray')
+        .style('opacity', l => vis.scaleEdgeOpacity(l.count));
+    vis.nodes.style('stroke', 'darkgray')
+        .style('stroke-width', '2px');
 };
 NetworkVis.prototype.nodeMousemove = function(d, vis) {
-  vis.tooltip.style("left", (d3.event.pageX) + "px")
-      .style("top", (d3.event.pageY + 10) + "px");
+  if (!vis.hideTooltip) {
+    vis.tooltip.style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY + 10) + "px");
+  }
 };

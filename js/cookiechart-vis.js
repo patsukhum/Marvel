@@ -13,6 +13,7 @@
 CookieChartVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
   this.data = _data;
+  this.drawn = false;
 
   this.initVis();
 };
@@ -22,10 +23,10 @@ CookieChartVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 40,
-    'bottom': 40,
-    'left': 40,
-    'right': 40
+    'top': 10,
+    'bottom': 10,
+    'left': 10,
+    'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
   vis.height = vis.width * 1;
@@ -50,6 +51,7 @@ CookieChartVis.prototype.wrangleData = function() {
     allGenres.add(d.genres);
   })
 
+  console.log(allGenres)
   vis.genreToIdx = {};
   vis.idxToGenre = [];
 
@@ -60,8 +62,9 @@ CookieChartVis.prototype.wrangleData = function() {
     vis.idxToGenre.push(d);
     idx += 1;
   });
+  console.log(vis.idxToGenre)
 
-  vis.updateVis();
+  //vis.updateVis();
 };
 
 
@@ -76,24 +79,26 @@ CookieChartVis.prototype.updateVis = function() {
   // Generate x and y center locations for clusters
   var xCenter = []
   for (var i = 0; i < 3; i++) {
-    var init = 100;
+    var init = 200;
     for (var j = 0; j < 3; j++) {
-      var offset = 350;
+      var offset = 250;
       xCenter.push(init + offset * j);
     }
   }
 
   var yCenter = []
   for (var i = 0; i < 3; i++) {
-    var pos = 200 + 300 * i;
+    var pos = 230 * i;
     for (var j = 0; j < 3; j++) {
       yCenter.push(pos);
     }
   }
 
-  var nodes = [];
+  console.log(xCenter)
+
+  vis.nodes = [];
   vis.data.forEach((d, i) => {
-    nodes.push({
+    vis.nodes.push({
       radius: d.revenues / 50000000,
       category: vis.genreToIdx[d.genres],
       name: d.title,
@@ -101,7 +106,7 @@ CookieChartVis.prototype.updateVis = function() {
     })
   });
 
-  var simulation = d3.forceSimulation(nodes)
+  var simulation = d3.forceSimulation(vis.nodes)
     .force('charge', d3.forceManyBody().strength(0))
     .force('x', d3.forceX().x(function(d) {
       return xCenter[d.category];
@@ -115,11 +120,11 @@ CookieChartVis.prototype.updateVis = function() {
     .on('tick', ticked);
 
   function ticked() {
-    var u = d3.select('svg g')
+    vis.u = d3.select('svg g')
       .selectAll('circle')
-      .data(nodes);
+      .data(vis.nodes);
 
-    u.enter()
+    vis.u.enter()
       .append('circle')
       .attr('r', function(d) {
         return d.radius;
@@ -130,7 +135,7 @@ CookieChartVis.prototype.updateVis = function() {
         return colorScale[d.category];
       })
       .style('opacity', 0.8)
-      .merge(u)
+      .merge(vis.u)
       .attr('cx', function(d) {
         return d.x;
       })
@@ -138,7 +143,7 @@ CookieChartVis.prototype.updateVis = function() {
         return d.y;
       })
 
-    u.exit().remove();
+    vis.u.exit().remove();
   }
 
   var xOffsetText = 100;
@@ -161,21 +166,32 @@ CookieChartVis.prototype.updateVis = function() {
     })
     .attr("fill", "black");
   texts.exit().remove();
+
+  vis.drawn = true;
 }
 
 CookieChartVis.prototype.nodeMouseover = function(d, vis) {
+  vis.u.filter(function(data) { return data == d; })
+    .style('stroke', 'darkgray')
+    .style('stroke-width', '3px');
+
   vis.tooltip.transition()
     .style('opacity', 0.8);
 
   vis.tooltip.html(`<h4>${d.name}</h4>` +`<p>Revenue: ${formatMillions(d.revenue)}</p>`)
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY + 10) + "px");
+
+
 };
 
 CookieChartVis.prototype.nodeMouseout = function(d, vis) {
   vis.tooltip.transition()
     .duration(100)
     .style("opacity", 0);
+
+  vis.u.style('stroke', 'none')
+    .style('stroke-width', 'none');
 };
 
 function formatMillions(num) {

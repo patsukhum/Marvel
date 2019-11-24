@@ -142,9 +142,8 @@ PlotFlowVis.prototype.drawVis = function() {
   vis.updateScales();
 
   vis.films = vis.gFilms.selectAll('rect')
-      .data(vis.displayData, d => d.movie);
-
-  vis.films.enter()
+      .data(vis.displayData, d => d.movie)
+      .enter()
       .append('rect')
         .attr('class', 'rect-film')
         .attr('height', vis.rectHeight)
@@ -194,18 +193,23 @@ PlotFlowVis.prototype.drawVis = function() {
   var characterEnter = characters.enter()
       .append('g')
       .attr('class', 'character')
-      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-20)')
+      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-30)')
       .on('mouseover', function() {
         d3.select(this).select('circle')
-            .style('fill', '#f78f3f')
-            .style('stroke', '#f78f3f');
+            .call(focus);
       })
-      .on('mouseout', function() {
+      .on('mouseout', function(d) {
+        if (vis.groupSelected !== d) {
+          d3.select(this).select('circle')
+              .call(unfocus);
+        }
+      })
+      .on('click', function(d) {
+        unfocusAll(vis);
         d3.select(this).select('circle')
-            .style('fill', 'none')
-            .style('stroke', 'darkgray');
-      })
-      .on('click', function(d) { charboxClick(d, vis); });
+            .call(focus);
+        charboxClick(d, vis);
+      });
 
   characterEnter.append('circle')
       .attr('class', 'node')
@@ -219,6 +223,20 @@ PlotFlowVis.prototype.drawVis = function() {
       .attr('height', 2 * radius)
       .attr('y', 4);
 
+  characterEnter.append('text')
+      .attr('x', radius)
+      .attr('y', 2 * radius + 10)
+      .text(d => titleCase(d))
+      .attr('class', 'film-title')
+      .call(wrap, 2 * radius);
+
+  // Title for character box
+  vis.gCharacters.append('text')
+      .text("Click a character (or group of characters) to highlight only their films!")
+      .attr('x', 0)
+      .attr('y', -40)
+      .style('font-size', 10);
+
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
 
@@ -227,8 +245,8 @@ PlotFlowVis.prototype.drawVis = function() {
 PlotFlowVis.prototype.updateVis = function() {
   var vis = this;
 
-  vis.films = vis.gFilms.selectAll('rect')
-      .data(vis.displayData, d => d.movie);
+  // vis.films = vis.gFilms.selectAll('rect')
+  //     .data(vis.displayData, d => d.movie);
   vis.titles = vis.gFilms.selectAll('text')
       .data(vis.displayData, d => d.movie);
   vis.arrows = vis.gArrows.selectAll('path')
@@ -269,9 +287,21 @@ PlotFlowVis.prototype.updateVis = function() {
 
   if (!vis.branching) {
     vis.xAxis.scale(vis.x);
-    vis.gX.call(vis.xAxis);
+    vis.gX.call(vis.xAxis)
+        .style('opacity', 0)
+        .transition()
+        .on('start', function() {
+          d3.select(this).style('opacity', 0)
+        })
+        .duration(1000)
+        .style('opacity', 1);
   } else {
     vis.gX.selectAll('.tick')
+        .transition()
+        .duration(1000)
+        .style('opacity', 0)
+        .remove();
+    vis.gX.select('path')
         .transition()
         .duration(1000)
         .style('opacity', 0)
@@ -368,4 +398,18 @@ function resetSelected(vis) {
       .style('stroke', 'black')
       .style('stroke-width', 1)
       .attr('marker-end', 'url(#arrowhead)');
+  unfocusAll(vis);
+}
+function focus(elem) {
+  elem.style('fill', '#f78f3f')
+      .style('stroke', '#f78f3f');
+}
+
+function unfocus(elem) {
+  elem.style('fill', 'none')
+      .style('stroke', 'darkgray');
+}
+function unfocusAll(vis) {
+  vis.svg.selectAll('.character circle')
+      .call(unfocus);
 }

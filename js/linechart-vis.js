@@ -15,6 +15,7 @@ LineChartVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.displayData = [];
+  this.drawn = false;
 
   this.initVis();
 };
@@ -22,10 +23,10 @@ LineChartVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 40,
-    'bottom': 40,
-    'left': 40,
-    'right': 40
+    'top': 50,
+    'bottom': 60,
+    'left': 65,
+    'right': 50
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
   vis.height = vis.width * 0.75;
@@ -83,8 +84,9 @@ LineChartVis.prototype.wrangleData = function() {
     dictionary.year = element;
     dictionary.numMovies = {dc: 0, marvel: 0};
     dictionary.boxOfficeWorldwide = {dc:0, marvel: 0};
-    dictionary.avgRating = {dc: 0, marvel: 0};
-    dictionary.avgVotes = {dc: 0, marvel: 0};
+    // dictionary.avgRating = {dc: 0, marvel: 0};
+    // dictionary.avgVotes = {dc: 0, marvel: 0};
+    dictionary.movieNames = {dc:[], marvel:[]};
     // dictionary.pageViews = {dc: 0, marvel: 0};
 
 
@@ -95,30 +97,32 @@ LineChartVis.prototype.wrangleData = function() {
         if(movie['DC Film'] == "1") {
           dictionary.numMovies.dc += 1;
           dictionary.boxOfficeWorldwide.dc += movie.BoxOfficeWorldwide;
-          dictionary.avgRating.dc += movie.imdbRating;
-          dictionary.avgVotes.dc += movie.imdbVotes;
+          // dictionary.avgRating.dc += movie.imdbRating;
+          // dictionary.avgVotes.dc += movie.imdbVotes;
+          dictionary.movieNames.dc.push(movie.Title);
 
         }
         else {
           dictionary.numMovies.marvel += 1;
           dictionary.boxOfficeWorldwide.marvel += movie.BoxOfficeWorldwide;
-          dictionary.avgRating.marvel += movie.imdbRating;
-          dictionary.avgVotes.marvel += movie.imdbVotes;
+          // dictionary.avgRating.marvel += movie.imdbRating;
+          // dictionary.avgVotes.marvel += movie.imdbVotes;
+          dictionary.movieNames.marvel.push(movie.Title);
         }
 
       }
     })
 
     // average values
-    if(dictionary.numMovies.dc != 0) {
-      dictionary.avgRating.dc = dictionary.avgRating.dc / dictionary.numMovies.dc;
-      dictionary.avgVotes.dc = dictionary.avgVotes.dc / dictionary.numMovies.dc;
-    }
+    // if(dictionary.numMovies.dc != 0) {
+    //   dictionary.avgRating.dc = dictionary.avgRating.dc / dictionary.numMovies.dc;
+    //   dictionary.avgVotes.dc = dictionary.avgVotes.dc / dictionary.numMovies.dc;
+    // }
 
-    if(dictionary.numMovies.marvel != 0) {
-      dictionary.avgRating.marvel = dictionary.avgRating.marvel / dictionary.numMovies.marvel;
-      dictionary.avgVotes.marvel = dictionary.avgVotes.marvel / dictionary.numMovies.marvel;
-    }
+    // if(dictionary.numMovies.marvel != 0) {
+    //   dictionary.avgRating.marvel = dictionary.avgRating.marvel / dictionary.numMovies.marvel;
+    //   dictionary.avgVotes.marvel = dictionary.avgVotes.marvel / dictionary.numMovies.marvel;
+    // }
 
     vis.displayData.push(dictionary);
 
@@ -174,7 +178,7 @@ LineChartVis.prototype.updateVis = function() {
   
   // add circles to graph
 	// codes adapted from: https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
-	var circle = this.svg.selectAll("circle").data(vis.displayData, function(d) { return parseTime(d.year); });
+	var circle = this.svg.selectAll("circle").data(vis.displayData);
 	
 
     circle.enter().append("circle")
@@ -241,7 +245,7 @@ LineChartVis.prototype.updateVis = function() {
   // add title
   this.svg.append("g")
     .attr("class","visTitle")
-    .attr("transform", `translate(${vis.width/7},-10)`)
+    .attr("transform", `translate(${vis.width/7-20},-10)`)
     .append("text")
       .text("Yearly Worldwide Box Office Revenues")
       .style("fill","black")
@@ -259,12 +263,41 @@ LineChartVis.prototype.updateVis = function() {
 
 	// update tooltip
 	vis.tipDC.html(function(d) { 
-		return `${d.year} <br> $${formatComma(d[selection].dc)}`; 
+    // append corresponding movie names
+    var movieNames = "<ul>"
+    for(name of Object.values(d.movieNames.dc)) {
+      movieNames += "<li>"
+      movieNames += name
+      movieNames += "</li>"
+    }
+    if(movieNames == "<ul>") {
+      movieNames = "None<br>";
+    }
+    else {
+      movieNames += "</ul>";
+    }
+		return `Movies in ${d.year}: ${movieNames}Revenue: $${formatComma(d[selection].dc)}`; 
 	})
   vis.svg.call(vis.tipDC);
   
  	vis.tipMarvel.html(function(d) { 
-		return `${d.year} <br> $${formatComma(d[selection].marvel)}`; 
+    // append corresponding movie names
+    var movieNames = "<ul>"
+    for(name of Object.values(d.movieNames.marvel)) {
+      movieNames += "<li>"
+      movieNames += name
+      movieNames += "</li>"
+    }
+    if(movieNames == "<ul>") {
+      movieNames = "None<br>";
+    }
+    else {
+      movieNames += "</ul>";
+    }
+
+		return `Movies in ${d.year}: ${movieNames}Revenue: $${formatComma(d[selection].marvel)}`; 
 	})
-	vis.svg.call(vis.tipMarvel);
+  vis.svg.call(vis.tipMarvel);
+  
+  vis.drawn = true;
 };
