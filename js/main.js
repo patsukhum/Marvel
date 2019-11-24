@@ -31,11 +31,12 @@ queue()
     .defer(d3.csv, 'data/clean/map-data-all.csv')
     .defer(d3.json, 'data/clean/world-110m.json')
     .defer(d3.json, 'data/clean/slim-2.json')
+    .defer(d3.csv, 'data/clean/map-data-aux.csv')
     .await(createMapVis);
 
-function createMapVis(error, data1, data2, data3) {
+function createMapVis(error, data1, data2, data3, data4) {
 
-  var mapVis = new MapVis('map-vis', data1, data2, data3);
+  var mapVis = new MapVis('map-vis', data1, data2, data3, data4);
 }
 
 // create Vis2.7: movie flow chart

@@ -10,12 +10,13 @@
  * @constructor
  */
 
-MapVis = function(_parentElement, _data, _mapData, _countryCodes) {
+MapVis = function(_parentElement, _data, _mapData, _countryCodes, _auxData) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.allData = _data;
   this.mapDataRaw = _mapData;
   this.countryCodes = _countryCodes;
+  this.auxData = _auxData;
 
   console.log(this.data);
   this.initVis();
@@ -49,6 +50,20 @@ MapVis.prototype.initVis = function() {
     .style("opacity", 0);
 
   vis.selectedMovie = vis.allData[0];
+
+  // Column 2
+  vis.xCol2 = 650;
+  vis.barY = d3.scaleBand()
+    .range([vis.height, 0]);
+
+  vis.barX = d3.scaleLinear()
+    .range([0, vis.width]);
+
+  vis.svgCol2 = vis.svg.append("g")
+    .attr("class", "map-col2")
+    .attr("transform", "translate(" + vis.xCol2 +
+      ",0)");
+
   vis.wrangleData();
 };
 
@@ -84,8 +99,6 @@ MapVis.prototype.wrangleData = function() {
   // vis.dataRange = vis.data.filter((d) => {
   //   return d['Market'] !== 'United States of America' && d['Market'] !== 'China';
   // })
-  console.log("vis.data");
-  console.log(vis.allData);
 
   // test end
 
@@ -110,6 +123,17 @@ MapVis.prototype.wrangleData = function() {
   vis.idToRevenue = {};
   vis.data.forEach((d) => {
     vis.idToRevenue[vis.countryToId[d.Market]] = d.Gross;
+  })
+
+  var sorted = vis.data.sort((a, b) => a.Gross > b.Gross ? -1 : 1);
+  vis.topGross = sorted.slice(0, 3);
+
+  vis.auxData.forEach((d) => {
+    d.imdbRating = +d.imdbRating;
+    d.Metascore = +d.Metascore;
+    d.Year = +d.Year;
+    d.Domestic = +d.Domestic;
+    d.International = +d.International;
   })
 
   vis.updateVis();
@@ -215,13 +239,13 @@ MapVis.prototype.updateVis = function() {
     .domain([1, length - 1])
     .rangeRound([legendHeight * (length - 1) / length, legendHeight / length]);
 
-  var rects = vis.svg.selectAll("rect")
+  var legendRects = vis.svg.selectAll(".legend-rect")
     .data(vis.color.range());
 
-  rects.enter()
+  legendRects.enter()
     .append("rect")
-    .attr("class", "rects")
-    .merge(rects)
+    .attr("class", "legend-rect")
+    .merge(legendRects)
     .attr("x", (d, i) => {
       return 0;
     })
@@ -235,7 +259,7 @@ MapVis.prototype.updateVis = function() {
       return 20;
     })
     .attr("fill", (d) => d);
-  rects.exit().remove();
+  legendRects.exit().remove();
 
   var legendTexts = ['No Data', '0-100K', '100K-1M', '1M-10M', '10M-100M', '100M-500M', '500M-1B'];
   var texts = vis.svg.selectAll(".texts")
@@ -262,119 +286,269 @@ MapVis.prototype.updateVis = function() {
   vis.svg.append("g")
     .append("text")
     .attr("class", "legend-text")
-    .text('Gross Revenue')
+    .text('Gross Revenue ($)')
     .attr("x", 0)
     .attr("y", 90)
     .attr("fill", "black")
     .style("font-size", 15);
 
-  var xCol2 = 650;
-  vis.svgCol2 = vis.svg.append("g")
-    .attr("class", "map-col2")
-    .attr("transform", "translate(" + xCol2 +
-      ",0)");
+  var movieTitle = vis.svgCol2.selectAll(".movie-name")
+    .data([vis.selectedMovie])
 
-  vis.svgCol2.append("text")
-    .attr("class", "col2-text")
-    .text('[MOVIE NAME]')
+  movieTitle.enter()
+    .append("text")
+    .merge(movieTitle)
+    .attr("class", "movie-name")
     .attr("x", 0)
     .attr("y", 30)
+    .text((d) => {
+      return d.Name;
+    })
     .attr("fill", "black")
-    .style("font-size", 15);
+    .style('text-decoration', 'underline');
+  movieTitle.exit().remove();
 
-  vis.svgCol2.append("text")
-    .attr("class", "col2-text")
-    .text('Metacritic')
-    .attr("x", 0)
-    .attr("y", 70)
-    .attr("fill", "black")
-    .style("font-size", 15);
+  console.log(vis.selectedMovie)
+  var selectedMovieAux = vis.auxData.filter((d) => {
+    return vis.selectedMovie.Name === d.Title;
+  })[0];
+  console.log(selectedMovieAux)
 
-  vis.svgCol2.append('text')
-    .attr('font-family', 'FontAwesome')
-    .style('font-size', '20')
-    .attr('x', 80)
-    .attr('y', 70)
-    .text(function(d) {
-      return '\uf005 \uf005 \uf005 \uf005 \uf005'
-    });
-
+  // vis.svgCol2.append("text")
+  //   .attr("class", "col2-text")
+  //   .text(() => {
+  //     return vis.selectedMovie.Name;
+  //   })
+  //   .attr("x", 0)
+  //   .attr("y", 30)
+  //   .attr("fill", "black")
+  //   .style("font-size", 25);
 
   vis.svgCol2.append("text")
     .attr("class", "col2-text")
     .text('IMDB')
     .attr("x", 0)
+    .attr("y", 70)
+    .attr("fill", "black")
+    .style("font-size", 15);
+
+  vis.svgCol2.append('div')
+    .attr('class', 'rating')
+    .attr('x', 80)
+    .attr('y', 70)
+
+  var options = {
+    max_value: 5,
+    step_size: 0.1,
+    initial_value: selectedMovieAux['imdbRating'],
+  }
+  var options2 = {
+    max_value: 5,
+    step_size: 0.1,
+    initial_value: selectedMovieAux['Metascore'],
+  }
+
+  $(".stars-imdb").rate(options);
+  $(".stars-meta").rate(options2);
+
+  $(".stars-imdb .rate-select-layer").css("width", selectedMovieAux['imdbRating']/5*100);
+  $(".stars-meta .rate-select-layer").css("width", selectedMovieAux['Metascore']/5*100);
+
+  vis.svgCol2.append("text")
+    .attr("class", "col2-text")
+    .text('Metacritic')
+    .attr("x", 0)
     .attr("y", 90)
     .attr("fill", "black")
     .style("font-size", 13);
 
-  vis.svgCol2.append('text')
-    .attr('font-family', 'FontAwesome')
-    .style('font-size', '20')
-    .attr('x', 80)
-    .attr('y', 90)
-    .text(function(d) {
-      return '\uf005 \uf005 \uf005 \uf005 \uf005'
-    });
+  var pieData = {
+    'International': selectedMovieAux['International'],
+    'Domestic': selectedMovieAux['Domestic'],
+  }
 
-  // var data1 = {
-  //   a: 9,
-  //   b: 20,
-  //   c: 30,
-  //   d: 8,
-  //   e: 12
-  // }
-  //
-  // var radius = Math.min(width, height) / 2 - margin
-  // var color = d3.scaleOrdinal()
-  //   .domain(["a", "b", "c", "d", "e", "f"])
-  //   .range(d3.schemeDark2);
-  //
-  // var width = 450,
-  //   height = 450,
-  //   margin = 40;
-  //
-  //
-  //
-  // // Compute the position of each group on the pie:
-  // var pie = d3.pie()
-  //   .value(function(d) {
-  //     return d.value;
-  //   })
-  //   .sort(function(a, b) {
-  //     console.log(a);
-  //     return d3.ascending(a.key, b.key);
-  //   }) // This make sure that group order remains the same in the pie chart
-  // var data_ready = pie(d3.entries(data1))
-  // console.log('data_ready')
-  // console.log(data_ready)
-  // // map to data
-  // var u = vis.svgCol2.selectAll(".pie")
-  //   .data(data_ready)
-  //
-  // // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-  // u.enter()
-  //   .append('path')
-  //   .attr("class", "pie")
-  //   .merge(u)
-  //   .transition()
-  //   .duration(1000)
-  //   .attr('d', d3.arc()
-  //     .innerRadius(0)
-  //     .outerRadius(radius)
-  //   )
-  //   .attr('fill', function(d) {
-  //     return (color(d.data.key))
-  //   })
-  //   .attr("stroke", "white")
-  //   .style("stroke-width", "2px")
-  //   .style("opacity", 1)
-  //
+  var radius = 40;
+
+  var piecolor = d3.scaleOrdinal()
+    .domain(["International", "Domestic"])
+    .range(['#ff9000', '#ce6d0c']);
+
+
+  // Compute the position of each group on the pie:
+  var pie = d3.pie()
+    .value(function(d) {
+      return d.value;
+    })
+  var data_ready = pie(d3.entries(pieData))
+  // map to data
+  var u = vis.svgCol2.selectAll(".pie")
+    .data(data_ready)
+
+  var arcGenerator = d3.arc()
+    .innerRadius(0)
+    .outerRadius(radius)
+  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  u.enter()
+    .append('path')
+    // .attr("class", "pie")
+    // .merge(u)
+    // .transition()
+    // .duration(1000)
+    .attr('d', arcGenerator)
+    .attr('fill', function(d) {
+      return (piecolor(d.data.key))
+    })
+    // .attr('x', 100)
+    // .attr('y', 100)
+    .attr("stroke", "white")
+    .style("stroke-width", "2px")
+    .style("opacity", 1)
+    .attr("transform", "translate(290,60)");
+
   // u.exit()
   //   .remove()
-  //
-  //
 
+  vis.svgCol2
+    .selectAll('.pie')
+    .data(data_ready)
+    .enter()
+    .append('text')
+    .text(function(d) {
+      return d.data.value + '%';
+    })
+    .attr("transform", function(d) {
+      var centroid = arcGenerator.centroid(d);
+      var x = centroid[0] + 290;
+      var y = centroid[1] + 60;
+      return "translate(" + x + "," + y + ")";
+    })
+    .style("text-anchor", "middle")
+    .style("font-size", 12)
+    .style('fill', 'white')
+  // .attr("transform", "translate(300,80)");
+
+  var pieLegends = ['International', 'Domestic'];
+  var pieColors = ['#ff9000', '#ce6d0c'];
+  var legendPie = vis.svgCol2.selectAll(".pie-legend")
+    .data(pieColors);
+
+  legendPie.enter()
+    .append("rect")
+    .attr("class", "pie-legend")
+    .merge(legendPie)
+    .attr("x", (d, i) => {
+      return 340;
+    })
+    .attr("y", (d, i) => {
+      return 30 + 15*(i);
+    })
+    .attr("width", (d) => {
+      return 10;
+    })
+    .attr("height", (d) => {
+      return 10;
+    })
+    .attr("fill", (d) => d);
+  legendPie.exit().remove();
+
+  var legendPieText = vis.svgCol2.selectAll(".pie-legend-text")
+    .data(pieLegends);
+
+  legendPieText.enter()
+    .append("text")
+    .attr("class", "pie-legend-text")
+    .merge(legendPieText)
+    .attr("x", (d, i) => {
+      return 355;
+    })
+    .attr("y", (d, i) => {
+      return 40 + 15*(i);
+    })
+    .text((d) => d)
+    .attr("fill", (d,i) => pieColors[i])
+    .style('font-size', 13);
+  legendPieText.exit().remove();
+
+
+  vis.barX.domain(d3.extent(vis.topGross, function(d) {
+    return d.value;
+  }));
+  var keys = vis.topGross.map((d) => d.Market);
+
+  vis.barY.domain(keys);
+  var rects = vis.svgCol2.selectAll(".rects")
+    .data(vis.topGross);
+
+  rects.enter()
+    .append("rect")
+    .attr("class", "rects")
+    .merge(rects)
+    .attr("y", function(d, i) {
+      return 120 + i * 20;
+    })
+    .attr("x", function(d) {
+      return 20;
+    })
+    .attr("width", function(d) {
+      return d.Gross / 3000000;
+    })
+    .attr("height", function(d) {
+      return 15;
+    })
+    .attr("fill", (d) => {
+      return vis.color(d.Gross);
+    });
+  rects.exit().remove();
+
+  var topCountryNames = vis.svgCol2.selectAll(".top-country-names")
+    .data(vis.topGross)
+
+  topCountryNames.enter()
+    .append("text")
+    .merge(topCountryNames)
+    .attr("class", "top-country-names")
+    .attr("x", function(d) {
+      return 0;
+    })
+    .attr("y", function(d, i) {
+      return 130 + i * 20;
+    })
+    .text((d) => {
+      return mapCountryName(d.Market);
+    })
+    .attr("fill", "gray")
+    .style("text-anchor", "end")
+    .style("font-size", "13");
+  topCountryNames.exit().remove();
+
+  var values = vis.svgCol2.selectAll(".values")
+    .data(vis.topGross)
+
+  values.enter()
+    .append("text")
+    .merge(values)
+    .attr("class", "values")
+    .attr("x", function(d) {
+      return d.Gross / 3000000 + 30;
+    })
+    .attr("y", function(d, i) {
+      return 130 + i * 20;
+    })
+    .text((d) => {
+      return formatMillions(d.Gross);
+    })
+    // .attr("fill", "gray")
+    .attr("fill", (d) => {
+      return vis.color(d.Gross);
+    })
+    .style("font-size", "13");
+  values.exit().remove();
+
+  // vis.x.range([0, vis.width]);
+  // vis.y.range([vis.height, 0]);
+  //
+  // // Update the y-axis
+  // vis.svg.select(".y-axis").call(vis.yAxis);
 }
 
 function createRange(maxVal, numCounts) {
@@ -391,10 +565,32 @@ function formatRevenue(num) {
 
 }
 
+function mapCountryName(name) {
+  var mapping = {
+    'United States of America': 'USA',
+    'United Kingdom of Great Britain and Northern Ireland': 'UK'
+  };
+  if (name in mapping) {
+    return mapping[name];
+  }
+  return name;
+}
+
 function clicked(d, i, vis) {
-  console.log(i);
   vis.selectedMovie = vis.allData[i];
-  console.log(vis.selectedMovie);
   vis.wrangleData();
   vis.updateVis();
+}
+
+function formatMillions(num) {
+  num = +num;
+  if (num >= 1000000000) {
+    num1 = Math.floor(num / 1000000000);
+    num2 = Math.floor(num % 1000000000 / 1000000);
+    return num1 + "." + num2 + "B";
+  } else if (num >= 1000000) {
+    num = Math.floor(num / 1000000);
+    return num + "M";
+  }
+  return num;
 }

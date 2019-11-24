@@ -302,31 +302,16 @@ fill: #e23636;
   width: 75%;
 }
 
-.stars-outer {
-  display: inline-block;
-  position: relative;
-  font-family: FontAwesome;
-}
-
-.stars-outer::before {
-  content: "\f006 \f006 \f006 \f006 \f006";
-}
-
-.stars-inner {
+.stars-imdb {
   position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
+  top: 120px;
+  right: -770px;
+  color: #F7BC06;
 }
 
-.stars-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
-  color: #f8ce0b;
-}
-
-.stars {
-  width: 250px;
-  height: 250px;
+.stars-meta {
+  position: absolute;
+  top: 140px;
+  right: -665px;
+  color: #F7BC06;
 }
