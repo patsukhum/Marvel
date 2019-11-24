@@ -67,12 +67,12 @@ function createNetworkIntroVis(error, nodes, edges) {
   var edgesFilt = edges.filter(d => namesToKeep.includes(d.source.name) && namesToKeep.includes(d.target.name));
   var data = {'nodes': nodesFilt, 'edges': edgesFilt};
   var config = {
-    height: 300,
+    height: 400,
     margin: { top: 10, bottom: 10, left: 10, right: 10},
-    strength: -50,
-    distance: 100,
-    minNodeRadius: 20,
-    maxNodeRadius: 20,
+    strength: -100,
+    distance: 120,
+    minNodeRadius: 35,
+    maxNodeRadius: 35,
     hideTooltip: true
   };
   networkIntroVis = new NetworkVis('network-intro-vis', data, config);
