@@ -50,6 +50,10 @@ MapVis.prototype.initVis = function() {
     .style("opacity", 0);
 
   vis.selectedMovie = vis.allData[0];
+  vis.nameToAllDataIdx = {};
+  vis.allData.forEach((d,i) => {
+    vis.nameToAllDataIdx[d.Name] = i;
+  })
 
   // Column 2
   vis.xCol2 = 650;
@@ -258,9 +262,9 @@ MapVis.prototype.updateVis = function() {
         return 300 + 30 * (i % 4);
       })
       .text((d) => d)
-      .call(wrap, 2 * 40)
+      .call(wrap, 80)
       .on('mouseover', function(d, i) {
-        clicked(d, i, vis);
+        clicked(vis.nameToAllDataIdx[d], vis);
         d3.select(this)
           .style('fill', 'red')
           .style('text-decoration', 'underline')
@@ -271,18 +275,6 @@ MapVis.prototype.updateVis = function() {
           .style('text-decoration', 'none');
       });
 
-
-    // .on('mouseover', function(d, i) {
-    //   clicked(d, i, vis);
-    //   d3.select(this)
-    //     .style('fill', 'red')
-    //     .style('text-decoration', 'underline')
-    // })
-    // .on('mouseout', function(d, i) {
-    //   d3.select(this)
-    //     .style('fill', 'black')
-    //     .style('text-decoration', 'none');
-    // });
   })
 
 
@@ -356,10 +348,11 @@ MapVis.prototype.updateVis = function() {
     .merge(movieTitle)
     .attr("class", "movie-name")
     .attr("x", 0)
-    .attr("y", 30)
+    .attr("y", 10)
     .text((d) => {
       return d.Name;
     })
+    .call(wrap, 200)
     .attr("fill", "black")
     .style('text-decoration', 'underline');
   movieTitle.exit().remove();
@@ -622,7 +615,7 @@ function mapCountryName(name) {
   return name;
 }
 
-function clicked(d, i, vis) {
+function clicked(i, vis) {
   vis.selectedMovie = vis.allData[i];
   vis.wrangleData();
   vis.updateVis();
