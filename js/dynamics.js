@@ -7,6 +7,9 @@ var myFullpage = new fullpage('#fullpage', {
   afterLoad: function(origin, destination, direction) {
     secId = destination.item.getAttribute('id');
     switch(secId) {
+      case 'cookiechart-sec':
+          drawCookieChartVis();
+          break;
       case 'linechart-sec':
           drawLineChartVis();
           break;
@@ -42,7 +45,7 @@ $('#plot-flow-sec button').on('click', function(event) {
         .fadeOut(1000, function() { $(this).remove() })
         .end()
         .append('span')
-        .text("This is the timeline in the MCU universe. The plot flows from left to right along the lines. Click to toggle between the linear and branching timeline")
+        .text("This is the timeline in the MCU universe. The plot flows from left to right along the lines. Click to toggle between the linear and branching timeline.")
         .css('opacity', 0)
         .fadeTo(500, 1);
   }
@@ -62,5 +65,14 @@ function drawNetworkVis() {
 
 // ********** linechart vis ********** //
 function drawLineChartVis() {
+  if (!linechartVis.drawn) {
     linechartVis.updateVis();
+  }
+}
+
+// ********** linechart vis ********** //
+function drawCookieChartVis() {
+  if (!cookiechartVis.drawn) {
+    cookiechartVis.updateVis();
+  }
 }
