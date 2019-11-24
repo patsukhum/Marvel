@@ -23,13 +23,13 @@ CookieChartVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 10,
+    'top': 100,
     'bottom': 10,
-    'left': 10,
+    'left': 20,
     'right': 10
   };
-  vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 1;
+  vis.width = $('#' + vis.parentElement).width() +30 - vis.margin.left - vis.margin.right;
+  vis.height = vis.width * 0.8;
   vis.svg = makeSvg(vis, 'cookiechart-vis');
 
   vis.tooltip = d3.select('body').append('g')
@@ -74,21 +74,21 @@ CookieChartVis.prototype.updateVis = function() {
   var width = vis.width,
     height = vis.height;
 
-  var colorScale = ['pink', 'darkred', 'black', 'lightblue', 'green', 'orange', 'red', 'gray', 'blue'];
+  var colorScale = ['pink', 'darkred', 'black', 'lightblue', 'green', 'orange', "#e23636", 'gray', "#0476F2"];
 
   // Generate x and y center locations for clusters
   var xCenter = []
   for (var i = 0; i < 3; i++) {
-    var init = 200;
+    var init = 90;
     for (var j = 0; j < 3; j++) {
-      var offset = 250;
+      var offset = 220;
       xCenter.push(init + offset * j);
     }
   }
 
   var yCenter = []
   for (var i = 0; i < 3; i++) {
-    var pos = 230 * i;
+    var pos = 200 * i;
     for (var j = 0; j < 3; j++) {
       yCenter.push(pos);
     }
@@ -99,7 +99,7 @@ CookieChartVis.prototype.updateVis = function() {
   vis.nodes = [];
   vis.data.forEach((d, i) => {
     vis.nodes.push({
-      radius: d.revenues / 50000000,
+      radius: d.revenues / 60000000,
       category: vis.genreToIdx[d.genres],
       name: d.title,
       revenue: d.revenues
@@ -134,7 +134,7 @@ CookieChartVis.prototype.updateVis = function() {
       .style('fill', function(d) {
         return colorScale[d.category];
       })
-      .style('opacity', 0.8)
+      .style('opacity', 0.77)
       .merge(vis.u)
       .attr('cx', function(d) {
         return d.x;
@@ -146,14 +146,14 @@ CookieChartVis.prototype.updateVis = function() {
     vis.u.exit().remove();
   }
 
-  var xOffsetText = 100;
-  var yOffsetText = 150;
+  var xOffsetText = 0;
+  var yOffsetText = 0;
   var texts = vis.svg.selectAll("text")
     .data(vis.idxToGenre);
 
   texts.enter()
     .append("text")
-    .attr("class", "texts")
+    .attr("class", "texts genre-label")
     .merge(texts)
     .attr("x", (d, i) => {
       return xCenter[i] - xOffsetText;
@@ -164,7 +164,8 @@ CookieChartVis.prototype.updateVis = function() {
     .text((d, i) => {
       return d;
     })
-    .attr("fill", "black");
+    .attr("fill", "black")
+    .style("text-anchor","middle");
   texts.exit().remove();
 
   vis.drawn = true;

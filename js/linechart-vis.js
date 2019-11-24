@@ -245,11 +245,11 @@ LineChartVis.prototype.updateVis = function() {
   // add title
   this.svg.append("g")
     .attr("class","visTitle")
-    .attr("transform", `translate(${vis.width/7-20},-10)`)
+    .attr("transform", `translate(${vis.width/2},-10)`)
     .append("text")
       .text("Yearly Worldwide Box Office Revenues")
       .style("fill","black")
-      .style("text-anchor","center");
+      .style("text-anchor","middle");
 
   // add custom legend
   // code help from: https://www.d3-graph-gallery.com/graph/custom_legend.html
