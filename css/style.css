@@ -56,6 +56,7 @@ h4 {
 }
 
 .global-background {
+  /* background-image: url("../img/other/global.jpg"); */
   background-image: url("../img/other/global3.png");
   background-size: 100%;
 }
