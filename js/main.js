@@ -51,10 +51,12 @@ queue()
 function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
   var config = {
+    height: 400,
     minNodeRadius: 10,
     maxNodeRadius: 30,
     strength: -400,
-    distance: 150
+    distance: 150,
+    margin: {top: 20, bottom: 80, left: 20, right: 20}
   };
   networkVis = new NetworkVis('network-vis', data, config);
 }

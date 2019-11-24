@@ -19,7 +19,7 @@ NetworkVis = function(_parentElement, _data, _config) {
 NetworkVis.prototype.initVis = function() {
   var vis = this;
 
-  vis.margin = vis.config.margin || {'top': 40, 'bottom': 40, 'left': 40, 'right': 40};
+  vis.margin = vis.config.margin || {'top': 40, 'bottom': 80, 'left': 40, 'right': 40};
   vis.width = vis.config.width || $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
   vis.height = vis.config.height || vis.width * 0.75;
 
