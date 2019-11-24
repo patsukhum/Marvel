@@ -318,3 +318,11 @@ fill: #e23636;
   right: -665px;
   color: #F7BC06;
 }
+
+.text0, .text1, .text2 {
+  fill: black;
+  font-size: 9px;
+  alignment-baseline: middle;
+  text-anchor: middle;
+  font-family: Roboto;
+}

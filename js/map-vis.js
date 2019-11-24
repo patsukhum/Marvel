@@ -136,6 +136,27 @@ MapVis.prototype.wrangleData = function() {
     d.International = +d.International;
   })
 
+  console.log('vis.auxData');
+  console.log(vis.auxData);
+  // console.log(vis.movieNames);
+  vis.movieYearRangeArr = [
+    [],
+    [],
+    []
+  ];
+
+  vis.auxData.forEach((d) => {
+    if (d.Year <= 2013) {
+      vis.movieYearRangeArr[0].push(d.Title);
+    } else if (d.Year <= 2017) {
+      vis.movieYearRangeArr[1].push(d.Title);
+    } else {
+      vis.movieYearRangeArr[2].push(d.Title);
+    }
+  });
+  // console.log(vis.movieYearRangeArr);
+
+
   vis.updateVis();
 };
 
@@ -148,19 +169,12 @@ MapVis.prototype.updateVis = function() {
   // });
 
   vis.color.domain([0.1, 100000, 1000000, 10000000, 100000000, 500000000, 1000000000]);
-  console.log('vis.color.domain')
-  console.log(vis.color.domain)
   // vis.color.range(d3.schemeReds[8].slice(2, 8));
   var emptyColor = ["lightgray"];
   var colors = emptyColor.concat(d3.schemeReds[6]);
 
   vis.color.range(colors);
-  console.log(colors)
-  console.log(vis.color(0));
-  console.log(vis.color(2));
-  console.log(vis.color(800000000));
 
-  console.log(d3.schemeReds[8].slice(3, 8));
   // var rangeArr = createRange(maxVal, 8);
 
   var projection = d3.geoConicEqualArea()
@@ -197,38 +211,80 @@ MapVis.prototype.updateVis = function() {
       if (d.id in vis.idToRevenue)
         return vis.color(vis.idToRevenue[d.id]);
       return vis.color(0);
-      // allColors.add(vis.color(vis.idToRevenue[d.id]));
-      // if (d['Market'] === 'United States of America' && d['Market'] === 'China')
-      //   return vis.color(maxVal);
-      // return vis.color(vis.idToRevenue[d.id]);
     });
   chmap.exit().remove();
 
-  vis.svg.selectAll('text')
-    .data(vis.movieNames)
-    .enter().append('text')
-    .attr('x', (d, i) => 20 + 145 * (i % 8))
-    .attr('y', (d, i) => {
-      if (i < 8)
-        return 300;
-      else if (i < 16)
-        return 350;
-      else
-        return 400;
-    })
-    .text((d) => d)
-    .attr('class', 'film-title')
-    .on('mouseover', function(d, i) {
-      clicked(d, i, vis);
-      d3.select(this)
-        .style('fill', 'red')
-        .style('text-decoration', 'underline')
-    })
-    .on('mouseout', function(d, i) {
-      d3.select(this)
-        .style('fill', 'black')
-        .style('text-decoration', 'none');
-    });
+  // Movie Names By Year
+  var yearRanges = ['2008-2013', '2014-2017', '2018-2019'];
+
+  vis.movieYearRangeArr.forEach((curMovies, idx) => {
+    var yearText = yearRanges[idx];
+    vis.svg.selectAll('.year-text' + idx)
+      .data([yearText])
+      .enter()
+      .append("text")
+      .attr("class", "year-text" + idx)
+      .text((d) => {
+        return d;
+      })
+      .attr("x", 20 + 430 * idx)
+      .attr("y", 270)
+      .attr("fill", "black");
+
+    vis.svg.selectAll('.year-rect' + idx)
+      .data(curMovies)
+      .enter()
+      .append('rect')
+      .attr('class', 'year-rect' + idx)
+      .attr('x', (d, i) => {
+        return  -30+430 * idx + 100 * Math.floor(i / 4);
+      })
+      .attr('y', (d, i) => {
+        return 290 + 30 * (i % 4);
+      })
+      .attr('width', 95)
+      .attr('height', 25)
+      .attr('class', 'rect-film')
+
+    vis.svg.selectAll('.text' + idx)
+      .data(curMovies)
+      .enter()
+      .append('text')
+      .attr('class', 'text' + idx)
+      .attr('x', (d, i) => {
+        return 20 + 430 * idx + 100 * Math.floor(i / 4);
+      })
+      .attr('y', (d, i) => {
+        return 300 + 30 * (i % 4);
+      })
+      .text((d) => d)
+      .call(wrap, 2 * 40)
+      .on('mouseover', function(d, i) {
+        clicked(d, i, vis);
+        d3.select(this)
+          .style('fill', 'red')
+          .style('text-decoration', 'underline')
+      })
+      .on('mouseout', function(d, i) {
+        d3.select(this)
+          .style('fill', 'black')
+          .style('text-decoration', 'none');
+      });
+
+
+    // .on('mouseover', function(d, i) {
+    //   clicked(d, i, vis);
+    //   d3.select(this)
+    //     .style('fill', 'red')
+    //     .style('text-decoration', 'underline')
+    // })
+    // .on('mouseout', function(d, i) {
+    //   d3.select(this)
+    //     .style('fill', 'black')
+    //     .style('text-decoration', 'none');
+    // });
+  })
+
 
   // LEGEND
 
@@ -314,16 +370,6 @@ MapVis.prototype.updateVis = function() {
   })[0];
   console.log(selectedMovieAux)
 
-  // vis.svgCol2.append("text")
-  //   .attr("class", "col2-text")
-  //   .text(() => {
-  //     return vis.selectedMovie.Name;
-  //   })
-  //   .attr("x", 0)
-  //   .attr("y", 30)
-  //   .attr("fill", "black")
-  //   .style("font-size", 25);
-
   vis.svgCol2.append("text")
     .attr("class", "col2-text")
     .text('IMDB')
@@ -351,8 +397,8 @@ MapVis.prototype.updateVis = function() {
   $(".stars-imdb").rate(options);
   $(".stars-meta").rate(options2);
 
-  $(".stars-imdb .rate-select-layer").css("width", selectedMovieAux['imdbRating']/5*100);
-  $(".stars-meta .rate-select-layer").css("width", selectedMovieAux['Metascore']/5*100);
+  $(".stars-imdb .rate-select-layer").css("width", selectedMovieAux['imdbRating'] / 5 * 100);
+  $(".stars-meta .rate-select-layer").css("width", selectedMovieAux['Metascore'] / 5 * 100);
 
   vis.svgCol2.append("text")
     .attr("class", "col2-text")
@@ -440,7 +486,7 @@ MapVis.prototype.updateVis = function() {
       return 340;
     })
     .attr("y", (d, i) => {
-      return 30 + 15*(i);
+      return 30 + 15 * (i);
     })
     .attr("width", (d) => {
       return 10;
@@ -462,10 +508,10 @@ MapVis.prototype.updateVis = function() {
       return 355;
     })
     .attr("y", (d, i) => {
-      return 40 + 15*(i);
+      return 40 + 15 * (i);
     })
     .text((d) => d)
-    .attr("fill", (d,i) => pieColors[i])
+    .attr("fill", (d, i) => pieColors[i])
     .style('font-size', 13);
   legendPieText.exit().remove();
 
