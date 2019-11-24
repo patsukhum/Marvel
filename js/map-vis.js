@@ -51,7 +51,7 @@ MapVis.prototype.initVis = function() {
 
   vis.selectedMovie = vis.allData[0];
   vis.nameToAllDataIdx = {};
-  vis.allData.forEach((d,i) => {
+  vis.allData.forEach((d, i) => {
     vis.nameToAllDataIdx[d.Name] = i;
   })
 
@@ -140,9 +140,6 @@ MapVis.prototype.wrangleData = function() {
     d.International = +d.International;
   })
 
-  console.log('vis.auxData');
-  console.log(vis.auxData);
-  // console.log(vis.movieNames);
   vis.movieYearRangeArr = [
     [],
     [],
@@ -158,12 +155,60 @@ MapVis.prototype.wrangleData = function() {
       vis.movieYearRangeArr[2].push(d.Title);
     }
   });
-  // console.log(vis.movieYearRangeArr);
-
 
   vis.updateVis();
 };
 
+MapVis.prototype.updateDataSelection = function() {
+  var vis = this;
+
+
+  // test begin
+  // vis.selectedMovie = vis.data[0];
+
+  vis.movieNames = vis.data.map((d) => d.Name);
+  var curMovie = [];
+  var movieKeys = Object.keys(vis.selectedMovie)
+  for (var key of movieKeys) {
+    if (key in vis.countryToId) {
+      var obj = {
+        'Market': key,
+        'Gross': vis.selectedMovie[key]
+      };
+      curMovie.push(obj);
+    }
+  }
+  vis.data = curMovie;
+
+  var allCountryIds = []
+  vis.data.forEach((d) => {
+    var countryId = vis.countryToId[d.Market];
+    allCountryIds.push(countryId);
+
+    d.Gross = +d.Gross;
+  })
+
+  var countriesExcluded = ['Antarctica', 'Fiji', 'French Southern Territories']
+  vis.countryInfo = vis.mapData.filter((d) => {
+    var countryName = vis.idToCountry[d.id];
+    return !countriesExcluded.includes(countryName);
+  });
+
+  // vis.countryInfo.forEach((d) => {
+  //   var country = idToCountry[d.id];
+  //   d.Gross = vis.mapData.reduce((d) => d.country);
+  // });
+  vis.idToRevenue = {};
+  vis.data.forEach((d) => {
+    vis.idToRevenue[vis.countryToId[d.Market]] = d.Gross;
+  })
+
+  var sorted = vis.data.sort((a, b) => a.Gross > b.Gross ? -1 : 1);
+  vis.topGross = sorted.slice(0, 3);
+
+
+  vis.updateVis();
+}
 
 MapVis.prototype.updateVis = function() {
   var vis = this;
@@ -241,7 +286,7 @@ MapVis.prototype.updateVis = function() {
       .append('rect')
       .attr('class', 'year-rect' + idx)
       .attr('x', (d, i) => {
-        return  -30+430 * idx + 100 * Math.floor(i / 4);
+        return -30 + 430 * idx + 100 * Math.floor(i / 4);
       })
       .attr('y', (d, i) => {
         return 290 + 30 * (i % 4);
@@ -582,12 +627,6 @@ MapVis.prototype.updateVis = function() {
     })
     .style("font-size", "13");
   values.exit().remove();
-
-  // vis.x.range([0, vis.width]);
-  // vis.y.range([vis.height, 0]);
-  //
-  // // Update the y-axis
-  // vis.svg.select(".y-axis").call(vis.yAxis);
 }
 
 function createRange(maxVal, numCounts) {
@@ -599,8 +638,10 @@ function createRange(maxVal, numCounts) {
 }
 
 function formatRevenue(num) {
-  // TODO
-  return "$" + num;
+  if (num === 0 || num === undefined) {
+    return "No Data";
+  }
+  return "$" + formatMillions(num);
 
 }
 
@@ -617,8 +658,8 @@ function mapCountryName(name) {
 
 function clicked(i, vis) {
   vis.selectedMovie = vis.allData[i];
-  vis.wrangleData();
-  vis.updateVis();
+  vis.updateDataSelection();
+  // vis.updateVis();
 }
 
 function formatMillions(num) {
@@ -630,6 +671,9 @@ function formatMillions(num) {
   } else if (num >= 1000000) {
     num = Math.floor(num / 1000000);
     return num + "M";
+  } else if (num >= 1000) {
+    num = Math.floor(num / 1000);
+    return num + "K";
   }
   return num;
 }
