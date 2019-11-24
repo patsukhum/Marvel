@@ -120,12 +120,10 @@
     </div>
 
     <div id="mcu-intro-sec" class="section characters-background">
-      <br><br><br><br><br><br><br><br><br><br>
-      <div class="container box">
+      <br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <div class="container box" style="padding:20px;padding-left:50px;">
         <div class="row">
-
-            <p style="font-size:25px;">
-
+            <p style="font-size:22px;">
               One of the defining features (one might say, 'superpowers') of the MCU is the sheer number of characters
               and stories that have been woven into its single timeline.
               Beginning with Iron Man in 2008, MCU began producing movies with increasing frequency and increasing success.
@@ -146,11 +144,11 @@
         </div>
         <div class="row">
 
-          <div class="col-md-11 caption text">
-            <span>This is a timeline of movies as they were released.</span><span>However this linear timeline only tells part of the story.</span>
+          <div class="col-md-10 caption text">
+            <span style="font-size:19px">This is a timeline of movies as they were released.</span><span style="font-size:19px"> However, this linear timeline only tells part of the story.</span>
             <br/>
           </div>
-          <div class="col-md-1 caption">
+          <div class="col-md-2 caption">
             <button type="button" class="btn btn-danger" id="btn-branching">Click me!</button>
           </div>
         </div>
@@ -182,18 +180,19 @@
       </div>
     </div>
 
-    <div id="captain-america-sec" class="section">
-      <div class="container box">
-        <h3>Captain America</h3>
-        <div class="row">
+    <div id="captain-america-sec" class="section captain-america-background">
+      <br><br><br><br><br><br><br><br><br>
+      <div class="container box" style="margin-left:40px;padding:30px;max-width:600px;">
+        <h1 style="font-size:50px;">Captain America!</h1>
+        <!-- <div class="row">
 
           <div class="col" style="height:400px; overflow:hidden;">
-            <img src="img/other/captain_america.jpg" alt="Captain America" class="center">
+            <img src="img/other/captain_america.jpg" alt="Captain America" class="center" height="400" width="auto">
           </div>
-        </div>
+        </div> -->
         <div class="row">
           <div class="col">
-            <p>
+            <p style="font-size:23px;">
               Surprising, right? We thought it would be Iron Man, but it seems that Wikipedia had a different idea.
               Continue scrolling to see the whole network and more stats about the characters, their abilities, and
               relationships with one another.
@@ -204,8 +203,8 @@
     </div>
 
     <div id="network-sec" class="section">
-      <div class="container box">
-        <h3>Marvel Character Networks</h3>
+      <div class="container box" >
+        <h3>Marvel Characters: Networks & Power Matrix</h3>
         <div class="row">
           <div class="col-md-4">
             <div id="network-vis" class="vis-container"></div>
@@ -217,9 +216,9 @@
       </div>
     </div>
 
-    <div id="matrix-sec" class="section">
+    <div id="matrix-explain-sec" class="section">
       <div class="container box box2">
-        <h3>Marvel Characters: Who is the strongest?</h3>
+        <h3>Who is the strongest character?</h3>
         <div class="row">
           <div class="col">
 <!--            <select id="sort">-->
@@ -237,35 +236,26 @@
 <!--            </select>-->
 <!--            <br></br>-->
 <!--            <div id="matrix-vis" class="vis-container"></div>-->
+            <p>
+                Of course, the relationships between characters are only part of the story. These are superheros after
+                all - what about their powers? We can look at two kinds of data: abilities (quantitative traits such as
+                speed, strength, etc) and powers (specific superpowers such as healing, flight, etc.). Looking
+                down the columns, we can see that super strength, speed, intelligence, and flight are much more common
+                than, say, healing or magical powers. It seems as though the characters with the largest influence -
+                Captain America, Iron Man, Thor – tend to also have a similar set of powers – super-strength, speed,
+                intelligence – as well as a distinctive weapon and perhaps flight. On the other hand, characters with
+                lower influence tend to be equipped with a different suite of powers and abilities.
+            </p>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="matrix-explain-sec" class="section">
-        <div class="container box">
-          <div class="row">
-            <div class="col">
-              <p>
-                  Of course, the relationships between characters are only part of the story. These are superheros after
-                  all - what about their powers? We can look at two kinds of data: abilities (quantitative traits such as
-                  speed, strength, etc) and powers (specific superpowers such as healing, flight, etc.). We’ve also included
-                  columns for if their powers were acquired or innate, as well as one for gender (red means male) Looking
-                  down the columns, we can see that super strength, speed, intelligence, and flight are much more common
-                  than, say, healing or magical powers. It seems as though the characters with the largest influence -
-                  Captain America, Iron Man, Thor – tend to also have a similar set of powers – super-strength, speed,
-                  intelligence – as well as a distinctive weapon and perhaps flight. On the other hand, characters with
-                  lower influence tend to be equipped with a different suite of powers and abilities.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <div id="future-sec" class="section">
-      <div class="container box">
+    <div id="future-sec" class="section conclusion-background">
+        <br><br><br><br><br><br><br><br><br><br><br>
+      <div class="container box" style="padding:20px;padding-left:40px;">
         <h3>The future of the MCU?</h3>
-        <p>
+        <p style="font-size:23px;">
           After Endgame, it’s hard to imagine where the MCU might go next. Yet, many more movies are in the works - the
           so-called “Phase 4” of the MCU - including Black Widow, Spider-Man III, Black Panther II, and many more. With
           this next set of movies, only one thing is certain: comic book movies and the MCU are not going anywhere.
@@ -284,48 +274,53 @@
           </div>
         </div>
 
-
-        <h3 style="font-size:35px">Data Sources and Methods</h3>
+        <h3 style="font-size:35px">The Team</h3>
         <div class="row">
           <div class="col">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu
-            vero, inquam, ducas licet, si sequetur; Quid igitur, inquit, eos responsuros putas? Duo Reges: constructio interrete. Roges enim Aristonem, bonane ei videantur haec: vacuitas doloris, divitiae, valitudo; Tum Lucius: Mihi vero ista valde
-            probata sunt, quod item fratri puto. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret?
+            We are a group of undergraduate and graduate students at Harvard University. This project was for the <a href="https://www.cs171.org/2019/">CS171:Visualization</a> course in Fall 2019.
           </div>
         </div>
+        <div class="row">
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Benjamin Levy</span><br>
+            <span style="font-size:18px;">M.Sc in Data Science</span>
+          </div>
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Rachel Moon</span><br>
+            <span style="font-size:18px;">M.Sc in Data Science</span>
+          </div>
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Pat Sukhum</span><br>
+            <span style="font-size:18px;">M.Sc in Data Science</span>
+          </div>
+          <div class="col profile">
+            <img src="img/placeholder.png" height=150 width=120><br>
+            <span class="name">Kevin Yoon</span><br>
+            <span style="font-size:18px;">B.Sc in Electrical Engineering</span>
+          </div>
+        </div>
+
+
+       
+
       </div>
     </div>
 
-    <div id="team-sec" class="section">
+    <div id="data-sec" class="section">
         <div class="container box box2">
-          <h3>The Team</h3>
+                 
+          <h3>Data Sources and Methods</h3>
           <div class="row">
             <div class="col">
-              We are a group of undergraduate and graduate students at Harvard University. This project was for the <a href="https://www.cs171.org/2019/">CS171:Visualization</a> course in Fall 2019.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu
+              vero, inquam, ducas licet, si sequetur; Quid igitur, inquit, eos responsuros putas? Duo Reges: constructio interrete. Roges enim Aristonem, bonane ei videantur haec: vacuitas doloris, divitiae, valitudo; Tum Lucius: Mihi vero ista valde
+              probata sunt, quod item fratri puto. Quid ei reliquisti, nisi te, quoquo modo loqueretur, intellegere, quid diceret?
             </div>
           </div>
-          <div class="row">
-            <div class="col profile">
-              <img src="img/placeholder.png" height=150 width=120><br>
-              <span class="name">Benjamin Levy</span><br>
-              <span style="font-size:18px;">M.Sc in Data Science</span>
-            </div>
-            <div class="col profile">
-              <img src="img/placeholder.png" height=150 width=120><br>
-              <span class="name">Rachel Moon</span><br>
-              <span style="font-size:18px;">M.Sc in Data Science</span>
-            </div>
-            <div class="col profile">
-              <img src="img/placeholder.png" height=150 width=120><br>
-              <span class="name">Pat Sukhum</span><br>
-              <span style="font-size:18px;">M.Sc in Data Science</span>
-            </div>
-            <div class="col profile">
-              <img src="img/placeholder.png" height=150 width=120><br>
-              <span class="name">Kevin Yoon</span><br>
-              <span style="font-size:18px;">B.Sc in Electrical Engineering</span>
-            </div>
-          </div>
+ 
         </div>
     </div> 
 

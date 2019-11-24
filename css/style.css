@@ -56,7 +56,18 @@ h4 {
 }
 
 .characters-background {
+  background-image: url("../img/other/mcu_all_80.jpg");
+  background-size: 100% 100%;
+  /* background-image: url("../img/marvel_characters_80.jpg"); */
+}
+.captain-america-background {
+  background-image: url("../img/other/captain_america_80.jpg");
+  background-size: 100% 100%;
+}
+
+.conclusion-background {
   background-image: url("../img/marvel_characters_80.jpg");
+  background-size: 100% 100%;
 }
 
 
@@ -126,8 +137,8 @@ code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
 }
 
 .box2 {
-  border-width: 5px 3px 4px 4px;
-  border-radius: 8% 4% 97% 5%/4% 50% 3% 1%;
+  border-width: 5px 3px 4px 5px;
+  border-radius: 8% 4% 1% 5%/4% 50% 3% 2%;
 }
 
 .white {
