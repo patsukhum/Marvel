@@ -1,8 +1,10 @@
 // Globals
 var plotVis,
+    cookiechartVis,
     linechartVis,
     networkIntroVis,
     networkVis;
+
 
 // //create Vis1:
 queue()
@@ -10,7 +12,7 @@ queue()
  .await(createCookieVis)
 
 function createCookieVis(error, data) {
-  var cookiechartVis = new CookieChartVis('cookiechart-vis', data);
+  cookiechartVis = new CookieChartVis('cookiechart-vis', data);
 }
 
 // create Vis2: line chart
