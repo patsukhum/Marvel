@@ -23,10 +23,10 @@ LineChartVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 40,
-    'bottom': 40,
-    'left': 40,
-    'right': 40
+    'top': 50,
+    'bottom': 60,
+    'left': 65,
+    'right': 50
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
   vis.height = vis.width * 0.75;
@@ -245,7 +245,7 @@ LineChartVis.prototype.updateVis = function() {
   // add title
   this.svg.append("g")
     .attr("class","visTitle")
-    .attr("transform", `translate(${vis.width/7},-10)`)
+    .attr("transform", `translate(${vis.width/7-20},-10)`)
     .append("text")
       .text("Yearly Worldwide Box Office Revenues")
       .style("fill","black")

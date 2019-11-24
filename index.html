@@ -28,18 +28,25 @@
 
     <div id="intro-sec" class="section">
       <div class="container box">
-        <p>
-          In April 2019, Marvel’s most recent film, Avengers: Endgame came out, promptly smashing just about every
-          box office record there is to smash (as well as the Avengers facility and much of Upstate New York). Not only did Endgame snag
-          the record of <a target="_blank" href="https://www.vox.com/2019/7/22/20703487/avengers-endgame-avatar-biggest-movie-all-time-box-office">
-          biggest opening weekend in the world at $1.2 billion</a>, but It blew past Avatar’s previous record of total box office revenue, reaching a
-          new record of $2.79 billion in July.
-        </p>
-        <p>
-          In fact, setting aside some notable exceptions like Avatar, it seems as though almost all the biggest
-          movies these days are action-packed comic book stories adapted for the big screen. Let’s look at some data
-          to see if this is really the case:
-        </p>
+        <div class="row">
+            <div class="col-5" style="text-align:center;">
+              <img id="poster" src="img/endgame.jpg" width="340">
+            </div>
+          <div class="col-7">
+            <p style="font-size:25px;">
+              In April 2019, Marvel’s most recent film, <i>Avengers: Endgame</i> came out, promptly smashing just about every
+              box office record there is to smash (as well as the Avengers facility and much of Upstate New York). 
+              Not only did Endgame snag the record of <a target="_blank" href="https://www.vox.com/2019/7/22/20703487/avengers-endgame-avatar-biggest-movie-all-time-box-office">
+              biggest opening weekend in the world at $1.2 billion</a>, but It blew past Avatar’s previous record of total box office revenue, reaching a
+              new record of $2.79 billion in July.
+            </p>
+            <p style="font-size:25px;">
+              In fact, setting aside some notable exceptions like Avatar, it seems as though almost all the biggest
+              movies these days are action-packed comic book stories adapted for the big screen. Let’s look at some data
+              to see if this is really the case:
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -79,7 +86,7 @@
             <div id="linechart-vis" class="vis-container"></div>
           </div>
           <div class="col">
-            <p>
+            <p style="font-size:25px;">
               Without a doubt, the most dominant franchises in the comic book movie genre are Marvel and DC.
               Both the Marvel Cinematic Universe (MCU) and DC Extended Universe (DCEU) have been churning out huge
               numbers of successful (and not so successful) movies, ever since Iron Man came out in 2008.
@@ -109,19 +116,17 @@
       </div>
     </div>
 
-    <div id="mcu-intro-sec" class="section">
+    <div id="mcu-intro-sec" class="section characters-background">
+      <br><br><br><br><br><br><br><br><br><br>
       <div class="container box">
         <div class="row">
-          <div class="col">
-            <p>
+            <p style="font-size:25px;">
               One of the defining features (one might say, 'superpowers') of the MCU is the sheer number of characters
               and stories that have been woven into its single timeline.
-              <br>
               Beginning with Iron Man in 2008, MCU began producing movies with increasing frequency and increasing success.
               Now in 2019, there have been a total of [NUMBER] MCU movies from [NUMBER] different series, with plans for
               [NUMBER] more.
             </p>
-          </div>
         </div>
       </div>
     </div>
@@ -136,8 +141,8 @@
         </div>
         <div class="row">
           <div class="col-md-10 caption text">
-            <span>This is a timeline of movies as they were released.</span><br/>
-            <span>However this linear timeline only tells part of the story.</span>
+            <span style="font-size:19px;">This is a timeline of movies ordered by release dates.</span>
+            <span style="font-size:19px;">However this linear timeline only tells part of the story...</span>
           </div>
           <div class="col-md-2 caption">
             <button type="button" class="btn btn-danger" id="btn-branching">Click me!</button>
@@ -150,7 +155,7 @@
       <div class="container box">
         <div class="row">
           <div class="col-md-8">
-            <p>
+            <p style="font-size:23px;">
               In addition to the branching plots, the relations between each of the many main characters
               in MCU are highly complex. To get a sense of this, we downloaded the Wikipedia pages of each MCU main
               character using the Wikimedia API and extracted the links between character pages. Each link
@@ -159,7 +164,7 @@
               on <span class="iron-man">Iron Man</span>’s page is a reference to
               <span class="hulk">Hulk</span>, meaning that the two characters did something together.
             </p>
-            <p>
+            <p style="font-size:23px;">
               We analyzed this graph to determine who the most "important" character in the MCU was based on Wikipedia
               links. Drumroll please...
             </p>
@@ -175,10 +180,10 @@
       <div class="container box">
         <h3>Marvel Character Networks</h3>
         <div class="row">
-          <div class="col">
+          <div class="col-7">
             <div id="network-vis" class="vis-container"></div>
           </div>
-          <div class="col">
+          <div class="col-5">
             <p>
               Captain America!
             </p>
@@ -259,7 +264,7 @@
         </div>
 
 
-        <h3 style="font-size:35px">Data Sources and Methods [coming soon]</h3>
+        <h3 style="font-size:35px">Data Sources and Methods</h3>
         <div class="row">
           <div class="col">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Audeo dicere, inquit. Ergo, si semel tristior effectus est, hilara vita amissa est? Sic consequentibus vestris sublatis prima tolluntur. An hoc usque quaque, aliter in vita? Tu
