@@ -227,7 +227,7 @@ MapVis.prototype.updateVis = function() {
   // var rangeArr = createRange(maxVal, 8);
 
   var projection = d3.geoConicEqualArea()
-    .translate([vis.width / 4, vis.height / 5])
+    .translate([vis.width / 4, vis.height / 6])
     .center([0, 0]).scale(100);
 
   var chmap = vis.svg.append("g")
@@ -277,7 +277,7 @@ MapVis.prototype.updateVis = function() {
         return d;
       })
       .attr("x", 20 + 430 * idx)
-      .attr("y", 270)
+      .attr("y", 150)
       .attr("fill", "black");
 
     vis.svg.selectAll('.year-rect' + idx)
@@ -289,7 +289,7 @@ MapVis.prototype.updateVis = function() {
         return -30 + 430 * idx + 100 * Math.floor(i / 4);
       })
       .attr('y', (d, i) => {
-        return 290 + 30 * (i % 4);
+        return 160 + 30 * (i % 4);
       })
       .attr('width', 95)
       .attr('height', 25)
@@ -304,7 +304,7 @@ MapVis.prototype.updateVis = function() {
         return 20 + 430 * idx + 100 * Math.floor(i / 4);
       })
       .attr('y', (d, i) => {
-        return 300 + 30 * (i % 4);
+        return 170 + 30 * (i % 4);
       })
       .text((d) => d)
       .call(wrap, 80)
@@ -343,7 +343,7 @@ MapVis.prototype.updateVis = function() {
       return 0;
     })
     .attr("y", (d, i) => {
-      return yLegend(i);
+      return yLegend(i)-40;
     })
     .attr("width", (d) => {
       return 20;
@@ -366,7 +366,7 @@ MapVis.prototype.updateVis = function() {
       return 30;
     })
     .attr("y", (d, i) => {
-      return 15 + yLegend(i);
+      return -25 + yLegend(i);
     })
     .text((d, i) => {
       return d;
@@ -376,14 +376,17 @@ MapVis.prototype.updateVis = function() {
     .style("text-anchor", "start");
   texts.exit().remove();
 
+
+  d3.select(".legend-text").remove();
   vis.svg.append("g")
     .append("text")
     .attr("class", "legend-text")
     .text('Gross Revenue ($)')
     .attr("x", 0)
-    .attr("y", 10)
+    .attr("y", -35)
     .attr("fill", "black")
     .style("font-size", 15);
+
 
   var movieTitle = vis.svgCol2.selectAll(".movie-name")
     .data([vis.selectedMovie])
@@ -455,7 +458,7 @@ MapVis.prototype.updateVis = function() {
 
   var piecolor = d3.scaleOrdinal()
     .domain(["International", "Domestic"])
-    .range(['#ff9000', '#ce6d0c']);
+    .range(['#3268bd', '#e23636']);
 
 
   // Compute the position of each group on the pie:
@@ -482,12 +485,10 @@ MapVis.prototype.updateVis = function() {
     .attr('fill', function(d) {
       return (piecolor(d.data.key))
     })
-    // .attr('x', 100)
-    // .attr('y', 100)
     .attr("stroke", "white")
     .style("stroke-width", "2px")
     .style("opacity", 1)
-    .attr("transform", "translate(290,60)");
+    .attr("transform", "translate(250,60)");
 
   // u.exit()
   //   .remove()
@@ -502,7 +503,7 @@ MapVis.prototype.updateVis = function() {
     })
     .attr("transform", function(d) {
       var centroid = arcGenerator.centroid(d);
-      var x = centroid[0] + 290;
+      var x = centroid[0] + 250;
       var y = centroid[1] + 60;
       return "translate(" + x + "," + y + ")";
     })
@@ -511,8 +512,8 @@ MapVis.prototype.updateVis = function() {
     .style('fill', 'white')
   // .attr("transform", "translate(300,80)");
 
-  var pieLegends = ['International', 'Domestic'];
-  var pieColors = ['#ff9000', '#ce6d0c'];
+  var pieLegends = ['Domestic', 'International', ];
+  var pieColors = ['#e23636', '#3268bd'];
   var legendPie = vis.svgCol2.selectAll(".pie-legend")
     .data(pieColors);
 
@@ -521,7 +522,7 @@ MapVis.prototype.updateVis = function() {
     .attr("class", "pie-legend")
     .merge(legendPie)
     .attr("x", (d, i) => {
-      return 340;
+      return 310;
     })
     .attr("y", (d, i) => {
       return 30 + 15 * (i);
@@ -543,7 +544,7 @@ MapVis.prototype.updateVis = function() {
     .attr("class", "pie-legend-text")
     .merge(legendPieText)
     .attr("x", (d, i) => {
-      return 355;
+      return 325;
     })
     .attr("y", (d, i) => {
       return 40 + 15 * (i);
