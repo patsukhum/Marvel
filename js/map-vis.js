@@ -33,7 +33,6 @@ MapVis.prototype.initVis = function() {
     'right': 40
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  // vis.width = 1000 - vis.margin.left - vis.margin.right;
   vis.height = vis.width * 0.35;
   vis.svg = makeSvg(vis, 'map-vis');
 
@@ -42,7 +41,6 @@ MapVis.prototype.initVis = function() {
     .attr('class', 'tooltip')
     .style('opacity', 0);
 
-  // vis.color = d3.scaleQuantile();
   vis.color = d3.scaleThreshold();
 
   vis.tooltip = d3.select("body").append("div")
@@ -84,9 +82,6 @@ MapVis.prototype.wrangleData = function() {
     vis.countryToId[d.name] = +d['country-code'];
   })
 
-  // test begin
-  // vis.selectedMovie = vis.data[0];
-
   vis.movieNames = vis.data.map((d) => d.Name);
   var curMovie = [];
   var movieKeys = Object.keys(vis.selectedMovie)
@@ -100,11 +95,6 @@ MapVis.prototype.wrangleData = function() {
     }
   }
   vis.data = curMovie;
-  // vis.dataRange = vis.data.filter((d) => {
-  //   return d['Market'] !== 'United States of America' && d['Market'] !== 'China';
-  // })
-
-  // test end
 
   var allCountryIds = []
   vis.data.forEach((d) => {
@@ -120,10 +110,6 @@ MapVis.prototype.wrangleData = function() {
     return !countriesExcluded.includes(countryName);
   });
 
-  // vis.countryInfo.forEach((d) => {
-  //   var country = idToCountry[d.id];
-  //   d.Gross = vis.mapData.reduce((d) => d.country);
-  // });
   vis.idToRevenue = {};
   vis.data.forEach((d) => {
     vis.idToRevenue[vis.countryToId[d.Market]] = d.Gross;
@@ -649,7 +635,8 @@ function formatRevenue(num) {
 function mapCountryName(name) {
   var mapping = {
     'United States of America': 'USA',
-    'United Kingdom of Great Britain and Northern Ireland': 'UK'
+    'United Kingdom of Great Britain and Northern Ireland': 'UK',
+    'Korea, Republic of': 'South Korea'
   };
   if (name in mapping) {
     return mapping[name];
