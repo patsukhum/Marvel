@@ -181,11 +181,11 @@ NetworkVis.prototype.nodeMouseout = function(d, vis) {
     vis.tooltip.transition()
         .duration(100)
         .style("opacity", 0);
+  }
     vis.edges.style('stroke', 'darkgray')
         .style('opacity', l => vis.scaleEdgeOpacity(l.count));
     vis.nodes.style('stroke', 'darkgray')
         .style('stroke-width', '2px');
-  }
 };
 NetworkVis.prototype.nodeMousemove = function(d, vis) {
   if (!vis.hideTooltip) {

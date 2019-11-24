@@ -252,8 +252,19 @@ fill: #e23636;
   left: 0;
 }
 
-/* Image stuff */
+/** Image stuff **/
+.half-height {
+  display: inline-block;
+  height: 400px;
+  overflow: hidden;
+  width:100%;
+}
 .img-max-height {
-  height: 100%;
-  width: auto;
+  width: 100%;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
 }
