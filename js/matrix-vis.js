@@ -37,7 +37,7 @@ Matrix.prototype.initVis = function() {
 
   vis.margin = {
     'top': 20,
-    'bottom': 20,
+    'bottom': 0,
     'left': 50,
     'right': 10
   };
@@ -156,7 +156,7 @@ Matrix.prototype.updateVis = function() {
         .attr("y", vis.innerPadding)
         .attr("width", vis.rectWidth)
         .attr("height", vis.rectWidth)
-        .attr("opacity", element === 0 ? 0 : 1)
+        .attr("opacity", element === 0 ? 1 : 0)
         .attr("fill", function(d) {
           return "lightgrey"
         });
@@ -173,7 +173,7 @@ Matrix.prototype.updateVis = function() {
         .attr("y", vis.innerPadding)
         .attr("width", vis.rectWidth)
         .attr("height", vis.rectWidth)
-        .attr("opacity", element === 0 ? 1 : 0)
+        .attr("opacity", element === 0 ? 0 : 1)
     });
   });
 
