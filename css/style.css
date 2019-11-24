@@ -117,7 +117,10 @@ div.tooltip {
   font-family: 'Acme', cursive;
 }
 
-
+.genre-label {
+  font-size: 15px;
+  font-family: 'Acme', cursive;
+}
 
 /* comic book box feel
 code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
