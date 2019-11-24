@@ -27,7 +27,8 @@ function createLineChartVis(error, data) {
 
 // create Vis2.5: map chart
 queue()
-    .defer(d3.csv, 'data/clean/endgame_clean.csv')
+    // .defer(d3.csv, 'data/clean/endgame_clean.csv')
+    .defer(d3.csv, 'data/clean/map-data-all.csv')
     .defer(d3.json, 'data/clean/world-110m.json')
     .defer(d3.json, 'data/clean/slim-2.json')
     .await(createMapVis);
@@ -51,10 +52,12 @@ queue()
 function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
   var config = {
+    height: 400,
     minNodeRadius: 10,
     maxNodeRadius: 30,
     strength: -400,
-    distance: 150
+    distance: 150,
+    margin: {top: 20, bottom: 80, left: 20, right: 20}
   };
   networkVis = new NetworkVis('network-vis', data, config);
 }
@@ -64,12 +67,12 @@ function createNetworkIntroVis(error, nodes, edges) {
   var edgesFilt = edges.filter(d => namesToKeep.includes(d.source.name) && namesToKeep.includes(d.target.name));
   var data = {'nodes': nodesFilt, 'edges': edgesFilt};
   var config = {
-    height: 300,
+    height: 400,
     margin: { top: 10, bottom: 10, left: 10, right: 10},
-    strength: -50,
-    distance: 100,
-    minNodeRadius: 20,
-    maxNodeRadius: 20,
+    strength: -100,
+    distance: 120,
+    minNodeRadius: 35,
+    maxNodeRadius: 35,
     hideTooltip: true
   };
   networkIntroVis = new NetworkVis('network-intro-vis', data, config);
@@ -87,3 +90,9 @@ function createMatrixVis(error, matrix_data, all_characters_data) {
   console.log(all_characters_data)
   matrixVis = new Matrix("matrix-vis", matrix_data, all_characters_data);
 };
+
+d3.select('#sort').on('change', function() {
+  choice = d3.select('#sort').property('value');
+  console.log(choice);
+  matrixVis.sortMatrix();
+})

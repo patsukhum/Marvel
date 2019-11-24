@@ -6,6 +6,7 @@
  *
  * @param _parentElement  -- ID of HTML element that will contain the vis
  * @param _data           -- JSON containing nodes and edges
+ * @param _config         -- Configuration object
  * @constructor
  */
 NetworkVis = function(_parentElement, _data, _config) {
@@ -13,15 +14,16 @@ NetworkVis = function(_parentElement, _data, _config) {
   this.data = _data;
   this.displayData = _data;
   this.config = _config;
+  this.selected = null;
 
   this.initVis();
 };
 NetworkVis.prototype.initVis = function() {
   var vis = this;
 
-  vis.margin = vis.config.margin || {'top': 40, 'bottom': 40, 'left': 40, 'right': 40};
+  vis.margin = vis.config.margin || {'top': 40, 'bottom': 80, 'left': 40, 'right': 40};
   vis.width = vis.config.width || $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.config.height || vis.width * 0.75;
+  vis.height = vis.config.height || vis.width * 0.7;
 
   // Defining parameters for force simulation
   vis.strength = vis.config.strength || -300;
@@ -66,8 +68,19 @@ NetworkVis.prototype.initVis = function() {
         .attr('class', 'tooltip')
         .style('opacity', 0);
   }
-
   vis.wrangleData();
+
+  // d3.select(vis.svg.parentNode)
+  //     .on('click', function() {
+  //       console.log('Click attached!'); clickReset(vis);
+  //     });
+
+  // d3.select(vis.svg.parentNode).append('rect')
+  //     .attr('width', vis.width)
+  //     .attr('height', vis.height)
+  //     .style('stroke', 'none')
+  //     .style('fill', 'none')
+  //     .on('click', function() { console.log('Click attached!'); clickReset(vis); });
 };
 NetworkVis.prototype.wrangleData = function() {
   var vis = this;
@@ -115,6 +128,7 @@ NetworkVis.prototype.updateVis = function() {
       .on('mouseover', d => vis.nodeMouseover(d, vis))
       .on('mouseout', d => vis.nodeMouseout(d, vis))
       .on('mousemove', d => vis.nodeMousemove(d, vis));
+      // .on('click', (d, i) => vis.nodeClick(d, i, vis)); (FOR NOW)
 
   nodeEnter.append('circle')
       .attr('r', d => vis.scaleNodeRadius(d.centrality));
@@ -193,3 +207,34 @@ NetworkVis.prototype.nodeMousemove = function(d, vis) {
         .style("top", (d3.event.pageY + 10) + "px");
   }
 };
+NetworkVis.prototype.nodeClick = function(d, i, vis) {
+  if (vis.selected !== d) {
+    clickReset(vis);
+
+    vis.selected = d;
+    setCircleLayout(vis.displayData.nodes, i, vis)
+  }
+  // d3.event.stopPropagation();
+};
+function clickReset(vis) {
+  console.log('Clicky!');
+  if (vis.selected) {
+    vis.displayData.nodes.forEach(function(d) {
+      d.fx = null;
+      d.fy = null;
+    });
+    vis.selected = null;
+  }
+}
+function setCircleLayout(nodes, idxSelected, vis) {
+  var total = nodes.length - 1,
+      r = Math.min(vis.width, vis.height) / 2 - 5,
+      arc = 2 * Math.PI / total;
+  nodes.filter((d, i) => i !== idxSelected).forEach(function(d, i) {
+    var theta = arc * i;
+    d.fx = Math.cos(theta) * r + vis.width / 2;
+    d.fy = Math.sin(theta) * r + vis.height / 2;
+  });
+  nodes[idxSelected].fx = vis.width / 2;
+  nodes[idxSelected].fy = vis.height / 2;
+}

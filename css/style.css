@@ -12,6 +12,7 @@ body {
 
 div.section {
   margin-bottom: 50px;
+  opacity: 0.9;
 }
 
 
@@ -31,7 +32,7 @@ h3 {
   text-align: center;
   font-size: 50px;
   font-family: 'Staatliches', cursive;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 h4 {
@@ -42,6 +43,31 @@ h4 {
 .vis-container {
   width: 100%;
   position: relative;
+}
+
+#poster {
+  box-shadow: 10px 10px 5px grey;
+
+  -webkit-transform:rotate(-4deg);
+  -moz-transform: rotate(-4deg);
+  -ms-transform: rotate(-4deg);
+  -o-transform: rotate(-4deg);
+  transform: rotate(-4deg);
+}
+
+.characters-background {
+  background-image: url("../img/other/mcu_all_80.jpg");
+  background-size: 100% 100%;
+  /* background-image: url("../img/marvel_characters_80.jpg"); */
+}
+.captain-america-background {
+  background-image: url("../img/other/captain_america_80.jpg");
+  background-size: 100% 100%;
+}
+
+.conclusion-background {
+  background-image: url("../img/other/marvel_characters_80.jpg");
+  background-size: 100% 100%;
 }
 
 
@@ -65,7 +91,7 @@ select {
 div.tooltip {
   position: absolute;
   background-color: white;
-  width: 250px;
+  width: auto;
   height: auto;
   padding: 10px;
   border-style: solid;
@@ -88,17 +114,9 @@ div.tooltip {
 
 .row_label, .col_label {
   font-weight: bold;
-  font-size: 15px;
   font-family: 'Acme', cursive;
 }
 
-.visTitle {
-    font-family: "Pangolin", cursive;
-}
-
-.xAxis, .yAxis {
-    font-family: 'Pangolin', cursive;
-}
 
 
 /* comic book box feel
@@ -119,8 +137,8 @@ code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
 }
 
 .box2 {
-  border-width: 5px 3px 4px 4px;
-  border-radius: 8% 4% 97% 5%/4% 50% 3% 1%;
+  border-width: 5px 3px 4px 5px;
+  border-radius: 8% 4% 1% 5%/4% 50% 3% 2%;
 }
 
 .white {
@@ -139,7 +157,7 @@ html {
 .mapPath {
   paint-order: stroke fill;
   stroke-width: 1.8;
-  stroke: black;
+  stroke: white;
 }
 
 /* plot flow */
@@ -171,8 +189,19 @@ html {
 }
 
 
-
+/* #################### */
 /* for vis2: line chart */
+
+.visTitle {
+  font-family: "Acme", cursive;
+  font-size: 23px;
+}
+
+.xAxis, .yAxis {
+  font-family: 'Pangolin', cursive;
+  font-size: 15px;
+}
+
 .lineDC {
   fill: none;
   stroke: #0476F2;
@@ -252,6 +281,10 @@ fill: #e23636;
   left: 0;
 }
 
+
+
+
+
 /** Image stuff **/
 .half-height {
   display: inline-block;
@@ -267,4 +300,33 @@ fill: #e23636;
   margin-left: auto;
   margin-right: auto;
   width: 75%;
+}
+
+.stars-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+}
+
+.stars-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+.stars {
+  width: 250px;
+  height: 250px;
 }

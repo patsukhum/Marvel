@@ -36,10 +36,10 @@ Matrix.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 0,
-    'bottom': 40,
-    'left': 40,
-    'right': 40
+    'top': 20,
+    'bottom': 0,
+    'left': 50,
+    'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
   vis.height = vis.width /2;
@@ -63,6 +63,8 @@ Matrix.prototype.initVis = function() {
       .append('div')
       .attr('class', 'tooltip')
       .style('opacity', 0);
+  vis.rectWidth = 25;
+  vis.innerPadding = 5;
 
   vis.wrangleData();
 };
@@ -119,6 +121,22 @@ Matrix.prototype.updateVis = function() {
       .selectAll("image")
       .data(vis.matrixData);
 
+  //column character icons
+  vis.matrixData.forEach(function(d,j){
+    vis.svg.append("image")
+        .attr('xlink:href', () => {
+          return svgCharactersMapping[j];
+        })
+        .attr("x", (vis.rectWidth + vis.innerPadding) * j + vis.innerPadding)
+        .attr("y", -vis.innerPadding * 2)
+        .attr("width", vis.rectWidth)
+        .attr("height", vis.rectWidth)
+        .attr("opacity", 1)
+        .on('click', function(d,index){
+          console.log("character clicked")
+        });
+  });
+
   u.enter()
       .append('image')
       .attr('xlink:href', (d,j) => {
@@ -155,49 +173,21 @@ Matrix.prototype.updateVis = function() {
     //group to each row
     vis.rgroup = vis.svg.append("g")
       .attr("class", "matrix_row")
-      .attr("transform", "translate(" + (vis.margin.left + 10) +
-        "," + (vis.margin.top + 31*i + 10) + ")");
+      .attr("transform", "translate(" + 0 +
+        "," + ((vis.rectWidth + vis.innerPadding) * i + vis.innerPadding) + ")");
 
     //add rect to each row
     row.forEach(function(element, j) {
       vis.rgroup.append("rect")
-        .attr("x", vis.margin.left + 40 * j)
-        .attr("y", vis.margin.top + 35)
-        .attr("width", 25)
-        .attr("height", 25)
-        .attr("opacity", (d) => {
-          // Flipping the logic: Visible only for 0's b/c we fill 1's with
-          // image SVGs.
-          if (element === 0) {
-            return 1;
-          } else {
-            return 0;
-          }
-        })
+        .attr("x", (vis.rectWidth + vis.innerPadding) * j + vis.innerPadding)
+        .attr("y", vis.innerPadding)
+        .attr("width", vis.rectWidth)
+        .attr("height", vis.rectWidth)
+        .attr("opacity", element === 0 ? 1 : 0)
         .attr("fill", function(d) {
           return "lightgrey"
         });
     });
-
-    //row power labels
-    vis.svg.selectAll("text.row_label")
-        .data(vis.matrixData)
-        .enter()
-        .append("text")
-        .attr("class", "row_label")
-        // .attr("x", -40)
-        .attr("x", vis.margin.left +30)
-        .attr("y", function(d, index) {
-          return 30 * index + 70;
-        })
-        .text(function(col) {
-          return col.power;
-        })
-        .style("text-anchor", "end")
-        .attr("font-size", 13)
-        .on('click', function(d,index){
-          vis.sortMatrix(d.power)
-        });
 
     //add SVG to each row
     row.forEach(function(element, j) {
@@ -206,19 +196,36 @@ Matrix.prototype.updateVis = function() {
         .attr('xlink:href', (d) => {
           return vis.svgImagesMapping[i];
         })
-        .attr("x", vis.margin.left + 40 * j -5)
-        .attr("y", vis.margin.top + 35)
-        .attr("width", 35)
-        .attr("height", 35)
-        .attr("opacity", (d) => {
-          if (element === 1) {
-            return 1;
-          } else {
-            return 0;
-          }
-        })
+        .attr("x", (vis.rectWidth + vis.innerPadding) * j + vis.innerPadding)
+        .attr("y", vis.innerPadding)
+        .attr("width", vis.rectWidth)
+        .attr("height", vis.rectWidth)
+        .attr("opacity", element === 0 ? 0 : 1)
     });
   });
+
+  //row power labels
+  vis.svg.selectAll("text.row_label")
+      .data(vis.matrixData)
+      .enter()
+      .append("text")
+      .attr("class", "row_label")
+      .attr('text-anchor', 'end')
+      .attr('alignment-baseline', 'middle')
+      .attr("x", 0)
+      .attr("y", (d, i) => (vis.rectWidth * (i + 1/2) + vis.innerPadding * (i - 1/2)))
+      .text(function(col) {
+        if (col.power.length > 0) {
+          return titleCase(col.power);
+        }
+        return col.power;
+      })
+      .style("text-anchor", "end")
+      .attr("font-size", 9)
+      .on('click', function(d,index){
+        vis.sortMatrix(d.power)
+      })
+      .call(wrap, 10);
 };
 
 Matrix.prototype.showDetail = function(d, vis) {
@@ -243,17 +250,20 @@ Matrix.prototype.sortMatrix = function(field) {
     console.log(a)
     return b[field] - a[field]
   });
-  // console.log(field);
-  console.log(vis.matrixData)
-  // var rgroup = vis.svg.selectAll('.matrix_row')
-  //     .data(vis.matrixData, function(d){
-  //       // console.log(d)
-  //       return d.name
-  //     })
 
-  // rgroup.transition().duration(1000)
-  //     .attr("transform", function(d,i){
-  //       return "translate(" + (vis.margin.left + 10) +
-  //           "," + (vis.margin.top + 31*i + 10) + ")";
-  //     });
+  console.log(vis.matrixData)
+
+  var rgroup = vis.svg.selectAll('.matrix_row')
+      .data(vis.matrixData, function(d){
+        console.log(d)
+        // return d.power
+      });
+
+  // console.log(rgroup)
+
+  rgroup.transition().duration(1000)
+      .attr("transform", function(d,i){
+        return "translate(" + (10) +
+            "," + (31*i + 10) + ")";
+      });
 };
