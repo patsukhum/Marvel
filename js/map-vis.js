@@ -444,7 +444,7 @@ MapVis.prototype.updateVis = function() {
 
   var piecolor = d3.scaleOrdinal()
     .domain(["International", "Domestic"])
-    .range(['#3268bd', '#e23636']);
+    .range(['#3268bd', '#A2CD48']);
 
 
   // Compute the position of each group on the pie:
@@ -499,7 +499,7 @@ MapVis.prototype.updateVis = function() {
   // .attr("transform", "translate(300,80)");
 
   var pieLegends = ['Domestic', 'International', ];
-  var pieColors = ['#e23636', '#3268bd'];
+  var pieColors = ['#A2CD48', '#3268bd'];
   var legendPie = vis.svgCol2.selectAll(".pie-legend")
     .data(pieColors);
 
