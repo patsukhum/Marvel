@@ -55,6 +55,12 @@ h4 {
   transform: rotate(-4deg);
 }
 
+.global-background {
+  background-image: url("../img/other/global3.png");
+  background-size: 100%;
+}
+
+
 .characters-background {
   background-image: url("../img/other/mcu_all_80.jpg");
   background-size: 100% 100%;
