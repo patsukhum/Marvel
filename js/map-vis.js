@@ -27,14 +27,14 @@ MapVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 40,
+    'top': 150,
     'bottom': 40,
     'left': 40,
     'right': 40
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
   // vis.width = 1000 - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 1;
+  vis.height = vis.width * 0.35;
   vis.svg = makeSvg(vis, 'map-vis');
 
   vis.tooltip = d3.select('body').append('g')
@@ -66,7 +66,7 @@ MapVis.prototype.initVis = function() {
   vis.svgCol2 = vis.svg.append("g")
     .attr("class", "map-col2")
     .attr("transform", "translate(" + vis.xCol2 +
-      ",0)");
+      ",-120)");
 
   vis.wrangleData();
 };
@@ -298,7 +298,7 @@ MapVis.prototype.updateVis = function() {
       return 0;
     })
     .attr("y", (d, i) => {
-      return 80 + yLegend(i);
+      return yLegend(i);
     })
     .attr("width", (d) => {
       return 20;
@@ -321,7 +321,7 @@ MapVis.prototype.updateVis = function() {
       return 30;
     })
     .attr("y", (d, i) => {
-      return 95 + yLegend(i);
+      return 15 + yLegend(i);
     })
     .text((d, i) => {
       return d;
@@ -336,7 +336,7 @@ MapVis.prototype.updateVis = function() {
     .attr("class", "legend-text")
     .text('Gross Revenue ($)')
     .attr("x", 0)
-    .attr("y", 90)
+    .attr("y", 10)
     .attr("fill", "black")
     .style("font-size", 15);
 
