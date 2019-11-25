@@ -34,7 +34,7 @@ PlotFlowVis.prototype.initVis = function() {
   vis.svg = makeSvg(vis, 'plot-flow-vis');
 
   vis.rectHeight = 35;
-  vis.rectWidth = 75;
+  vis.rectWidth = 78;
 
   // Parsing data
   var yearCounts = {};
