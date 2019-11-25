@@ -53,6 +53,7 @@ $('#plot-flow-sec button').on('click', function(event) {
   plotVis.toggleBranching();
 });
 
+
 // ********** Network intro ********** //
 function drawNetworkIntroVis() {
   
@@ -76,3 +77,12 @@ function drawCookieChartVis() {
     cookiechartVis.updateVis();
   }
 }
+
+// // ********** Event handler ********** //
+// var eventHandler = {};
+// $(eventHandler).bind("selectionChanged", function(character) {
+//   matrixVis.highlightCol(character);
+// });
+// $(eventHandler).bind("selectionClear", function() {
+//   matrixVis.clearHighlight();
+// });

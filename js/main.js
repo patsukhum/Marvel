@@ -59,8 +59,10 @@ function createNetworkVis(error, nodes, edges) {
     maxNodeRadius: 30,
     strength: -400,
     distance: 150,
-    margin: {top: 20, bottom: 80, left: 20, right: 20}
-  };
+    margin: {top: 30, bottom: 80, left: 20, right: 20},
+    linkToMatrix: true,
+    topText: "Click on one of the bubbles to highlight the matrix! (Click again to reset)"
+};
   networkVis = new NetworkVis('network-vis', data, config);
 }
 function createNetworkIntroVis(error, nodes, edges) {
@@ -75,7 +77,8 @@ function createNetworkIntroVis(error, nodes, edges) {
     distance: 120,
     minNodeRadius: 35,
     maxNodeRadius: 35,
-    hideTooltip: true
+    hideTooltip: true,
+    linkToMatrix: false
   };
   networkIntroVis = new NetworkVis('network-intro-vis', data, config);
 }
