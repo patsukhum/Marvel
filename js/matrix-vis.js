@@ -29,7 +29,7 @@ Matrix.prototype.initVis = function() {
     'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width /2;
+  vis.height = vis.width / 2;
 
   vis.svg = makeSvg(vis, 'matrix-vis');
   var baseDir = 'img/attributes/';
@@ -78,6 +78,13 @@ Matrix.prototype.initVis = function() {
 
   vis.gRowLabs = vis.svg.append('g');
 
+  // Adding text
+  vis.svg.append('text')
+      .attr('y', vis.height - 10)
+      .attr('x', 0)
+      .text('Click the name of an ability to sort the columns!')
+      .attr('class', 'annotation');
+
   vis.wrangleData();
 };
 
@@ -111,6 +118,8 @@ Matrix.prototype.updateVis = function() {
         .attr('x', -vis.innerPadding)
         .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding)
         .on('click', d => vis.sortMatrix(d, vis))
+        .on('mouseover', function() { d3.select(this).attr('fill', '#f78f3f'); })
+        .on('mouseout', function() { d3.select(this).attr('fill', 'black'); })
         .call(wrap, 10);
 
   vis.cols = vis.svg.selectAll('g.col')
@@ -125,7 +134,9 @@ Matrix.prototype.updateVis = function() {
       .attr('x', 0)
       .attr('y', -vis.rectWidth)
       .attr('width', vis.rectWidth)
-      .attr('height', vis.rectHeight);
+      .attr('height', vis.rectHeight)
+      .on('mouseover', d => vis.showDetail(d, vis))
+      .on('mouseout', d => vis.hideDetail(d, vis));
 
   vis.cols = colEnter.merge(vis.cols)
       .transition(400)
@@ -166,7 +177,7 @@ Matrix.prototype.showDetail = function(d, vis) {
   vis.tooltip.transition()
       .style('opacity', 0.8);
 
-  vis.tooltip.html(`<h4>${d.name}</h4>`)
+  vis.tooltip.html(`<p>${d.name}</p>`)
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY + 10) + "px");
 };

@@ -36,6 +36,9 @@ NetworkVis.prototype.initVis = function() {
   // Whether to link to the matrix
   vis.linkToMatrix = vis.config.linkToMatrix || false;
 
+  // Text to put at the top
+  vis.topText = vis.config.topText || "";
+
   vis.svg = makeSvg(vis, 'network-vis');
 
   vis.gEdges = vis.svg.append('g')
@@ -72,19 +75,14 @@ NetworkVis.prototype.initVis = function() {
         .attr('class', 'tooltip')
         .style('opacity', 0);
   }
+
+  vis.svg.append('text')
+      .attr('x', 0)
+      .attr('y', -20)
+      .attr('class', 'annotation')
+      .text(vis.topText);
+
   vis.wrangleData();
-
-  // d3.select(vis.svg.parentNode)
-  //     .on('click', function() {
-  //       console.log('Click attached!'); clickReset(vis);
-  //     });
-
-  // d3.select(vis.svg.parentNode).append('rect')
-  //     .attr('width', vis.width)
-  //     .attr('height', vis.height)
-  //     .style('stroke', 'none')
-  //     .style('fill', 'none')
-  //     .on('click', function() { console.log('Click attached!'); clickReset(vis); });
 };
 NetworkVis.prototype.wrangleData = function() {
   var vis = this;

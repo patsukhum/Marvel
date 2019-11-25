@@ -83,7 +83,7 @@ select {
   font-size: 15px;
 }
 
-
+/*** Network ***/
 .edge {
   stroke: darkgray;
   fill: none;
@@ -93,6 +93,9 @@ select {
   fill: white;
   stroke: darkgray;
   stroke-width: 2px;
+}
+.annotation {
+  font-size: 11px;
 }
 
 div.tooltip {
