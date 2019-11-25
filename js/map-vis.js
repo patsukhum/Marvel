@@ -74,15 +74,12 @@ MapVis.prototype.wrangleData = function() {
 
   vis.mapData = topojson.feature(vis.mapDataRaw, vis.mapDataRaw.objects.countries).features;
 
-
   vis.idToCountry = {};
   vis.countryToId = {};
   vis.countryCodes.forEach((d) => {
     vis.idToCountry[+d['country-code']] = d.name;
     vis.countryToId[d.name] = +d['country-code'];
   })
-
-
 
   vis.movieNames = vis.data.map((d) => d.Name);
   var curMovie = [];
@@ -617,7 +614,7 @@ function mapCountryName(name) {
 
 function clicked(i, vis) {
   vis.selectedMovie = vis.allData[i];
-  vis.updateDataSelection();
+  vis.wrangleData();
 }
 
 function formatMillions(num) {
