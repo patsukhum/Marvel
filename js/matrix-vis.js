@@ -113,10 +113,10 @@ Matrix.prototype.updateVis = function() {
         .on('click', d => vis.sortMatrix(d, vis))
         .call(wrap, 10);
 
-  var cols = vis.svg.selectAll('g.col')
+  vis.cols = vis.svg.selectAll('g.col')
       .data(vis.displayData, d => d.name);
 
-  var colEnter = cols.enter()
+  var colEnter = vis.cols.enter()
       .append('g')
       .attr('class', 'col');
 
@@ -127,13 +127,13 @@ Matrix.prototype.updateVis = function() {
       .attr('width', vis.rectWidth)
       .attr('height', vis.rectHeight);
 
-  cols = colEnter.merge(cols)
+  vis.cols = colEnter.merge(vis.cols)
       .transition(400)
       .attr('transform', (d, i) => 'translate(' + ((vis.rectWidth + vis.innerPadding) * i + vis.innerPadding) + ",0)")
       .selection();
 
   // Set x and y for the rows
-  var cells = cols.selectAll('g.cell')
+  var cells = vis.cols.selectAll('g.cell')
       .data(d => d.data);
 
   var cellEnter = cells.enter()
@@ -186,4 +186,14 @@ Matrix.prototype.sortMatrix = function(power, vis) {
   console.log(vis.matrixData);
 
   vis.wrangleData();
+};
+Matrix.prototype.highlightCol = function(character) {
+  var vis = this;
+  console.log("Highlighting");
+  vis.cols.style('opacity', d => d.name === character ? 1 : 0.3);
+};
+Matrix.prototype.clearHighlight = function() {
+  var vis = this;
+
+  vis.cols.style('opacity', 1);
 };

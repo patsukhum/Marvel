@@ -7,6 +7,7 @@
  * @param _parentElement  -- ID of HTML element that will contain the vis
  * @param _data           -- JSON containing nodes and edges
  * @param _config         -- Configuration object
+ * @param _eventHandler   -- Event handler
  * @constructor
  */
 NetworkVis = function(_parentElement, _data, _config) {
@@ -127,8 +128,8 @@ NetworkVis.prototype.updateVis = function() {
       .call(vis.dragNode)
       .on('mouseover', d => vis.nodeMouseover(d, vis))
       .on('mouseout', d => vis.nodeMouseout(d, vis))
-      .on('mousemove', d => vis.nodeMousemove(d, vis));
-      // .on('click', (d, i) => vis.nodeClick(d, i, vis)); (FOR NOW)
+      .on('mousemove', d => vis.nodeMousemove(d, vis))
+      .on('click', (d, i) => vis.nodeClick(d, i, vis));
 
   nodeEnter.append('circle')
       .attr('r', d => vis.scaleNodeRadius(d.centrality));
@@ -212,20 +213,17 @@ NetworkVis.prototype.nodeClick = function(d, i, vis) {
     clickReset(vis);
 
     vis.selected = d;
-    setCircleLayout(vis.displayData.nodes, i, vis)
+    matrixVis.highlightCol(d.name);
+  } else {
+    matrixVis.clearHighlight();
   }
   // d3.event.stopPropagation();
 };
-function clickReset(vis) {
-  console.log('Clicky!');
-  if (vis.selected) {
-    vis.displayData.nodes.forEach(function(d) {
-      d.fx = null;
-      d.fy = null;
-    });
-    vis.selected = null;
-  }
+function clickReset() {
+  console.log('Click reset!');
+  matrixVis.clearHighlight();
 }
+
 function setCircleLayout(nodes, idxSelected, vis) {
   var total = nodes.length - 1,
       r = Math.min(vis.width, vis.height) / 2 - 5,
