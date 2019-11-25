@@ -33,6 +33,9 @@ NetworkVis.prototype.initVis = function() {
   // Whether to use tooltip
   vis.hideTooltip = vis.config.hideTooltip || false;
 
+  // Whether to link to the matrix
+  vis.linkToMatrix = vis.config.linkToMatrix || false;
+
   vis.svg = makeSvg(vis, 'network-vis');
 
   vis.gEdges = vis.svg.append('g')
@@ -209,20 +212,16 @@ NetworkVis.prototype.nodeMousemove = function(d, vis) {
   }
 };
 NetworkVis.prototype.nodeClick = function(d, i, vis) {
-  if (vis.selected !== d) {
-    clickReset(vis);
-
-    vis.selected = d;
-    matrixVis.highlightCol(d.name);
-  } else {
-    matrixVis.clearHighlight();
+  if (vis.linkToMatrix) {
+    console.log(vis.linkToMatrix);
+    if (vis.selected !== d) {
+      vis.selected = d;
+      matrixVis.highlightCol(d.name);
+    } else {
+      matrixVis.clearHighlight();
+    }
   }
-  // d3.event.stopPropagation();
 };
-function clickReset() {
-  console.log('Click reset!');
-  matrixVis.clearHighlight();
-}
 
 function setCircleLayout(nodes, idxSelected, vis) {
   var total = nodes.length - 1,
