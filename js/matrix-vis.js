@@ -34,22 +34,22 @@ Matrix.prototype.initVis = function() {
   vis.svg = makeSvg(vis, 'matrix-vis');
   var baseDir = 'img/attributes/';
   vis.svgImagesMapping = {
-      0: baseDir+"strength.svg",
-      1: baseDir+"speed.svg",
-      2: baseDir+"brain.svg",
-      3: baseDir+"alien.svg",
-      4: baseDir+"heal.svg",
-      5: baseDir+"armor.svg",
-      6: baseDir+"weapons.svg",
-      7: baseDir+"flight.svg",
-      8: baseDir+"magic.svg",
-      9: baseDir+"chemistry.svg"
+    0: baseDir + "strength.svg",
+    1: baseDir + "speed.svg",
+    2: baseDir + "brain.svg",
+    3: baseDir + "alien.svg",
+    4: baseDir + "heal.svg",
+    5: baseDir + "armor.svg",
+    6: baseDir + "weapons.svg",
+    7: baseDir + "flight.svg",
+    8: baseDir + "magic.svg",
+    9: baseDir + "chemistry.svg"
   };
 
   vis.tooltip = d3.select('body').append('g')
-      .append('div')
-      .attr('class', 'tooltip')
-      .style('opacity', 0);
+    .append('div')
+    .attr('class', 'tooltip')
+    .style('opacity', 0);
   vis.rectWidth = 25;
   vis.innerPadding = 5;
 
@@ -70,7 +70,8 @@ Matrix.prototype.initVis = function() {
 
   //create an array of attributes for filtering purposes
   vis.attributes = ["super_strength", "super_speed", "super_intelligence",
-    "alien", "healing", "armor", "weapon", "flight", "magic", "acquired_power"];
+    "alien", "healing", "armor", "weapon", "flight", "magic", "acquired_power"
+  ];
 
   console.log(vis.matrixData);
 
@@ -80,10 +81,10 @@ Matrix.prototype.initVis = function() {
 
   // Adding text
   vis.svg.append('text')
-      .attr('y', vis.height - 10)
-      .attr('x', 0)
-      .text('Click the name of an ability to sort the columns!')
-      .attr('class', 'annotation');
+    .attr('y', vis.height - 10)
+    .attr('x', 0)
+    .text('Click the name of an ability to sort the columns!')
+    .attr('class', 'annotation');
 
   vis.wrangleData();
 };
@@ -98,7 +99,10 @@ Matrix.prototype.wrangleData = function() {
     vis.attributes.forEach(function(a, j) {
       col[j] = d[a];
     });
-    vis.displayData[i] = {name: d.name, data: col};
+    vis.displayData[i] = {
+      name: d.name,
+      data: col
+    };
   });
 
   vis.updateVis();
@@ -108,89 +112,111 @@ Matrix.prototype.updateVis = function() {
   var vis = this;
 
   var rowLabs = vis.gRowLabs
-      .selectAll("text.row_label")
-        .data(vis.attributes)
-      .enter().append('text')
-        .attr('class', 'row_label')
-        .text(d => titleCase(d))
-        .style('text-anchor', 'end')
-        .style('alignment-baseline', 'hanging')
-        .attr('x', -vis.innerPadding)
-        .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding)
-        .on('click', d => vis.sortMatrix(d, vis))
-        .on('mouseover', function() { d3.select(this).attr('fill', '#f78f3f'); })
-        .on('mouseout', function() { d3.select(this).attr('fill', 'black'); })
-        .call(wrap, 10);
+    .selectAll("text.row_label")
+    .data(vis.attributes)
+    .enter().append('text')
+    .attr('class', 'row_label')
+    .text(d => titleCase(d))
+    .style('text-anchor', 'end')
+    .style('alignment-baseline', 'hanging')
+    .attr('x', -vis.innerPadding - 10)
+    .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding)
+    .on('click', d => vis.sortMatrix(d, vis))
+    .on('mouseover', function() {
+      d3.select(this).attr('fill', '#f78f3f');
+    })
+    .on('mouseout', function() {
+      d3.select(this).attr('fill', 'black');
+    })
+    .call(wrap, 10);
+
+  vis.gRowLabs
+    .selectAll("text.sortable-icon")
+    .data(vis.attributes)
+    .enter().append('image')
+    .attr('xlink:href', d => 'img/sortable.svg')
+    .attr('class', 'sortable-icon')
+    .attr('x', -vis.innerPadding-8)
+    .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding+7)
+    .on('click', d => vis.sortMatrix(d, vis))
+    .attr('width', 13)
+    .attr('height', 13)
+    .on('mouseover', function() {
+      d3.select(this).attr('fill', '#f78f3f');
+    })
+    .on('mouseout', function() {
+      d3.select(this).attr('fill', 'black');
+    })
 
   vis.cols = vis.svg.selectAll('g.col')
-      .data(vis.displayData, d => d.name);
+    .data(vis.displayData, d => d.name);
 
   var colEnter = vis.cols.enter()
-      .append('g')
-      .attr('class', 'col');
+    .append('g')
+    .attr('class', 'col');
 
   colEnter.append('image')
-      .attr('xlink:href', d => getSvgIcon(d.name))
-      .attr('x', 0)
-      .attr('y', -vis.rectWidth)
-      .attr('width', vis.rectWidth)
-      .attr('height', vis.rectHeight)
-      .on('mouseover', d => vis.showDetail(d, vis))
-      .on('mouseout', d => vis.hideDetail(d, vis));
+    .attr('xlink:href', d => getSvgIcon(d.name))
+    .attr('x', 0)
+    .attr('y', -vis.rectWidth)
+    .attr('width', vis.rectWidth)
+    .attr('height', vis.rectHeight)
+    .on('mouseover', d => vis.showDetail(d, vis))
+    .on('mouseout', d => vis.hideDetail(d, vis));
 
   vis.cols = colEnter.merge(vis.cols)
-      .transition(400)
-      .attr('transform', (d, i) => 'translate(' + ((vis.rectWidth + vis.innerPadding) * i + vis.innerPadding) + ",0)")
-      .selection();
+    .transition(400)
+    .attr('transform', (d, i) => 'translate(' + ((vis.rectWidth + vis.innerPadding) * i + vis.innerPadding) + ",0)")
+    .selection();
 
   // Set x and y for the rows
   var cells = vis.cols.selectAll('g.cell')
-      .data(d => d.data);
+    .data(d => d.data);
 
   var cellEnter = cells.enter()
-      .append('g')
-      .attr('class', 'cell');
+    .append('g')
+    .attr('class', 'cell');
 
   cellEnter.append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('height', vis.rectWidth)
-      .attr('width', vis.rectWidth)
-      .attr('class', 'no-power')
-      .style('opacity', d => 1 - d);
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('height', vis.rectWidth)
+    .attr('width', vis.rectWidth)
+    .attr('class', 'no-power')
+    .style('opacity', d => 1 - d);
 
   cellEnter.append('image')
-      .attr('xlink:href', function(d, i) {
-        return vis.svgImagesMapping[i];
-      })
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('height', vis.rectWidth)
-      .attr('width', vis.rectWidth)
-      .style('opacity', d => d);
+    .attr('xlink:href', function(d, i) {
+      return vis.svgImagesMapping[i];
+    })
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('height', vis.rectWidth)
+    .attr('width', vis.rectWidth)
+    .style('opacity', d => d);
 
   cellEnter.merge(cells)
-      .attr('transform', (d, i) => 'translate(0,' + (vis.innerPadding + (vis.innerPadding + vis.rectWidth) * i) + ')');
+    .attr('transform', (d, i) => 'translate(0,' + (vis.innerPadding + (vis.innerPadding + vis.rectWidth) * i) + ')');
 };
 
 Matrix.prototype.showDetail = function(d, vis) {
   vis.tooltip.transition()
-      .style('opacity', 0.8);
+    .style('opacity', 0.8);
 
   vis.tooltip.html(`<p>${d.name}</p>`)
-      .style("left", (d3.event.pageX) + "px")
-      .style("top", (d3.event.pageY + 10) + "px");
+    .style("left", (d3.event.pageX) + "px")
+    .style("top", (d3.event.pageY + 10) + "px");
 };
 
 Matrix.prototype.hideDetail = function(d, vis) {
   vis.tooltip.transition()
-      .duration(100)
-      .style("opacity", 0);
+    .duration(100)
+    .style("opacity", 0);
 };
 
 Matrix.prototype.sortMatrix = function(power, vis) {
   console.log(`Sorting by ${power}`);
-  vis.matrixData = vis.matrixData.sort(function(a,b){
+  vis.matrixData = vis.matrixData.sort(function(a, b) {
     return b[power] - a[power];
   });
 
