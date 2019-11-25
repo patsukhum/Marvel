@@ -93,6 +93,8 @@ Matrix.prototype.wrangleData = function() {
     });
     vis.displayData[i] = {name: d.name, data: col};
   });
+
+  vis.updateVis();
 };
 
 Matrix.prototype.updateVis = function() {
