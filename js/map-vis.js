@@ -82,6 +82,8 @@ MapVis.prototype.wrangleData = function() {
     vis.countryToId[d.name] = +d['country-code'];
   })
 
+
+
   vis.movieNames = vis.data.map((d) => d.Name);
   var curMovie = [];
   var movieKeys = Object.keys(vis.selectedMovie)
@@ -148,10 +150,6 @@ MapVis.prototype.wrangleData = function() {
 MapVis.prototype.updateDataSelection = function() {
   var vis = this;
 
-
-  // test begin
-  // vis.selectedMovie = vis.data[0];
-
   vis.movieNames = vis.data.map((d) => d.Name);
   var curMovie = [];
   var movieKeys = Object.keys(vis.selectedMovie)
@@ -180,14 +178,6 @@ MapVis.prototype.updateDataSelection = function() {
     return !countriesExcluded.includes(countryName);
   });
 
-  // vis.countryInfo.forEach((d) => {
-  //   var country = idToCountry[d.id];
-  //   d.Gross = vis.mapData.reduce((d) => d.country);
-  // });
-  vis.idToRevenue = {};
-  vis.data.forEach((d) => {
-    vis.idToRevenue[vis.countryToId[d.Market]] = d.Gross;
-  })
 
   var sorted = vis.data.sort((a, b) => a.Gross > b.Gross ? -1 : 1);
   vis.topGross = sorted.slice(0, 3);
@@ -198,19 +188,12 @@ MapVis.prototype.updateDataSelection = function() {
 
 MapVis.prototype.updateVis = function() {
   var vis = this;
-  // --> Choropleth implementation
-  // var maxVal = d3.max(vis.dataRange, (d) => {
-  //   return d.Gross;
-  // });
 
   vis.color.domain([0.1, 100000, 1000000, 10000000, 100000000, 500000000, 1000000000]);
-  // vis.color.range(d3.schemeReds[8].slice(2, 8));
+
   var emptyColor = ["lightgray"];
   var colors = emptyColor.concat(d3.schemeReds[6]);
-
   vis.color.range(colors);
-
-  // var rangeArr = createRange(maxVal, 8);
 
   var projection = d3.geoConicEqualArea()
     .translate([vis.width / 4, vis.height / 6])
@@ -232,7 +215,6 @@ MapVis.prototype.updateVis = function() {
       vis.tooltip.transition()
         .duration(800)
         .style("opacity", .8);
-      // var code = d.properties.adm0_a3_is;
       var txt = vis.idToCountry[d.id] + "<br>" + formatRevenue(vis.idToRevenue[d.id]);
       vis.tooltip.html(txt)
         .style("left", (d3.event.pageX) + "px")
@@ -249,9 +231,8 @@ MapVis.prototype.updateVis = function() {
     });
   chmap.exit().remove();
 
-  // Movie Names By Year
+  // Movie Names By Year (for bottom panel)
   var yearRanges = ['2008-2013', '2014-2017', '2018-2019'];
-
   vis.movieYearRangeArr.forEach((curMovies, idx) => {
     var yearText = yearRanges[idx];
     vis.svg.selectAll('.year-text' + idx)
@@ -309,8 +290,7 @@ MapVis.prototype.updateVis = function() {
   })
 
 
-  // LEGEND
-
+  // Map legend
   var legendHeight = 130;
   var length = vis.color.range().length;
 
@@ -362,7 +342,6 @@ MapVis.prototype.updateVis = function() {
     .style("text-anchor", "start");
   texts.exit().remove();
 
-
   d3.select(".legend-text").remove();
   vis.svg.append("g")
     .append("text")
@@ -373,7 +352,7 @@ MapVis.prototype.updateVis = function() {
     .attr("fill", "black")
     .style("font-size", 15);
 
-
+  // Col 2 movie title header
   var movieTitle = vis.svgCol2.selectAll(".movie-name")
     .data([vis.selectedMovie])
 
@@ -391,11 +370,10 @@ MapVis.prototype.updateVis = function() {
     .style('text-decoration', 'underline');
   movieTitle.exit().remove();
 
-  console.log(vis.selectedMovie)
+  // Col 2 Charts
   var selectedMovieAux = vis.auxData.filter((d) => {
     return vis.selectedMovie.Name === d.Title;
   })[0];
-  console.log(selectedMovieAux)
 
   vis.svgCol2.append("text")
     .attr("class", "col2-text")
@@ -435,6 +413,7 @@ MapVis.prototype.updateVis = function() {
     .attr("fill", "black")
     .style("font-size", 13);
 
+  // Pie chart
   var pieData = {
     'International': selectedMovieAux['International'],
     'Domestic': selectedMovieAux['Domestic'],
@@ -446,27 +425,23 @@ MapVis.prototype.updateVis = function() {
     .domain(["International", "Domestic"])
     .range(['#3268bd', '#A2CD48']);
 
-
-  // Compute the position of each group on the pie:
   var pie = d3.pie()
     .value(function(d) {
       return d.value;
     })
   var data_ready = pie(d3.entries(pieData))
-  // map to data
+
+  var pieXOffset = 250;
+  var pieYOffset = 60;
   var u = vis.svgCol2.selectAll(".pie")
     .data(data_ready)
 
   var arcGenerator = d3.arc()
     .innerRadius(0)
     .outerRadius(radius)
-  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+
   u.enter()
     .append('path')
-    // .attr("class", "pie")
-    // .merge(u)
-    // .transition()
-    // .duration(1000)
     .attr('d', arcGenerator)
     .attr('fill', function(d) {
       return (piecolor(d.data.key))
@@ -474,10 +449,7 @@ MapVis.prototype.updateVis = function() {
     .attr("stroke", "white")
     .style("stroke-width", "2px")
     .style("opacity", 1)
-    .attr("transform", "translate(250,60)");
-
-  // u.exit()
-  //   .remove()
+    .attr("transform", "translate("+pieXOffset+","+pieYOffset+")");
 
   vis.svgCol2
     .selectAll('.pie')
@@ -489,14 +461,13 @@ MapVis.prototype.updateVis = function() {
     })
     .attr("transform", function(d) {
       var centroid = arcGenerator.centroid(d);
-      var x = centroid[0] + 250;
-      var y = centroid[1] + 60;
+      var x = centroid[0] + pieXOffset;
+      var y = centroid[1] + pieYOffset;
       return "translate(" + x + "," + y + ")";
     })
     .style("text-anchor", "middle")
     .style("font-size", 12)
     .style('fill', 'white')
-  // .attr("transform", "translate(300,80)");
 
   var pieLegends = ['Domestic', 'International', ];
   var pieColors = ['#A2CD48', '#3268bd'];
@@ -647,7 +618,6 @@ function mapCountryName(name) {
 function clicked(i, vis) {
   vis.selectedMovie = vis.allData[i];
   vis.updateDataSelection();
-  // vis.updateVis();
 }
 
 function formatMillions(num) {
