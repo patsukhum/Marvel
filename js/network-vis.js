@@ -7,6 +7,7 @@
  * @param _parentElement  -- ID of HTML element that will contain the vis
  * @param _data           -- JSON containing nodes and edges
  * @param _config         -- Configuration object
+ * @param _eventHandler   -- Event handler
  * @constructor
  */
 NetworkVis = function(_parentElement, _data, _config) {
@@ -31,6 +32,12 @@ NetworkVis.prototype.initVis = function() {
 
   // Whether to use tooltip
   vis.hideTooltip = vis.config.hideTooltip || false;
+
+  // Whether to link to the matrix
+  vis.linkToMatrix = vis.config.linkToMatrix || false;
+
+  // Text to put at the top
+  vis.topText = vis.config.topText || "";
 
   vis.svg = makeSvg(vis, 'network-vis');
 
@@ -68,19 +75,14 @@ NetworkVis.prototype.initVis = function() {
         .attr('class', 'tooltip')
         .style('opacity', 0);
   }
+
+  vis.svg.append('text')
+      .attr('x', 0)
+      .attr('y', -20)
+      .attr('class', 'annotation')
+      .text(vis.topText);
+
   vis.wrangleData();
-
-  // d3.select(vis.svg.parentNode)
-  //     .on('click', function() {
-  //       console.log('Click attached!'); clickReset(vis);
-  //     });
-
-  // d3.select(vis.svg.parentNode).append('rect')
-  //     .attr('width', vis.width)
-  //     .attr('height', vis.height)
-  //     .style('stroke', 'none')
-  //     .style('fill', 'none')
-  //     .on('click', function() { console.log('Click attached!'); clickReset(vis); });
 };
 NetworkVis.prototype.wrangleData = function() {
   var vis = this;
@@ -127,8 +129,8 @@ NetworkVis.prototype.updateVis = function() {
       .call(vis.dragNode)
       .on('mouseover', d => vis.nodeMouseover(d, vis))
       .on('mouseout', d => vis.nodeMouseout(d, vis))
-      .on('mousemove', d => vis.nodeMousemove(d, vis));
-      // .on('click', (d, i) => vis.nodeClick(d, i, vis)); (FOR NOW)
+      .on('mousemove', d => vis.nodeMousemove(d, vis))
+      .on('click', (d, i) => vis.nodeClick(d, i, vis));
 
   nodeEnter.append('circle')
       .attr('r', d => vis.scaleNodeRadius(d.centrality));
@@ -208,24 +210,17 @@ NetworkVis.prototype.nodeMousemove = function(d, vis) {
   }
 };
 NetworkVis.prototype.nodeClick = function(d, i, vis) {
-  if (vis.selected !== d) {
-    clickReset(vis);
-
-    vis.selected = d;
-    setCircleLayout(vis.displayData.nodes, i, vis)
+  if (vis.linkToMatrix) {
+    console.log(vis.linkToMatrix);
+    if (vis.selected !== d) {
+      vis.selected = d;
+      matrixVis.highlightCol(d.name);
+    } else {
+      matrixVis.clearHighlight();
+    }
   }
-  // d3.event.stopPropagation();
 };
-function clickReset(vis) {
-  console.log('Clicky!');
-  if (vis.selected) {
-    vis.displayData.nodes.forEach(function(d) {
-      d.fx = null;
-      d.fy = null;
-    });
-    vis.selected = null;
-  }
-}
+
 function setCircleLayout(nodes, idxSelected, vis) {
   var total = nodes.length - 1,
       r = Math.min(vis.width, vis.height) / 2 - 5,

@@ -29,7 +29,7 @@ Matrix.prototype.initVis = function() {
     'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width /2;
+  vis.height = vis.width / 2;
 
   vis.svg = makeSvg(vis, 'matrix-vis');
   var baseDir = 'img/attributes/';
@@ -78,6 +78,13 @@ Matrix.prototype.initVis = function() {
 
   vis.gRowLabs = vis.svg.append('g');
 
+  // Adding text
+  vis.svg.append('text')
+      .attr('y', vis.height - 10)
+      .attr('x', 0)
+      .text('Click the name of an ability to sort the columns!')
+      .attr('class', 'annotation');
+
   vis.wrangleData();
 };
 
@@ -111,12 +118,14 @@ Matrix.prototype.updateVis = function() {
         .attr('x', -vis.innerPadding)
         .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding)
         .on('click', d => vis.sortMatrix(d, vis))
+        .on('mouseover', function() { d3.select(this).attr('fill', '#f78f3f'); })
+        .on('mouseout', function() { d3.select(this).attr('fill', 'black'); })
         .call(wrap, 10);
 
-  var cols = vis.svg.selectAll('g.col')
+  vis.cols = vis.svg.selectAll('g.col')
       .data(vis.displayData, d => d.name);
 
-  var colEnter = cols.enter()
+  var colEnter = vis.cols.enter()
       .append('g')
       .attr('class', 'col');
 
@@ -125,15 +134,17 @@ Matrix.prototype.updateVis = function() {
       .attr('x', 0)
       .attr('y', -vis.rectWidth)
       .attr('width', vis.rectWidth)
-      .attr('height', vis.rectHeight);
+      .attr('height', vis.rectHeight)
+      .on('mouseover', d => vis.showDetail(d, vis))
+      .on('mouseout', d => vis.hideDetail(d, vis));
 
-  cols = colEnter.merge(cols)
+  vis.cols = colEnter.merge(vis.cols)
       .transition(400)
       .attr('transform', (d, i) => 'translate(' + ((vis.rectWidth + vis.innerPadding) * i + vis.innerPadding) + ",0)")
       .selection();
 
   // Set x and y for the rows
-  var cells = cols.selectAll('g.cell')
+  var cells = vis.cols.selectAll('g.cell')
       .data(d => d.data);
 
   var cellEnter = cells.enter()
@@ -166,7 +177,7 @@ Matrix.prototype.showDetail = function(d, vis) {
   vis.tooltip.transition()
       .style('opacity', 0.8);
 
-  vis.tooltip.html(`<h4>${d.name}</h4>`)
+  vis.tooltip.html(`<p>${d.name}</p>`)
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY + 10) + "px");
 };
@@ -186,4 +197,14 @@ Matrix.prototype.sortMatrix = function(power, vis) {
   console.log(vis.matrixData);
 
   vis.wrangleData();
+};
+Matrix.prototype.highlightCol = function(character) {
+  var vis = this;
+  console.log("Highlighting");
+  vis.cols.style('opacity', d => d.name === character ? 1 : 0.3);
+};
+Matrix.prototype.clearHighlight = function() {
+  var vis = this;
+
+  vis.cols.style('opacity', 1);
 };
