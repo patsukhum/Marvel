@@ -333,3 +333,14 @@ fill: #e23636;
   text-anchor: middle;
   font-family: Roboto;
 }
+
+/*** MATRIX ***/
+.no-power {
+  fill: darkgrey;
+}
+.yes-power {
+  fill: dodgerblue;
+}
+.row_label {
+  font-size: 9px;
+}
