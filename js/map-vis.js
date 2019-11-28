@@ -66,6 +66,49 @@ MapVis.prototype.initVis = function() {
     .attr("transform", "translate(" + vis.xCol2 +
       ",-120)");
 
+
+  vis.svgCol2.append("text")
+    .attr("class", "col2-text")
+    .text('IMDB')
+    .attr("x", 0)
+    .attr("y", 70)
+    .attr("fill", "black")
+    .style("font-size", 15);
+
+  vis.svgCol2.append("text")
+    .attr("class", "col2-text")
+    .text('Metacritic')
+    .attr("x", 0)
+    .attr("y", 90)
+    .attr("fill", "black")
+    .style("font-size", 13);
+
+  var options = {
+    max_value: 5,
+    step_size: 0.1,
+    initial_value: 5,
+  }
+  var options2 = {
+    max_value: 5,
+    step_size: 0.1,
+    initial_value: 5,
+  }
+
+  $(".stars-imdb").rate(options);
+  $(".stars-meta").rate(options2);
+
+  vis.mapGroup = vis.svg.append("g")
+    .attr('class', 'map');
+
+  vis.svg.append("g")
+    .append("text")
+    .attr("class", "legend-text")
+    .text('Gross Revenue ($)')
+    .attr("x", 0)
+    .attr("y", -35)
+    .attr("fill", "black")
+    .style("font-size", 15);
+
   vis.wrangleData();
 };
 
@@ -80,42 +123,6 @@ MapVis.prototype.wrangleData = function() {
     vis.idToCountry[+d['country-code']] = d.name;
     vis.countryToId[d.name] = +d['country-code'];
   })
-
-  vis.movieNames = vis.data.map((d) => d.Name);
-  var curMovie = [];
-  var movieKeys = Object.keys(vis.selectedMovie)
-  for (var key of movieKeys) {
-    if (key in vis.countryToId) {
-      var obj = {
-        'Market': key,
-        'Gross': vis.selectedMovie[key]
-      };
-      curMovie.push(obj);
-    }
-  }
-  vis.data = curMovie;
-
-  var allCountryIds = []
-  vis.data.forEach((d) => {
-    var countryId = vis.countryToId[d.Market];
-    allCountryIds.push(countryId);
-
-    d.Gross = +d.Gross;
-  })
-
-  var countriesExcluded = ['Antarctica', 'Fiji', 'French Southern Territories']
-  vis.countryInfo = vis.mapData.filter((d) => {
-    var countryName = vis.idToCountry[d.id];
-    return !countriesExcluded.includes(countryName);
-  });
-
-  vis.idToRevenue = {};
-  vis.data.forEach((d) => {
-    vis.idToRevenue[vis.countryToId[d.Market]] = d.Gross;
-  })
-
-  var sorted = vis.data.sort((a, b) => a.Gross > b.Gross ? -1 : 1);
-  vis.topGross = sorted.slice(0, 3);
 
   vis.auxData.forEach((d) => {
     d.imdbRating = +d.imdbRating;
@@ -141,94 +148,14 @@ MapVis.prototype.wrangleData = function() {
     }
   });
 
+  vis.updateDataSelection();
+  vis.initializeBottomPanel();
   vis.updateVis();
 };
 
-MapVis.prototype.updateDataSelection = function() {
+MapVis.prototype.initializeBottomPanel = function() {
   var vis = this;
 
-  vis.movieNames = vis.data.map((d) => d.Name);
-  var curMovie = [];
-  var movieKeys = Object.keys(vis.selectedMovie)
-  for (var key of movieKeys) {
-    if (key in vis.countryToId) {
-      var obj = {
-        'Market': key,
-        'Gross': vis.selectedMovie[key]
-      };
-      curMovie.push(obj);
-    }
-  }
-  vis.data = curMovie;
-
-  var allCountryIds = []
-  vis.data.forEach((d) => {
-    var countryId = vis.countryToId[d.Market];
-    allCountryIds.push(countryId);
-
-    d.Gross = +d.Gross;
-  })
-
-  var countriesExcluded = ['Antarctica', 'Fiji', 'French Southern Territories']
-  vis.countryInfo = vis.mapData.filter((d) => {
-    var countryName = vis.idToCountry[d.id];
-    return !countriesExcluded.includes(countryName);
-  });
-
-
-  var sorted = vis.data.sort((a, b) => a.Gross > b.Gross ? -1 : 1);
-  vis.topGross = sorted.slice(0, 3);
-
-
-  vis.updateVis();
-}
-
-MapVis.prototype.updateVis = function() {
-  var vis = this;
-
-  vis.color.domain([0.1, 100000, 1000000, 10000000, 100000000, 500000000, 1000000000]);
-
-  var emptyColor = ["lightgray"];
-  var colors = emptyColor.concat(d3.schemeReds[6]);
-  vis.color.range(colors);
-
-  var projection = d3.geoConicEqualArea()
-    .translate([vis.width / 4, vis.height / 6])
-    .center([0, 0]).scale(100);
-
-  var chmap = vis.svg.append("g")
-    .selectAll("path")
-    .data(vis.countryInfo);
-
-  var allColors = new Set();
-  chmap.enter()
-    .append("path")
-    .attr("class", "mapPath")
-    .attr("d", d3.geoPath()
-      .projection(projection)
-    )
-    .merge(chmap)
-    .on("mouseover", (d) => {
-      vis.tooltip.transition()
-        .duration(800)
-        .style("opacity", .8);
-      var txt = vis.idToCountry[d.id] + "<br>" + formatRevenue(vis.idToRevenue[d.id]);
-      vis.tooltip.html(txt)
-        .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY - 28) + "px");
-    })
-    .on("mouseout", (d) => {
-      vis.tooltip.transition()
-        .duration(600).style("opacity", 0);
-    })
-    .attr("fill", function(d, i) {
-      if (d.id in vis.idToRevenue)
-        return vis.color(vis.idToRevenue[d.id]);
-      return vis.color(0);
-    });
-  chmap.exit().remove();
-
-  // Movie Names By Year (for bottom panel)
   var yearRanges = ['2008-2013', '2014-2017', '2018-2019'];
   vis.movieYearRangeArr.forEach((curMovies, idx) => {
     var yearText = yearRanges[idx];
@@ -285,7 +212,92 @@ MapVis.prototype.updateVis = function() {
       });
 
   })
+}
 
+MapVis.prototype.updateDataSelection = function() {
+  var vis = this;
+
+  vis.movieNames = vis.data.map((d) => d.Name);
+  var curMovie = [];
+  var movieKeys = Object.keys(vis.selectedMovie)
+  for (var key of movieKeys) {
+    if (key in vis.countryToId) {
+      var obj = {
+        'Market': key,
+        'Gross': vis.selectedMovie[key]
+      };
+      curMovie.push(obj);
+    }
+  }
+  vis.data = curMovie;
+
+  var allCountryIds = []
+  vis.data.forEach((d) => {
+    var countryId = vis.countryToId[d.Market];
+    allCountryIds.push(countryId);
+
+    d.Gross = +d.Gross;
+  })
+
+  var countriesExcluded = ['Antarctica', 'Fiji', 'French Southern Territories']
+  vis.countryInfo = vis.mapData.filter((d) => {
+    var countryName = vis.idToCountry[d.id];
+    return !countriesExcluded.includes(countryName);
+  });
+
+  vis.idToRevenue = {};
+  vis.data.forEach((d) => {
+    vis.idToRevenue[vis.countryToId[d.Market]] = d.Gross;
+  })
+
+  var sorted = vis.data.sort((a, b) => a.Gross > b.Gross ? -1 : 1);
+  vis.topGross = sorted.slice(0, 3);
+
+  vis.updateVis();
+};
+
+MapVis.prototype.updateVis = function() {
+  var vis = this;
+
+  vis.color.domain([0.1, 100000, 1000000, 10000000, 100000000, 500000000, 1000000000]);
+
+  var emptyColor = ["lightgray"];
+  var colors = emptyColor.concat(d3.schemeReds[6]);
+  vis.color.range(colors);
+
+  var projection = d3.geoMercator()
+    .translate([vis.width / 3, vis.height / 8])
+    .center([0, 0]).scale(70);
+
+  var chmap = vis.mapGroup.selectAll(".mapPath")
+    .data(vis.countryInfo);
+
+  chmap.enter()
+    .append("path")
+    .attr("class", "mapPath")
+    .attr("d", d3.geoPath()
+      .projection(projection)
+    )
+    .merge(chmap)
+    .on("mouseover", (d) => {
+      vis.tooltip.transition()
+        .duration(800)
+        .style("opacity", .8);
+      var txt = vis.idToCountry[d.id] + "<br>" + formatRevenue(vis.idToRevenue[d.id]);
+      vis.tooltip.html(txt)
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
+    })
+    .on("mouseout", (d) => {
+      vis.tooltip.transition()
+        .duration(600).style("opacity", 0);
+    })
+    .attr("fill", function(d, i) {
+      if (d.id in vis.idToRevenue)
+        return vis.color(vis.idToRevenue[d.id]);
+      return vis.color(0);
+    });
+  chmap.exit().remove();
 
   // Map legend
   var legendHeight = 130;
@@ -306,7 +318,7 @@ MapVis.prototype.updateVis = function() {
       return 0;
     })
     .attr("y", (d, i) => {
-      return yLegend(i)-40;
+      return yLegend(i) - 40;
     })
     .attr("width", (d) => {
       return 20;
@@ -339,16 +351,6 @@ MapVis.prototype.updateVis = function() {
     .style("text-anchor", "start");
   texts.exit().remove();
 
-  d3.select(".legend-text").remove();
-  vis.svg.append("g")
-    .append("text")
-    .attr("class", "legend-text")
-    .text('Gross Revenue ($)')
-    .attr("x", 0)
-    .attr("y", -35)
-    .attr("fill", "black")
-    .style("font-size", 15);
-
   // Col 2 movie title header
   var movieTitle = vis.svgCol2.selectAll(".movie-name")
     .data([vis.selectedMovie])
@@ -372,43 +374,8 @@ MapVis.prototype.updateVis = function() {
     return vis.selectedMovie.Name === d.Title;
   })[0];
 
-  vis.svgCol2.append("text")
-    .attr("class", "col2-text")
-    .text('IMDB')
-    .attr("x", 0)
-    .attr("y", 70)
-    .attr("fill", "black")
-    .style("font-size", 15);
-
-  vis.svgCol2.append('div')
-    .attr('class', 'rating')
-    .attr('x', 80)
-    .attr('y', 70)
-
-  var options = {
-    max_value: 5,
-    step_size: 0.1,
-    initial_value: selectedMovieAux['imdbRating'],
-  }
-  var options2 = {
-    max_value: 5,
-    step_size: 0.1,
-    initial_value: selectedMovieAux['Metascore'],
-  }
-
-  $(".stars-imdb").rate(options);
-  $(".stars-meta").rate(options2);
-
   $(".stars-imdb .rate-select-layer").css("width", selectedMovieAux['imdbRating'] / 5 * 100);
   $(".stars-meta .rate-select-layer").css("width", selectedMovieAux['Metascore'] / 5 * 100);
-
-  vis.svgCol2.append("text")
-    .attr("class", "col2-text")
-    .text('Metacritic')
-    .attr("x", 0)
-    .attr("y", 90)
-    .attr("fill", "black")
-    .style("font-size", 13);
 
   // Pie chart
   var pieData = {
@@ -446,7 +413,7 @@ MapVis.prototype.updateVis = function() {
     .attr("stroke", "white")
     .style("stroke-width", "2px")
     .style("opacity", 1)
-    .attr("transform", "translate("+pieXOffset+","+pieYOffset+")");
+    .attr("transform", "translate(" + pieXOffset + "," + pieYOffset + ")");
 
   vis.svgCol2
     .selectAll('.pie')
@@ -522,6 +489,8 @@ MapVis.prototype.updateVis = function() {
     .append("rect")
     .attr("class", "rects")
     .merge(rects)
+    .transition()
+    .duration(800)
     .attr("y", function(d, i) {
       return 120 + i * 20;
     })
@@ -614,7 +583,7 @@ function mapCountryName(name) {
 
 function clicked(i, vis) {
   vis.selectedMovie = vis.allData[i];
-  vis.wrangleData();
+  vis.updateDataSelection();
 }
 
 function formatMillions(num) {

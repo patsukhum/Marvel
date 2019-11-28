@@ -159,7 +159,7 @@ LineChartVis.prototype.updateVis = function() {
     })
   ]);
 
-  
+
 
 
   //  this.svg.selectAll(".linechart").remove();
@@ -175,11 +175,11 @@ LineChartVis.prototype.updateVis = function() {
       .data([this.displayData])
       .attr("class", "lineMarvel linechart")
       .attr("d", vis.lineMarvel);
-  
+
   // add circles to graph
 	// codes adapted from: https://bl.ocks.org/gordlea/27370d1eea8464b04538e6d8ced39e89
 	var circle = this.svg.selectAll("circle").data(vis.displayData);
-	
+
 
     circle.enter().append("circle")
 		.attr("class", "tooltip-circle lineDC-circle") // Assign a class for styling
@@ -188,7 +188,7 @@ LineChartVis.prototype.updateVis = function() {
 		.attr("r", 5)
 		.on("mouseover", vis.tipDC.show)
     .on("mouseout", vis.tipDC.hide);
-    
+
     circle.enter().append("circle")
 		.attr("class", "tooltip-circle lineMarvel-circle") // Assign a class for styling
 		.attr("cx", function(d) { return vis.x(parseTime(d.year)) })
@@ -197,7 +197,7 @@ LineChartVis.prototype.updateVis = function() {
 		.on("mouseover", vis.tipMarvel.show)
 		.on("mouseout", vis.tipMarvel.hide);
 
-	
+
 
   // drawing line chart effect help from: http://bl.ocks.org/markmarkoh/8700606
   /* Add 'curtain' rectangle to hide entire graph */
@@ -218,7 +218,7 @@ LineChartVis.prototype.updateVis = function() {
 
   t.select('rect.curtain')
     .attr('width', 0);
-  
+
 
   //vis.svg.selectAll(".axis").remove();
 
@@ -262,7 +262,7 @@ LineChartVis.prototype.updateVis = function() {
   legend.append("text").attr("x", 60).attr("y", 50).text("DC Comics").style("font-size", "15px").attr("alignment-baseline","middle")
 
 	// update tooltip
-	vis.tipDC.html(function(d) { 
+	vis.tipDC.html(function(d) {
     // append corresponding movie names
     var movieNames = "<ul>"
     for(name of Object.values(d.movieNames.dc)) {
@@ -276,11 +276,11 @@ LineChartVis.prototype.updateVis = function() {
     else {
       movieNames += "</ul>";
     }
-		return `Movies in ${d.year}: ${movieNames}Revenue: $${formatComma(d[selection].dc)}`; 
+		return `Movies in ${d.year}: ${movieNames}Revenue: $${formatComma(d[selection].dc)}`;
 	})
   vis.svg.call(vis.tipDC);
-  
- 	vis.tipMarvel.html(function(d) { 
+
+ 	vis.tipMarvel.html(function(d) {
     // append corresponding movie names
     var movieNames = "<ul>"
     for(name of Object.values(d.movieNames.marvel)) {
@@ -295,9 +295,9 @@ LineChartVis.prototype.updateVis = function() {
       movieNames += "</ul>";
     }
 
-		return `Movies in ${d.year}: ${movieNames}Revenue: $${formatComma(d[selection].marvel)}`; 
+		return `Movies in ${d.year}: ${movieNames}Revenue: $${formatComma(d[selection].marvel)}`;
 	})
   vis.svg.call(vis.tipMarvel);
-  
+
   vis.drawn = true;
 };

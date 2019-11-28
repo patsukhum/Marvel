@@ -2,7 +2,6 @@
 var myFullpage = new fullpage('#fullpage', {
   navigation: true,
   navigationPosition: 'right',
-  scrollOverflow: true,
 
   afterLoad: function(origin, destination, direction) {
     secId = destination.item.getAttribute('id');
@@ -56,7 +55,7 @@ $('#plot-flow-sec button').on('click', function(event) {
 
 // ********** Network intro ********** //
 function drawNetworkIntroVis() {
-  
+
 }
 
 // ********** Network vis ********** //
