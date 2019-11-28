@@ -63,7 +63,7 @@ function createNetworkVis(error, nodes, edges) {
     linkToMatrix: true,
     topText: "Click on one of the bubbles to highlight the matrix! (Click again to reset)"
 };
-  networkVis = new NetworkVis('network-vis', data, config);
+  networkVis = new NetworkVis('network-vis', data, config, eventHandler);
 }
 function createNetworkIntroVis(error, nodes, edges) {
   var namesToKeep = ['Iron Man', 'Hulk'];
@@ -91,7 +91,7 @@ queue()
 
 function createMatrixVis(error, matrix_data) {
   console.log(matrix_data);
-  matrixVis = new Matrix("matrix-vis", matrix_data);
+  matrixVis = new Matrix("matrix-vis", matrix_data, eventHandler);
 };
 
 d3.select('#sort').on('change', function() {

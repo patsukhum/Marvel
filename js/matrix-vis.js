@@ -4,16 +4,15 @@
  * Matrix visualization for the abilities of major characters
  *
  * @param _parentElement  -- ID of HTML element that will contain the vis
- * @param _matrix_data              -- matrix values data
+ * @param _matrix_data    -- matrix values data
+ * @param _eventHandler   -- EventHandler object
  * @constructor
  */
 
-Matrix = function(_parentElement, _matrix_data) {
+Matrix = function(_parentElement, _matrix_data, _eventHandler) {
   this.parentElement = _parentElement;
-  this.prelimData = [];
-
   this.matrixData = _matrix_data;
-  this.displayData = [];
+  this.eventHandler = _eventHandler;
 
   this.initVis();
 };
@@ -79,6 +78,45 @@ Matrix.prototype.initVis = function() {
 
   vis.gRowLabs = vis.svg.append('g');
 
+
+  var rowLabs = vis.gRowLabs
+      .selectAll("text.row_label")
+      .data(vis.attributes)
+      .enter().append('text')
+      .attr('class', 'row_label')
+      .text(d => titleCase(d))
+      .style('text-anchor', 'end')
+      .style('alignment-baseline', 'hanging')
+      .attr('x', -vis.innerPadding - 10)
+      .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding)
+      .on('click', d => vis.sortMatrix(d, vis))
+      .on('mouseover', function() {
+        d3.select(this).attr('fill', '#f78f3f');
+      })
+      .on('mouseout', function() {
+        d3.select(this).attr('fill', 'black');
+      })
+      .call(wrap, 10);
+
+  vis.gRowLabs
+      .selectAll("text.sortable-icon")
+      .data(vis.attributes)
+      .enter().append('image')
+      .attr('xlink:href', d => 'img/sortable.svg')
+      .attr('class', 'sortable-icon')
+      .attr('x', -vis.innerPadding-8)
+      .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding+7)
+      .on('click', d => vis.sortMatrix(d, vis))
+      .attr('width', 13)
+      .attr('height', 13)
+      .on('mouseover', function() {
+        d3.select(this).attr('fill', '#f78f3f');
+      })
+      .on('mouseout', function() {
+        d3.select(this).attr('fill', 'black');
+      });
+
+
   // Adding text
   vis.svg.append('text')
     .attr('y', vis.height - 10)
@@ -111,43 +149,6 @@ Matrix.prototype.wrangleData = function() {
 Matrix.prototype.updateVis = function() {
   var vis = this;
 
-  var rowLabs = vis.gRowLabs
-    .selectAll("text.row_label")
-    .data(vis.attributes)
-    .enter().append('text')
-    .attr('class', 'row_label')
-    .text(d => titleCase(d))
-    .style('text-anchor', 'end')
-    .style('alignment-baseline', 'hanging')
-    .attr('x', -vis.innerPadding - 10)
-    .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding)
-    .on('click', d => vis.sortMatrix(d, vis))
-    .on('mouseover', function() {
-      d3.select(this).attr('fill', '#f78f3f');
-    })
-    .on('mouseout', function() {
-      d3.select(this).attr('fill', 'black');
-    })
-    .call(wrap, 10);
-
-  vis.gRowLabs
-    .selectAll("text.sortable-icon")
-    .data(vis.attributes)
-    .enter().append('image')
-    .attr('xlink:href', d => 'img/sortable.svg')
-    .attr('class', 'sortable-icon')
-    .attr('x', -vis.innerPadding-8)
-    .attr('y', (d, i) => (vis.rectWidth + vis.innerPadding) * i + vis.innerPadding+7)
-    .on('click', d => vis.sortMatrix(d, vis))
-    .attr('width', 13)
-    .attr('height', 13)
-    .on('mouseover', function() {
-      d3.select(this).attr('fill', '#f78f3f');
-    })
-    .on('mouseout', function() {
-      d3.select(this).attr('fill', 'black');
-    })
-
   vis.cols = vis.svg.selectAll('g.col')
     .data(vis.displayData, d => d.name);
 
@@ -168,6 +169,11 @@ Matrix.prototype.updateVis = function() {
     .transition(400)
     .attr('transform', (d, i) => 'translate(' + ((vis.rectWidth + vis.innerPadding) * i + vis.innerPadding) + ",0)")
     .selection();
+
+  vis.cols
+      .on('mouseover', d => vis.colMouseover(d, vis))
+      .on('mouseout', d => vis.colMouseout(d, vis))
+      .on('click', d => vis.colClick(d, vis));
 
   // Set x and y for the rows
   var cells = vis.cols.selectAll('g.cell')
@@ -224,13 +230,21 @@ Matrix.prototype.sortMatrix = function(power, vis) {
 
   vis.wrangleData();
 };
-Matrix.prototype.highlightCol = function(character) {
+Matrix.prototype.highlight = function(character) {
   var vis = this;
-  console.log("Highlighting");
   vis.cols.style('opacity', d => d.name === character ? 1 : 0.3);
 };
 Matrix.prototype.clearHighlight = function() {
   var vis = this;
 
   vis.cols.style('opacity', 1);
+};
+Matrix.prototype.colMouseover = function(d, vis) {
+  $(vis.eventHandler).trigger("mouseover", d.name);
+};
+Matrix.prototype.colMouseout = function(d, vis) {
+  $(vis.eventHandler).trigger("mouseout");
+};
+Matrix.prototype.colClick = function(d, vis) {
+  $(vis.eventHandler).trigger("clickHighlight", d.name);
 };

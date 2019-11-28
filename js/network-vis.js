@@ -10,12 +10,12 @@
  * @param _eventHandler   -- Event handler
  * @constructor
  */
-NetworkVis = function(_parentElement, _data, _config) {
+NetworkVis = function(_parentElement, _data, _config, _eventHandler) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.displayData = _data;
   this.config = _config;
-  this.selected = null;
+  this.eventHandler = _eventHandler
 
   this.initVis();
 };
@@ -171,37 +171,47 @@ NetworkVis.prototype.dragEnd = function(d, vis) {
   d.fx = null;
   d.fy = null;
 };
+
+NetworkVis.prototype.highlight = function(character) {
+  var vis = this;
+
+  vis.edges.style('stroke', l => edgeMatchesCharacter(l, character) ? '#f78f3f' : 'darkgray' )
+      .style('opacity', l => edgeMatchesCharacter(l, character) ? 1.0 : vis.scaleEdgeOpacity(l.count));
+  vis.nodes.style('stroke', n => nodeMatchesCharacter(n, character) ? "#f78f3f" : 'darkgray')
+      .style('stroke-width', n => nodeMatchesCharacter(n, character) ? '3px' : '2px');
+};
+NetworkVis.prototype.clearHighlight = function() {
+  var vis = this;
+
+  vis.edges.style('stroke', 'darkgray').style('opacity', l => vis.scaleEdgeOpacity(l.count));
+  vis.nodes.style('stroke', 'darkgray').style('stroke-width', '2px');
+};
+
 NetworkVis.prototype.nodeMouseover = function(d, vis) {
-  if (!vis.hideTooltip){
-    vis.tooltip.transition()
-        .style('opacity', 0.8);
-
-    vis.tooltip.html(`<h4>${d.name}</h4>` +
-        `<p>Number of wikipedia pages: ${d.num_pages}</p>` +
-        `<p>Average views per month: ${format1d(d.avg_monthly_views)}</p>` +
-        `<p>Average references: ${format1d(d.num_refs)}</p>` +
-        `<p>Average page links: ${format1d(d.num_links)}</p>` +
-        `<p>Average word count: ${format1d(d.word_count)}</p>` +
-        `<p>Network centrality: ${format1d(d.centrality)}</p>`)
-        .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY + 10) + "px");
-  }
-
-  vis.edges.style('stroke', l => d === l.source || d === l.target ? '#f78f3f' : 'darkgray' )
-      .style('opacity', l => d === l.source || d === l.target ? 1.0 : vis.scaleEdgeOpacity(d.count));
-  vis.nodes.style('stroke', n => d === n ? "#f78f3f" : 'darkgray')
-      .style('stroke-width', (d, n) => d === n ? '3px' : '2px');
+  console.log(d);
+  $(vis.eventHandler).trigger("mouseover", d.name);
+  // if (!vis.hideTooltip){
+  //   vis.tooltip.transition()
+  //       .style('opacity', 0.8);
+  //
+  //   vis.tooltip.html(`<h4>${d.name}</h4>` +
+  //       `<p>Number of wikipedia pages: ${d.num_pages}</p>` +
+    //     `<p>Average views per month: ${format1d(d.avg_monthly_views)}</p>` +
+    //     `<p>Average references: ${format1d(d.num_refs)}</p>` +
+    //     `<p>Average page links: ${format1d(d.num_links)}</p>` +
+    //     `<p>Average word count: ${format1d(d.word_count)}</p>` +
+    //     `<p>Network centrality: ${format1d(d.centrality)}</p>`)
+    //     .style("left", (d3.event.pageX) + "px")
+    //     .style("top", (d3.event.pageY + 10) + "px");
+  // }
 };
 NetworkVis.prototype.nodeMouseout = function(d, vis) {
-  if (!vis.hideTooltip) {
-    vis.tooltip.transition()
-        .duration(100)
-        .style("opacity", 0);
-  }
-    vis.edges.style('stroke', 'darkgray')
-        .style('opacity', l => vis.scaleEdgeOpacity(l.count));
-    vis.nodes.style('stroke', 'darkgray')
-        .style('stroke-width', '2px');
+  // if (!vis.hideTooltip) {
+  //   vis.tooltip.transition()
+  //       .duration(100)
+  //       .style("opacity", 0);
+  // }
+  $(vis.eventHandler).trigger("mouseout");
 };
 NetworkVis.prototype.nodeMousemove = function(d, vis) {
   if (!vis.hideTooltip) {
@@ -210,15 +220,19 @@ NetworkVis.prototype.nodeMousemove = function(d, vis) {
   }
 };
 NetworkVis.prototype.nodeClick = function(d, i, vis) {
-  if (vis.linkToMatrix) {
-    console.log(vis.linkToMatrix);
-    if (vis.selected !== d) {
-      vis.selected = d;
-      matrixVis.highlightCol(d.name);
-    } else {
-      matrixVis.clearHighlight();
-    }
-  }
+  $(vis.eventHandler).trigger("clickHighlight", d.name);
+  // if (vis.linkToMatrix) {
+  //   console.log(vis.linkToMatrix);
+  //   if (vis.selected !== d) {
+  //     vis.selected = d;
+  //     matrixVis.highlightCol(d.name);
+  //   } else {
+  //     matrixVis.clearHighlight();
+  //   }
+  // }
+};
+NetworkVis.prototype.clickClear = function(vis) {
+  $(vis.eventHandler).trigger("clickClear");
 };
 
 function setCircleLayout(nodes, idxSelected, vis) {
@@ -232,4 +246,10 @@ function setCircleLayout(nodes, idxSelected, vis) {
   });
   nodes[idxSelected].fx = vis.width / 2;
   nodes[idxSelected].fy = vis.height / 2;
+}
+function edgeMatchesCharacter(l, character) {
+  return character === l.source.name || character === l.target.name;
+}
+function nodeMatchesCharacter(n, character) {
+  return n.name === character;
 }
