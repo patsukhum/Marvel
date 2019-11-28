@@ -15,7 +15,7 @@ NetworkVis = function(_parentElement, _data, _config, _eventHandler) {
   this.data = _data;
   this.displayData = _data;
   this.config = _config;
-  this.eventHandler = _eventHandler
+  this.eventHandler = _eventHandler;
 
   this.initVis();
 };
