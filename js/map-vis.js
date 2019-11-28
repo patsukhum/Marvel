@@ -109,6 +109,13 @@ MapVis.prototype.initVis = function() {
     .attr("fill", "black")
     .style("font-size", 15);
 
+  var pieXOffset = 250;
+  var pieYOffset = 60;
+  vis.pieGroup = vis.svgCol2.append("g")
+    .attr("class", "pie-group")
+    .attr("transform", "translate(" + pieXOffset +
+      "," + pieYOffset + ")");
+
   vis.wrangleData();
 };
 
@@ -397,7 +404,7 @@ MapVis.prototype.updateVis = function() {
 
   var pieXOffset = 250;
   var pieYOffset = 60;
-  var u = vis.svgCol2.selectAll(".pie")
+  var u = vis.pieGroup.selectAll(".pie")
     .data(data_ready)
 
   var arcGenerator = d3.arc()
@@ -413,9 +420,8 @@ MapVis.prototype.updateVis = function() {
     .attr("stroke", "white")
     .style("stroke-width", "2px")
     .style("opacity", 1)
-    .attr("transform", "translate(" + pieXOffset + "," + pieYOffset + ")");
 
-  vis.svgCol2
+  vis.pieGroup
     .selectAll('.pie')
     .data(data_ready)
     .enter()
@@ -425,8 +431,10 @@ MapVis.prototype.updateVis = function() {
     })
     .attr("transform", function(d) {
       var centroid = arcGenerator.centroid(d);
-      var x = centroid[0] + pieXOffset;
-      var y = centroid[1] + pieYOffset;
+      // var x = centroid[0] + pieXOffset;
+      // var y = centroid[1] + pieYOffset;
+      var x = centroid[0];
+      var y = centroid[1];
       return "translate(" + x + "," + y + ")";
     })
     .style("text-anchor", "middle")
