@@ -103,7 +103,6 @@ $(eventHandler).bind("mouseout", function() {
   }
 });
 $(eventHandler).bind("highlight", function(event, character) {
-  console.log(character);
   matrixVis.highlight(character);
   networkVis.highlight(character);
 });

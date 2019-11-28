@@ -121,21 +121,20 @@ NetworkVis.prototype.updateVis = function() {
         .style('opacity', d => vis.scaleEdgeOpacity(d.count));
 
   vis.nodes = vis.gNodes.selectAll('g.node')
-      .data(vis.displayData.nodes);
+      .data(vis.displayData.nodes)
+      .enter()
+        .append('g')
+        .attr('class', 'node')
+        .call(vis.dragNode)
+        .on('mouseover', d => vis.nodeMouseover(d, vis))
+        .on('mouseout', d => vis.nodeMouseout(d, vis))
+        .on('mousemove', d => vis.nodeMousemove(d, vis))
+        .on('click', (d, i) => vis.nodeClick(d, i, vis));
 
-  var nodeEnter = vis.nodes.enter()
-      .append('g')
-      .attr('class', 'node')
-      .call(vis.dragNode)
-      .on('mouseover', d => vis.nodeMouseover(d, vis))
-      .on('mouseout', d => vis.nodeMouseout(d, vis))
-      .on('mousemove', d => vis.nodeMousemove(d, vis))
-      .on('click', (d, i) => vis.nodeClick(d, i, vis));
-
-  nodeEnter.append('circle')
+  vis.nodes.append('circle')
       .attr('r', d => vis.scaleNodeRadius(d.centrality));
 
-  nodeEnter.append('image')
+  vis.nodes.append('image')
       .attr('xlink:href', d => getSvgIcon(d.name))
       .attr('width', d => 2 * vis.scaleNodeRadius(d.centrality))
       .attr('height', d => 2 * vis.scaleNodeRadius(d.centrality))
@@ -143,17 +142,19 @@ NetworkVis.prototype.updateVis = function() {
       .attr('y', d => -vis.scaleNodeRadius(d.centrality) * 0.8);
 
   vis.force.on('tick', function() {
-    vis.edges.attr('x1', d => clamp(d.source.x, 0, vis.width))
+    vis.nodes
+        .attr('transform', d => 'translate(' + clamp(d.x, 0, vis.width) + ',' + clamp(d.y, 0, vis.height) + ')');
+    vis.edges
+        .attr('x1', d => clamp(d.source.x, 0, vis.width))
         .attr('y1', d => clamp(d.source.y, 0, vis.height))
         .attr('x2', d => clamp(d.target.x, 0, vis.width))
         .attr('y2', d => clamp(d.target.y, 0, vis.height));
-
-    nodeEnter.attr('transform', d => 'translate(' + clamp(d.x, 0, vis.width) + ',' + clamp(d.y, 0, vis.height) + ')');
   });
 
   vis.nodes.call(vis.dragNode);
 };
 NetworkVis.prototype.dragStart = function(d, vis) {
+  $(vis.eventHandler).trigger("clickHighlight", d.name);
   if (!d3.event.activate) {
     vis.force.alphaTarget(0.3).restart();
   }
@@ -165,6 +166,7 @@ NetworkVis.prototype.dragging = function(d) {
   d.fy = d3.event.y;
 };
 NetworkVis.prototype.dragEnd = function(d, vis) {
+  $(vis.eventHandler).trigger("clickClear");
   if (!d3.event.active) {
     vis.force.alphaTarget(0);
   }
@@ -188,7 +190,6 @@ NetworkVis.prototype.clearHighlight = function() {
 };
 
 NetworkVis.prototype.nodeMouseover = function(d, vis) {
-  console.log(d);
   $(vis.eventHandler).trigger("mouseover", d.name);
   // if (!vis.hideTooltip){
   //   vis.tooltip.transition()
@@ -248,8 +249,10 @@ function setCircleLayout(nodes, idxSelected, vis) {
   nodes[idxSelected].fy = vis.height / 2;
 }
 function edgeMatchesCharacter(l, character) {
+  console.log(l);
   return character === l.source.name || character === l.target.name;
 }
 function nodeMatchesCharacter(n, character) {
+  console.log(n);
   return n.name === character;
 }
