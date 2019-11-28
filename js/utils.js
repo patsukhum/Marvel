@@ -112,3 +112,22 @@ function titleCase(string) {
   }
   return sentence.join(" ");
 }
+
+
+// Returns an attrTween for translating along the specified path element.
+// From http://bl.ocks.org/dem42/e10e933990ee662c9cbd
+function translateAlong(path) {
+  var l = path.getTotalLength();
+  var ps = path.getPointAtLength(0);
+  var pe = path.getPointAtLength(l);
+  var angl = Math.atan2(pe.y - ps.y, pe.x - ps.x) * (180 / Math.PI) - 90;
+  var rot_tran = "rotate(" + angl + ")";
+  return function(d, i, a) {
+    console.log(d);
+
+    return function(t) {
+      var p = path.getPointAtLength(t * l);
+      return "translate(" + p.x + "," + p.y + ") " + rot_tran;
+    };
+  };
+}
