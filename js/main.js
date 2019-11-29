@@ -20,7 +20,7 @@ function createTitleVis(error, matrix_data) {
 //create Vis1:
 queue()
  .defer(d3.csv, 'data/clean/genre_revenue.csv')
- .await(createCookieVis)
+ .await(createCookieVis);
 
 function createCookieVis(error, data) {
   cookiechartVis = new CookieChartVis('cookiechart-vis', data);
@@ -68,7 +68,7 @@ queue()
 function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
   var config = {
-    height: 250,
+    height: 400,
     minNodeRadius: 10,
     maxNodeRadius: 30,
     strength: -400,

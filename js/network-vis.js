@@ -90,9 +90,6 @@ NetworkVis.prototype.wrangleData = function() {
   // Filtering out all edges below 10 counts
   // vis.displayData.edges = vis.data.edges.filter(d => d.count >= 5);
 
-  // Converting bidirectional links to double-counts [... or maybe just don't]
-
-
   vis.updateVis();
 };
 NetworkVis.prototype.updateVis = function() {
@@ -191,27 +188,8 @@ NetworkVis.prototype.clearHighlight = function() {
 
 NetworkVis.prototype.nodeMouseover = function(d, vis) {
   $(vis.eventHandler).trigger("mouseover", d.name);
-  // if (!vis.hideTooltip){
-  //   vis.tooltip.transition()
-  //       .style('opacity', 0.8);
-  //
-  //   vis.tooltip.html(`<h4>${d.name}</h4>` +
-  //       `<p>Number of wikipedia pages: ${d.num_pages}</p>` +
-    //     `<p>Average views per month: ${format1d(d.avg_monthly_views)}</p>` +
-    //     `<p>Average references: ${format1d(d.num_refs)}</p>` +
-    //     `<p>Average page links: ${format1d(d.num_links)}</p>` +
-    //     `<p>Average word count: ${format1d(d.word_count)}</p>` +
-    //     `<p>Network centrality: ${format1d(d.centrality)}</p>`)
-    //     .style("left", (d3.event.pageX) + "px")
-    //     .style("top", (d3.event.pageY + 10) + "px");
-  // }
 };
 NetworkVis.prototype.nodeMouseout = function(d, vis) {
-  // if (!vis.hideTooltip) {
-  //   vis.tooltip.transition()
-  //       .duration(100)
-  //       .style("opacity", 0);
-  // }
   $(vis.eventHandler).trigger("mouseout");
 };
 NetworkVis.prototype.nodeMousemove = function(d, vis) {
@@ -222,32 +200,11 @@ NetworkVis.prototype.nodeMousemove = function(d, vis) {
 };
 NetworkVis.prototype.nodeClick = function(d, i, vis) {
   $(vis.eventHandler).trigger("clickHighlight", d.name);
-  // if (vis.linkToMatrix) {
-  //   console.log(vis.linkToMatrix);
-  //   if (vis.selected !== d) {
-  //     vis.selected = d;
-  //     matrixVis.highlightCol(d.name);
-  //   } else {
-  //     matrixVis.clearHighlight();
-  //   }
-  // }
 };
 NetworkVis.prototype.clickClear = function(vis) {
   $(vis.eventHandler).trigger("clickClear");
 };
 
-function setCircleLayout(nodes, idxSelected, vis) {
-  var total = nodes.length - 1,
-      r = Math.min(vis.width, vis.height) / 2 - 5,
-      arc = 2 * Math.PI / total;
-  nodes.filter((d, i) => i !== idxSelected).forEach(function(d, i) {
-    var theta = arc * i;
-    d.fx = Math.cos(theta) * r + vis.width / 2;
-    d.fy = Math.sin(theta) * r + vis.height / 2;
-  });
-  nodes[idxSelected].fx = vis.width / 2;
-  nodes[idxSelected].fy = vis.height / 2;
-}
 function edgeMatchesCharacter(l, character) {
   return character === l.source.name || character === l.target.name;
 }
