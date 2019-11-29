@@ -327,7 +327,7 @@ LineChartVis.prototype.updateVis = function() {
 
 
     // add annotations
-    // annotation code help from: https://bl.ocks.org/susielu/a464c24d8b42f0c4d9fafe7b48e9e60a
+    // annotation code help from: https://bl.ocks.org/susielu/a464c24d8b42f0c4d9fafe7b48e9e60a, https://d3-annotation.susielu.com/
     const annotations = [{
         //below in makeAnnotations has type set to d3.annotationLabel
         //you can add this type value below to override that default
