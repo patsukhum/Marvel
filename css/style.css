@@ -16,13 +16,13 @@ div.section {
 }
 
 
-h1 {
+h1, .h1 {
   font-family: 'Bangers', cursive;
   text-align: center;
   font-size: 80px;
 }
 
-h2 {
+h2, .h2 {
   text-align: center;
   font-family: 'Permanent Marker', cursive;
   font-size: 35px;
@@ -78,6 +78,16 @@ h4 {
 }
 
 
+.bubble-path {
+  fill: white;
+  stroke: #000;
+  stroke-width: 3px;
+}
+
+.icon-path {
+  fill: none;
+  stroke: none;
+}
 
 select {
   font-size: 15px;

@@ -1,15 +1,14 @@
 /**
  * LineChartVis - Object constructor function
  *
- * Force-directed graph showing links between the Wikipedia pages of each
- * character
+ * Revenue line chart comparing Marvel vs. DC Comics
  *
  * @param _parentElement  -- ID of HTML element that will contain the vis
  * @param _data           -- Movies data
  * @constructor
  */
 
- // line chart plotting help from: https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
+ // overall line chart plotting help from: https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
 
 LineChartVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
@@ -19,6 +18,7 @@ LineChartVis = function(_parentElement, _data) {
 
   this.initVis();
 };
+
 LineChartVis.prototype.initVis = function() {
   var vis = this;
 
@@ -32,7 +32,7 @@ LineChartVis.prototype.initVis = function() {
   vis.height = vis.width * 0.75;
 
 
-  vis.svg = makeSvg(vis, 'linechart-vis');
+  vis.svg = makeSvg(vis, vis.parentElement);
 
 
   // create scales
