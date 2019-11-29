@@ -23,13 +23,13 @@ PlotFlowVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 50,
-    'bottom': 40,
+    'top': 10,
+    'bottom': 120,
     'left': 40,
     'right': 40
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.30;
+  vis.height = vis.width * 0.26;
 
   vis.svg = makeSvg(vis, 'plot-flow-vis');
 
@@ -180,7 +180,8 @@ PlotFlowVis.prototype.drawVis = function() {
         .call(wrap, vis.rectWidth - 3);
 
   // Drawing character selectbox
-  vis.gCharacters = vis.svg.append('g');
+  vis.gCharacters = vis.svg.append('g')
+      .attr('transform', 'translate(0,' + (vis.height + 50) + ')');
   var radius = 20,
       charData = vis.displayData
           .map(d => d.group)
@@ -193,7 +194,7 @@ PlotFlowVis.prototype.drawVis = function() {
   var characterEnter = characters.enter()
       .append('g')
       .attr('class', 'character')
-      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',-30)')
+      .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',0)')
       .on('mouseover', function() {
         d3.select(this).select('circle')
             .call(focus);
@@ -234,8 +235,8 @@ PlotFlowVis.prototype.drawVis = function() {
   vis.gCharacters.append('text')
       .text("Click a character (or group of characters) to highlight only their films!")
       .attr('x', 0)
-      .attr('y', -40)
-      .style('font-size', 10);
+      .attr('y', -10)
+      .style('font-size', 12);
 
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
@@ -268,16 +269,30 @@ PlotFlowVis.prototype.updateVis = function() {
 
   // Drawing arrows
   // TODO: Get the arrows to fade in (ideally draw themselves using attrTween)
+  var triangle = d3.symbol(d3.symbolTriangle);
   if (vis.branching) {
-    vis.arrows.enter()
+    var arrowEnter = vis.arrows.enter()
         .append('path')
         .attr('class', 'arrow')
         .style('opacity', 0)
         .call(vis.drawArrow, vis)
         .transition()
+        .attrTween("stroke-dasharray", function() {
+          var totalLength = d3.select(this).node().getTotalLength();
+          return d3.interpolateString("0," + totalLength, totalLength + "," + totalLength);
+        })
         .delay(d => vis.toggledBefore ? 1000 : 200 + d[0].x * 400 + d[0].y * 100)
-        .duration(200)
+        .duration(1000)
         .style('opacity', 1)
+        .selection();
+    //
+    // arrowEnter.append('path')
+    //     .attr('d', triangle)
+    //     .style('opacity', 0)
+    //     .transition()
+    //     .style('opacity', 1)
+    //     .delay(d => vis.toggledBefore ? 1000 : 200 + d[0].x * 400 + d[0].y * 100 + 2000)
+    //     .duration(1000)
   } else {
     vis.arrows.transition()
         .duration(200)

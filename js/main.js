@@ -4,6 +4,7 @@ var plotVis,
     linechartVis,
     networkIntroVis,
     networkVis,
+    charStatsVis,
     matrixVis;
 
 // create Vis0 for title slide:
@@ -58,21 +59,25 @@ d3.csv('data/clean/mcu_plot_flow.csv', function(data) {
 queue()
     .defer(d3.json, 'data/clean/all_character_nodes_centrality.json')
     .defer(d3.json, 'data/clean/all_character_links.json')
-    .await((error, nodes, edges) => { createNetworkVis(error, nodes, edges); createNetworkIntroVis(error, nodes, edges); });
+    .await((error, nodes, edges) => {
+      createNetworkVis(error, nodes, edges);
+      createNetworkIntroVis(error, nodes, edges);
+      createCharStatsVis(nodes);
+    });
 
 function createNetworkVis(error, nodes, edges) {
   var data = {'nodes': nodes, 'edges': edges};
   var config = {
-    height: 380,
+    height: 250,
     minNodeRadius: 10,
     maxNodeRadius: 30,
     strength: -400,
     distance: 150,
-    margin: {top: 30, bottom: 80, left: 20, right: 20},
+    margin: {top: 30, bottom: 20, left: 20, right: 20},
     linkToMatrix: true,
     topText: "Click on one of the bubbles to highlight the matrix! (Click again to reset)"
 };
-  networkVis = new NetworkVis('network-vis', data, config);
+  networkVis = new NetworkVis('network-vis', data, config, eventHandler);
 }
 function createNetworkIntroVis(error, nodes, edges) {
   var namesToKeep = ['Iron Man', 'Hulk'];
@@ -92,6 +97,11 @@ function createNetworkIntroVis(error, nodes, edges) {
   networkIntroVis = new NetworkVis('network-intro-vis', data, config);
 }
 
+// Character stats vis
+function createCharStatsVis(data) {
+  charStatsVis = new CharStatsVis('char-stats-vis', data, eventHandler);
+}
+
 
 //create Vis4: matrix
 queue()
@@ -100,11 +110,11 @@ queue()
 
 function createMatrixVis(error, matrix_data) {
   console.log(matrix_data);
-  matrixVis = new Matrix("matrix-vis", matrix_data);
-};
+  matrixVis = new Matrix("matrix-vis", matrix_data, eventHandler);
+}
 
 d3.select('#sort').on('change', function() {
   choice = d3.select('#sort').property('value');
   console.log(choice);
   matrixVis.sortMatrix();
-})
+});

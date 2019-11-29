@@ -126,18 +126,17 @@
       <div class="container box">
         <h3>The Marvel Cinematic Universe</h3>
         <div class="row">
-          <div class="col">
-            <div id="plot-flow-vis" class="vis-container"></div>
-          </div>
-        </div>
-        <div class="row">
-
           <div class="col-md-10 caption text">
-            <span style="font-size:19px">This is a timeline of movies as they were released.</span><span style="font-size:19px"> However, this linear timeline only tells part of the story.</span>
+            <span style="font-size:19px">This is a timeline of movies as they were released.</span><br/><span style="font-size:19px"> However, this linear timeline only tells part of the story.</span>
             <br/>
           </div>
           <div class="col-md-2 caption">
             <button type="button" class="btn btn-danger" id="btn-branching">Click me!</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div id="plot-flow-vis" class="vis-container"></div>
           </div>
         </div>
       </div>
@@ -188,10 +187,11 @@
       <div class="container box">
         <h3>What makes a hero?</h3>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
+            <div id="char-stats-vis" class="vis-container"></div>
             <div id="network-vis" class="vis-container"></div>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-6">
 <!--            <div id="matrix-vis" class="vis-container"></div>-->
             <div id="matrix-vis"></div>
             <div class="caption" style="font-size:14px;">
@@ -302,6 +302,7 @@
   <script src="js/matrix-vis.js"></script>
   <script src="js/title-vis.js"></script>
   <script src="js/plot-flow-vis.js"></script>
+  <script src="js/char-stats-vis.js"></script>
   <script src="js/dynamics.js"></script>
 
   <script src="js/main.js"></script>

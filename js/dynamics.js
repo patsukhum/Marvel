@@ -80,11 +80,37 @@ function drawCookieChartVis() {
   }
 }
 
-// // ********** Event handler ********** //
-// var eventHandler = {};
-// $(eventHandler).bind("selectionChanged", function(character) {
-//   matrixVis.highlightCol(character);
-// });
-// $(eventHandler).bind("selectionClear", function() {
-//   matrixVis.clearHighlight();
-// });
+// ********** Event handler ********** //
+var eventHandler = {};
+eventHandler.clicked = false;
+$(eventHandler).bind("clickHighlight", function(event, character) {
+  if (this.clicked === character) {
+    $(this).trigger("clickClear");
+  } else {
+    this.clicked = character;
+    $(this).trigger("highlight", character);
+  }
+});
+$(eventHandler).bind("clickClear", function() {
+  this.clicked = false;
+  $(this).trigger("selectionClear")
+});
+$(eventHandler).bind("mouseover", function(event, character) {
+  if (!this.clicked) {
+    $(this).trigger("highlight", character);
+  }
+});
+$(eventHandler).bind("mouseout", function() {
+  if (!this.clicked) {
+    $(this).trigger("selectionClear");
+  }
+});
+$(eventHandler).bind("highlight", function(event, character) {
+  matrixVis.highlight(character);
+  networkVis.highlight(character);
+  charStatsVis.highlight(character);
+});
+$(eventHandler).bind("selectionClear", function() {
+  matrixVis.clearHighlight();
+  networkVis.clearHighlight();
+});
