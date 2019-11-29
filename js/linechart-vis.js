@@ -377,5 +377,33 @@ LineChartVis.prototype.updateVis = function() {
       .duration(700).delay(6500)
       .style("opacity", 1.0);
 
+
+    // redraw plot circles, because annotation covers some circles
+    var circleRepeatDC = circle.enter().append("circle")
+		.attr("class", "tooltip-circle lineDC-circle") // Assign a class for styling
+		.attr("cx", function(d) { return vis.x(parseTime(d.year)) })
+		.attr("cy", function(d) { return vis.y(d[selection].dc) })
+		.attr("r", 5)
+		.on("mouseover", vis.tipDC.show)
+    .on("mouseout", vis.tipDC.hide);
+
+    var circleRepeatMarvel = circle.enter().append("circle")
+		.attr("class", "tooltip-circle lineMarvel-circle") // Assign a class for styling
+		.attr("cx", function(d) { return vis.x(parseTime(d.year)) })
+		.attr("cy", function(d) { return vis.y(d[selection].marvel) })
+		.attr("r", 5)
+		.on("mouseover", vis.tipMarvel.show)
+    .on("mouseout", vis.tipMarvel.hide);
+    
+    circleRepeatMarvel.style("opacity", 0.0)
+    .transition()
+    .duration(0).delay(7000)
+    .style("opacity", 1.0); 
+
+    circleRepeatDC.style("opacity", 0.0)
+    .transition()
+    .duration(0).delay(7000)
+    .style("opacity", 1.0); 
+
   vis.drawn = true;
 };
