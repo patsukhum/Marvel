@@ -177,12 +177,14 @@ Matrix.prototype.updateVis = function() {
     .append('g')
     .attr('class', 'cell');
 
-  cellEnter.append('rect')
-    .attr('x', 0)
-    .attr('y', 0)
-    .attr('height', vis.rectWidth)
-    .attr('width', vis.rectWidth)
+  cellEnter.append('circle')
+    .attr('cx', vis.rectWidth/2)
+    .attr('cy', vis.rectWidth/2)
+    // .attr('height', vis.rectWidth/4)
+    // .attr('width', vis.rectWidth/4)
+    .attr('r',vis.rectWidth/10)
     .attr('class', 'no-power')
+    .style('fill','black')
     .style('opacity', d => 1 - d);
 
   cellEnter.append('image')

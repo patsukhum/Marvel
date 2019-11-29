@@ -52,6 +52,9 @@ $('#plot-flow-sec button').on('click', function(event) {
   plotVis.toggleBranching();
 });
 
+$('#btn-cookie').on('click', function(event) {
+  cookiechartVis.toggleCookie();
+});
 
 // ********** Network intro ********** //
 function drawNetworkIntroVis() {

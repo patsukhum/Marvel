@@ -22,6 +22,7 @@ CookieChartVis = function(_parentElement, _data) {
 CookieChartVis.prototype.initVis = function() {
   var vis = this;
 
+  vis.stage = 0;
   vis.margin = {
     'top': 100,
     'bottom': 10,
@@ -36,6 +37,24 @@ CookieChartVis.prototype.initVis = function() {
     .append('div')
     .attr('class', 'tooltip')
     .style('opacity', 0);
+
+    // Generate x and y center locations for clusters
+    vis.xCenter = []
+    for (var i = 0; i < 3; i++) {
+      var init = 90;
+      for (var j = 0; j < 3; j++) {
+        var offset = 220;
+        vis.xCenter.push(init + offset * j);
+      }
+    }
+
+    vis.yCenter = []
+    for (var i = 0; i < 3; i++) {
+      var pos = 200 * i;
+      for (var j = 0; j < 3; j++) {
+        vis.yCenter.push(pos);
+      }
+    }
 
   vis.wrangleData();
 };
@@ -63,10 +82,21 @@ CookieChartVis.prototype.wrangleData = function() {
     idx += 1;
   });
   console.log(vis.idxToGenre)
-
-  //vis.updateVis();
 };
 
+CookieChartVis.prototype.toggleCookie = function() {
+  var vis = this;
+  if (vis.stage === 0){
+    vis.genreToIdx['Marvel'] = vis.genreToIdx['Action/Adventure'];
+    vis.genreToIdx['DC'] = vis.genreToIdx['Action/Adventure'];
+  } else {
+    vis.genreToIdx['Marvel'] = 6;
+    vis.genreToIdx['DC'] = 8;
+  }
+  vis.stage = (vis.stage+1)%2;
+
+  vis.updateVis();
+}
 
 CookieChartVis.prototype.updateVis = function() {
   var vis = this;
@@ -75,26 +105,6 @@ CookieChartVis.prototype.updateVis = function() {
     height = vis.height;
 
   var colorScale = ['pink', 'darkred', 'black', 'lightblue', 'green', 'orange', "#e23636", 'gray', "#0476F2"];
-
-  // Generate x and y center locations for clusters
-  var xCenter = []
-  for (var i = 0; i < 3; i++) {
-    var init = 90;
-    for (var j = 0; j < 3; j++) {
-      var offset = 220;
-      xCenter.push(init + offset * j);
-    }
-  }
-
-  var yCenter = []
-  for (var i = 0; i < 3; i++) {
-    var pos = 200 * i;
-    for (var j = 0; j < 3; j++) {
-      yCenter.push(pos);
-    }
-  }
-
-  console.log(xCenter)
 
   vis.nodes = [];
   vis.data.forEach((d, i) => {
@@ -106,13 +116,13 @@ CookieChartVis.prototype.updateVis = function() {
     })
   });
 
-  var simulation = d3.forceSimulation(vis.nodes)
+  vis.simulation = d3.forceSimulation(vis.nodes)
     .force('charge', d3.forceManyBody().strength(0))
     .force('x', d3.forceX().x(function(d) {
-      return xCenter[d.category];
+      return vis.xCenter[d.category];
     }))
     .force('y', d3.forceY().y(function(d) {
-      return yCenter[d.category];
+      return vis.yCenter[d.category];
     }))
     .force('collision', d3.forceCollide().radius(function(d) {
       return d.radius;
@@ -132,6 +142,7 @@ CookieChartVis.prototype.updateVis = function() {
       .on('mouseover', d => vis.nodeMouseover(d, vis))
       .on('mouseout', d => vis.nodeMouseout(d, vis))
       .style('fill', function(d) {
+        console.log('color')
         return colorScale[d.category];
       })
       .style('opacity', 0.77)
@@ -156,10 +167,10 @@ CookieChartVis.prototype.updateVis = function() {
     .attr("class", "texts genre-label")
     .merge(texts)
     .attr("x", (d, i) => {
-      return xCenter[i] - xOffsetText;
+      return vis.xCenter[i] - xOffsetText;
     })
     .attr("y", (d, i) => {
-      return yCenter[i] - yOffsetText;
+      return vis.yCenter[i] - yOffsetText;
     })
     .text((d, i) => {
       return d;
