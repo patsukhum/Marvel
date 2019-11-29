@@ -24,7 +24,7 @@ CharStatsVis.prototype.initVis = function() {
     'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.20;
+  vis.height = vis.width * 0.25;
 
   vis.colWidth = vis.width / 4;
   vis.colHeight = vis.height / 2;
@@ -80,16 +80,18 @@ CharStatsVis.prototype.initVis = function() {
   // Name of selected character
   vis.charName = vis.svg.append('text')
       .attr('class', 'char-title h4')
-      .attr('x', 0)
+      .style("text-anchor","middle")
+      .attr('x', 140)
       .attr('y', 10);
 
   // Image of selected character
   vis.charImg = vis.svg.append('image')
       .attr('class', 'char-stats-img')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('height', vis.height)
-      .attr('width', 3 * vis.colWidth);
+
+      .attr('x', 70)
+      .attr('y', 25)
+      .attr('height', 100)
+      .attr('width', 150);
 
   vis.wrangleData();
 };

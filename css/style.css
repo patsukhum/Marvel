@@ -469,3 +469,7 @@ fill: #e23636;
 .char-title {
   font-size: 20px;
 }
+
+.char-stats-img {
+  outline: 3px solid black;
+}
