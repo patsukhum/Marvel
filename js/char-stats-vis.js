@@ -85,17 +85,17 @@ CharStatsVis.prototype.initVis = function() {
   vis.charName = vis.svg.append('text')
       .attr('class', 'char-title h4')
       .style("text-anchor","middle")
-      .attr('x', 140)
-      .attr('y', 10);
+      .attr('x', 170)
+      .attr('y', 5);
 
   // Image of selected character
   vis.charImg = vis.svg.append('image')
       .attr('class', 'char-stats-img')
 
       .attr('x', 70)
-      .attr('y', 25)
-      .attr('height', 100)
-      .attr('width', 150);
+      .attr('y', 15)
+      .attr('height', 140)
+      .attr('width', 210);
 
   vis.wrangleData();
 };
