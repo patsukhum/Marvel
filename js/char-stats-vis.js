@@ -67,8 +67,8 @@ CharStatsVis.prototype.initVis = function() {
 
   // Arc generator
   vis.arc = d3.arc()
-      .innerRadius(15)
-      .outerRadius(25)
+      .innerRadius(20)
+      .outerRadius(27)
       .startAngle(0);
 
   // Drawing initial arcs
@@ -76,6 +76,10 @@ CharStatsVis.prototype.initVis = function() {
       .append('path')
       .attr('class', 'arc background')
       .attr('d', vis.arc({endAngle: Math.PI}));
+
+  // Creating text objects
+  vis.gMeters.append('text')
+      .attr('class', 'meter-text');
 
   // Name of selected character
   vis.charName = vis.svg.append('text')
@@ -110,10 +114,20 @@ CharStatsVis.prototype.updateVis = function() {
   if (vis.selected) {
     vis.gMeters
         .call(vis.drawMeter, vis);
+
+    var meterText = vis.gMeters.selectAll('text')
+        .data(v => [vis.displayData[v]]);
+    meterText.enter()
+        .append('text')
+        .merge(meterText)
+        .attr('x', 0)
+        .attr('y', 0)
+        .style('text-anchor', 'middle')
+        .text(d => formatValue(d))
+        .attr('transform', 'rotate(90)')
+        .style('font-size', 10);
     vis.charName.text(vis.selected);
     vis.charImg.attr('xlink:href', getJpgPath(vis.selected));
-  } else {
-    vis.clearHighlight();
   }
 };
 CharStatsVis.prototype.clearHighlight = function() {
