@@ -347,3 +347,18 @@ fill: #e23636;
 .row_label {
   font-size: 9px;
 }
+
+/*** Stats Meters ***/
+.arc {
+  stroke: black;
+  stroke-width: 2px;
+}
+.arc.background {
+  fill: none;
+}
+.arc.foreground {
+  fill: #A2CD48;
+}
+.char-title {
+  font-size: 16px;
+}
