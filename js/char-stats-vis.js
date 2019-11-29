@@ -105,7 +105,7 @@ CharStatsVis.prototype.updateVis = function() {
     vis.gMeters
         .call(vis.drawMeter, vis);
     vis.charName.text(vis.selected);
-    vis.charImg.attr('xlink:href', 'img/characters/jpg/' + vis.selected + '.jpg');
+    vis.charImg.attr('xlink:href', getJpgPath(vis.selected));
   } else {
     vis.clearHighlight();
   }

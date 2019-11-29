@@ -98,7 +98,7 @@ function getSvgIcon(charName) {
 }
 function getJpgPath(charName) {
   var jpgName = charName.toLowerCase().replace(/\s/g, '_');
-  return "img/characters/jpg" + jpgName + ".jpg";
+  return "img/characters/jpg/" + jpgName + ".jpg";
 }
 
 function unique(value, index, self) {
