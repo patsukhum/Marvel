@@ -1,15 +1,14 @@
 /**
  * LineChartVis - Object constructor function
  *
- * Force-directed graph showing links between the Wikipedia pages of each
- * character
+ * Revenue line chart comparing Marvel vs. DC Comics
  *
  * @param _parentElement  -- ID of HTML element that will contain the vis
  * @param _data           -- Movies data
  * @constructor
  */
 
- // line chart plotting help from: https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
+ // overall line chart plotting help from: https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
 
 LineChartVis = function(_parentElement, _data) {
   this.parentElement = _parentElement;
@@ -19,6 +18,7 @@ LineChartVis = function(_parentElement, _data) {
 
   this.initVis();
 };
+
 LineChartVis.prototype.initVis = function() {
   var vis = this;
 
@@ -32,7 +32,7 @@ LineChartVis.prototype.initVis = function() {
   vis.height = vis.width * 0.75;
 
 
-  vis.svg = makeSvg(vis, 'linechart-vis');
+  vis.svg = makeSvg(vis, vis.parentElement);
 
 
   // create scales
@@ -298,6 +298,112 @@ LineChartVis.prototype.updateVis = function() {
 		return `Movies in ${d.year}: ${movieNames}Revenue: $${formatComma(d[selection].marvel)}`;
 	})
   vis.svg.call(vis.tipMarvel);
+
+
+  // create a horizontal revenue line for DC
+  var line = vis.svg.append("g")
+  line.append("line")
+    .attr("class","horizontal-DCline")
+    .style("stroke", "#0476F2")
+    .style("stroke-width", 3)
+    .style("stroke-dasharray", ("10,3"))
+    .attr("x1", 0)   
+    .attr("y1", 210) 
+    .attr("x2", 420)  
+    .attr("y2", 210);
+
+
+  line.style("opacity", 0.0)
+  .transition()
+  .duration(1500).delay(5000)
+  .style("opacity", 1);
+
+  line.append("text")
+    .attr('text-anchor', 'middle')
+    .attr("x", 80)
+    .attr("y", 205)
+    .attr("class", "linechart-annotation")
+    .text("DC Comic's maximum revenue")
+
+
+    // add annotations
+    // annotation code help from: https://bl.ocks.org/susielu/a464c24d8b42f0c4d9fafe7b48e9e60a, https://d3-annotation.susielu.com/
+    const annotations = [{
+        //below in makeAnnotations has type set to d3.annotationLabel
+        //you can add this type value below to override that default
+        type: d3.annotationCalloutCircle,
+        note: {
+          label: "No movies were released.",
+          wrap: 120
+        },
+        //settings for the subject, in this case the circle radius
+        subject: {
+          radius: 30
+        },
+        x: 245,
+        y: 310,
+        dx: 50,
+        dy: -30,
+      },
+      {
+        type: d3.annotationCalloutCircle,
+        note: {
+          label: "Avengers:Endgame was a major hit.",
+          wrap: 120
+        },
+        //settings for the subject, in this case the circle radius
+        subject: {
+          radius: 10
+        },
+        x: 415,
+        y: 0,
+        dx: -50,
+        dy: 30,
+      }
+    
+    ].map(function(d){ d.color = "grey"; return d})
+
+      const makeAnnotations = d3.annotation()
+        .type(d3.annotationLabel)
+        .annotations(annotations)
+
+    
+      var annotationsOnPlot = line.append("g")
+      .attr("class", "annotation-group")
+      .call(makeAnnotations);
+      
+      annotationsOnPlot.style("opacity", 0.0)
+      .transition()
+      .duration(700).delay(6500)
+      .style("opacity", 1.0);
+
+
+    // redraw plot circles, because annotation covers some circles
+    var circleRepeatDC = circle.enter().append("circle")
+		.attr("class", "tooltip-circle lineDC-circle") // Assign a class for styling
+		.attr("cx", function(d) { return vis.x(parseTime(d.year)) })
+		.attr("cy", function(d) { return vis.y(d[selection].dc) })
+		.attr("r", 5)
+		.on("mouseover", vis.tipDC.show)
+    .on("mouseout", vis.tipDC.hide);
+
+    var circleRepeatMarvel = circle.enter().append("circle")
+		.attr("class", "tooltip-circle lineMarvel-circle") // Assign a class for styling
+		.attr("cx", function(d) { return vis.x(parseTime(d.year)) })
+		.attr("cy", function(d) { return vis.y(d[selection].marvel) })
+		.attr("r", 5)
+		.on("mouseover", vis.tipMarvel.show)
+    .on("mouseout", vis.tipMarvel.hide);
+    
+    circleRepeatMarvel.style("opacity", 0.0)
+    .transition()
+    .duration(0).delay(7000)
+    .style("opacity", 1.0); 
+
+    circleRepeatDC.style("opacity", 0.0)
+    .transition()
+    .duration(0).delay(7000)
+    .style("opacity", 1.0); 
 
   vis.drawn = true;
 };

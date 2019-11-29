@@ -6,8 +6,17 @@ var plotVis,
     networkVis,
     matrixVis;
 
+// create Vis0 for title slide:
+queue()
+    .defer(d3.csv, 'data/clean/matrix_data.csv')
+    .await(createTitleVis);
 
-// //create Vis1:
+function createTitleVis(error, matrix_data) {
+  titleVis = new TitleVis("title-vis", matrix_data);
+};
+
+
+//create Vis1:
 queue()
  .defer(d3.csv, 'data/clean/genre_revenue.csv')
  .await(createCookieVis)

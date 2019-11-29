@@ -130,7 +130,7 @@ CookieChartVis.prototype.updateVis = function() {
     .on('tick', ticked);
 
   function ticked() {
-    vis.u = d3.select('svg g')
+    vis.u = vis.svg
       .selectAll('circle')
       .data(vis.nodes);
 
