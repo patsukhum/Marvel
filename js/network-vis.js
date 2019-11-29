@@ -125,8 +125,7 @@ NetworkVis.prototype.updateVis = function() {
         .call(vis.dragNode)
         .on('mouseover', d => vis.nodeMouseover(d, vis))
         .on('mouseout', d => vis.nodeMouseout(d, vis))
-        .on('mousemove', d => vis.nodeMousemove(d, vis))
-        .on('click', (d, i) => vis.nodeClick(d, i, vis));
+        .on('mousemove', d => vis.nodeMousemove(d, vis));
 
   vis.nodes.append('circle')
       .attr('r', d => vis.scaleNodeRadius(d.centrality));
@@ -151,7 +150,7 @@ NetworkVis.prototype.updateVis = function() {
   vis.nodes.call(vis.dragNode);
 };
 NetworkVis.prototype.dragStart = function(d, vis) {
-  $(vis.eventHandler).trigger("clickHighlight", d.name);
+  // $(vis.eventHandler).trigger("clickHighlight", d.name);
   if (!d3.event.activate) {
     vis.force.alphaTarget(0.3).restart();
   }
@@ -163,7 +162,7 @@ NetworkVis.prototype.dragging = function(d) {
   d.fy = d3.event.y;
 };
 NetworkVis.prototype.dragEnd = function(d, vis) {
-  $(vis.eventHandler).trigger("clickClear");
+  // $(vis.eventHandler).trigger("clickClear");
   if (!d3.event.active) {
     vis.force.alphaTarget(0);
   }

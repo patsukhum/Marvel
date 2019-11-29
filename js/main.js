@@ -75,7 +75,7 @@ function createNetworkVis(error, nodes, edges) {
     distance: 150,
     margin: {top: 30, bottom: 20, left: 20, right: 20},
     linkToMatrix: true,
-    topText: "Click on one of the bubbles to highlight the matrix! (Click again to reset)"
+    topText: "Hover over the bubbles to see more stats on their Wikipedia presence! (And drag them because it's fun!)"
 };
   networkVis = new NetworkVis('network-vis', data, config, eventHandler);
 }

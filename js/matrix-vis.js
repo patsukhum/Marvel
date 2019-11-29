@@ -169,8 +169,7 @@ Matrix.prototype.updateVis = function() {
 
   vis.cols
       .on('mouseover', d => vis.colMouseover(d, vis))
-      .on('mouseout', d => vis.colMouseout(d, vis))
-      .on('click', d => vis.colClick(d, vis));
+      .on('mouseout', d => vis.colMouseout(d, vis));
 
   // Set x and y for the rows
   var cells = vis.cols.selectAll('g.cell')
