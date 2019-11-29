@@ -24,7 +24,7 @@ Matrix.prototype.initVis = function() {
   vis.margin = {
     'top': 30,
     'bottom': 20,
-    'left': 50,
+    'left': 80,
     'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
