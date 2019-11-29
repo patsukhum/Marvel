@@ -105,6 +105,7 @@ $(eventHandler).bind("mouseout", function() {
 $(eventHandler).bind("highlight", function(event, character) {
   matrixVis.highlight(character);
   networkVis.highlight(character);
+  charStatsVis.highlight(character);
 });
 $(eventHandler).bind("selectionClear", function() {
   matrixVis.clearHighlight();

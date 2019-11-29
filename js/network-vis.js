@@ -249,10 +249,8 @@ function setCircleLayout(nodes, idxSelected, vis) {
   nodes[idxSelected].fy = vis.height / 2;
 }
 function edgeMatchesCharacter(l, character) {
-  console.log(l);
   return character === l.source.name || character === l.target.name;
 }
 function nodeMatchesCharacter(n, character) {
-  console.log(n);
   return n.name === character;
 }

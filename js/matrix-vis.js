@@ -23,7 +23,7 @@ Matrix.prototype.initVis = function() {
 
   vis.margin = {
     'top': 30,
-    'bottom': 0,
+    'bottom': 20,
     'left': 50,
     'right': 10
   };
@@ -49,8 +49,8 @@ Matrix.prototype.initVis = function() {
     .append('div')
     .attr('class', 'tooltip')
     .style('opacity', 0);
-  vis.rectWidth = 25;
-  vis.innerPadding = 5;
+  vis.rectWidth = 20;
+  vis.innerPadding = 3;
 
 
   //matrix data
@@ -119,7 +119,7 @@ Matrix.prototype.initVis = function() {
 
   // Adding text
   vis.svg.append('text')
-    .attr('y', vis.height - 10)
+    .attr('y', vis.height + 10)
     .attr('x', 0)
     .text('Click the name of an ability to sort the columns!')
     .attr('class', 'annotation');
