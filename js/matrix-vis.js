@@ -73,10 +73,6 @@ Matrix.prototype.initVis = function() {
     "alien", "healing", "armor", "weapon", "flight", "magic", "acquired_power"
   ];
 
-  console.log(vis.matrixData);
-
-  console.log(vis.displayData);
-
   vis.gRowLabs = vis.svg.append('g');
 
   // Adding text
@@ -91,6 +87,7 @@ Matrix.prototype.initVis = function() {
 
 Matrix.prototype.wrangleData = function() {
   var vis = this;
+  
 
 
   vis.displayData = Array(vis.matrixData.length);
