@@ -28,14 +28,14 @@ h2, .h2 {
   font-size: 35px;
 }
 
-h3 {
+h3, .h3 {
   text-align: center;
   font-size: 50px;
   font-family: 'Staatliches', cursive;
   margin-bottom: 20px;
 }
 
-h4 {
+h4, .h4 {
   text-align: center;
   font-family: 'Bangers', cursive;
 }
@@ -379,5 +379,5 @@ fill: #e23636;
   fill: #A2CD48;
 }
 .char-title {
-  font-size: 16px;
+  font-size: 20px;
 }

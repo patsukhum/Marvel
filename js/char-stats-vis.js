@@ -54,7 +54,7 @@ CharStatsVis.prototype.initVis = function() {
       .attr('id', d => 'col-' + d);
 
   vis.cols.append('text')
-      .attr('y', vis.height - 20)
+      .attr('y', vis.height - 33)
       .attr('x', vis.colWidth / 2)
       .text(d => titleCase(d))
       .style('font-size', '10px')
@@ -63,19 +63,27 @@ CharStatsVis.prototype.initVis = function() {
   vis.gMeters = vis.cols.append('g')
       .attr('class', 'meter')
       .datum(d => d)
-      .attr('transform', 'translate(' + (vis.colWidth / 2) + ',' + (vis.height - 40) + ') rotate(-90)');
+      .attr('transform', 'translate(' + (vis.colWidth / 2) + ',' + (vis.colHeight) + ') rotate(-90)');
 
   // Arc generator
   vis.arc = d3.arc()
       .innerRadius(15)
-      .outerRadius(20)
+      .outerRadius(25)
       .startAngle(0);
 
   // Name of selected character
   vis.charName = vis.svg.append('text')
-      .attr('class', 'char-title')
+      .attr('class', 'char-title h4')
       .attr('x', 0)
-      .attr('y', 0);
+      .attr('y', 10);
+
+  // Image of selected character
+  vis.charImg = vis.svg.append('image')
+      .attr('class', 'char-stats-img')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('height', vis.height)
+      .attr('width', 3 * vis.colWidth);
 
   vis.wrangleData();
 };
@@ -97,6 +105,7 @@ CharStatsVis.prototype.updateVis = function() {
     vis.gMeters
         .call(vis.drawMeter, vis);
     vis.charName.text(vis.selected);
+    vis.charImg.attr('xlink:href', 'img/characters/jpg/' + vis.selected + '.jpg');
   } else {
     vis.clearHighlight();
   }
