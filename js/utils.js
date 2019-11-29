@@ -96,6 +96,10 @@ function getSvgIcon(charName) {
   iconName = replacements[iconName] || iconName;
   return iconDir + iconName + '.svg';
 }
+function getJpgPath(charName) {
+  var jpgName = charName.toLowerCase().replace(/\s/g, '_');
+  return "img/characters/jpg/" + jpgName + ".jpg";
+}
 
 function unique(value, index, self) {
   return self.indexOf(value) === index;
