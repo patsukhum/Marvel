@@ -225,6 +225,10 @@ html {
 fill: #0476F2;
 }
 
+.horizontal-DCline {
+  opacity: 0.5;
+}
+
 .lineMarvel {
 fill: none;
 stroke: #e23636;
@@ -233,6 +237,11 @@ stroke-width: 2px;
 
 .lineMarvel-circle {
 fill: #e23636;
+}
+
+.linechart-annotation {
+  font-size: 11px;
+  fill: grey;
 }
 
 /* tooltip css style from CS171 hw5 codes */

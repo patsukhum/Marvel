@@ -299,5 +299,83 @@ LineChartVis.prototype.updateVis = function() {
 	})
   vis.svg.call(vis.tipMarvel);
 
+
+  // create a horizontal revenue line for DC
+  var line = vis.svg.append("g")
+  line.append("line")
+    .attr("class","horizontal-DCline")
+    .style("stroke", "#0476F2")
+    .style("stroke-width", 3)
+    .style("stroke-dasharray", ("10,3"))
+    .attr("x1", 0)   
+    .attr("y1", 210) 
+    .attr("x2", 420)  
+    .attr("y2", 210);
+
+
+  line.style("opacity", 0.0)
+  .transition()
+  .duration(1500).delay(5000)
+  .style("opacity", 1);
+
+  line.append("text")
+    .attr('text-anchor', 'middle')
+    .attr("x", 80)
+    .attr("y", 205)
+    .attr("class", "linechart-annotation")
+    .text("DC Comic's maximum revenue")
+
+
+    // add annotations
+    // annotation code help from: https://bl.ocks.org/susielu/a464c24d8b42f0c4d9fafe7b48e9e60a, https://d3-annotation.susielu.com/
+    const annotations = [{
+        //below in makeAnnotations has type set to d3.annotationLabel
+        //you can add this type value below to override that default
+        type: d3.annotationCalloutCircle,
+        note: {
+          label: "No movies were released.",
+          wrap: 120
+        },
+        //settings for the subject, in this case the circle radius
+        subject: {
+          radius: 30
+        },
+        x: 245,
+        y: 310,
+        dx: 50,
+        dy: -30,
+      },
+      {
+        type: d3.annotationCalloutCircle,
+        note: {
+          label: "Avengers:Endgame was a major hit.",
+          wrap: 120
+        },
+        //settings for the subject, in this case the circle radius
+        subject: {
+          radius: 10
+        },
+        x: 415,
+        y: 0,
+        dx: -50,
+        dy: 30,
+      }
+    
+    ].map(function(d){ d.color = "grey"; return d})
+
+      const makeAnnotations = d3.annotation()
+        .type(d3.annotationLabel)
+        .annotations(annotations)
+
+    
+      var annotationsOnPlot = line.append("g")
+      .attr("class", "annotation-group")
+      .call(makeAnnotations);
+      
+      annotationsOnPlot.style("opacity", 0.0)
+      .transition()
+      .duration(700).delay(6500)
+      .style("opacity", 1.0);
+
   vis.drawn = true;
 };
