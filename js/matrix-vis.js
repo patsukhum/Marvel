@@ -115,7 +115,7 @@ Matrix.prototype.initVis = function() {
 
   // Adding text
   vis.svg.append('text')
-    .attr('y', vis.height + 10)
+    .attr('y', vis.height-20)
     .attr('x', 0)
     .text('Click the name of an ability to sort the columns!')
     .attr('class', 'annotation');
