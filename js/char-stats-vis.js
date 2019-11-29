@@ -71,6 +71,12 @@ CharStatsVis.prototype.initVis = function() {
       .outerRadius(25)
       .startAngle(0);
 
+  // Drawing initial arcs
+  vis.gMeters
+      .append('path')
+      .attr('class', 'arc background')
+      .attr('d', vis.arc({endAngle: Math.PI}));
+
   // Name of selected character
   vis.charName = vis.svg.append('text')
       .attr('class', 'char-title h4')
