@@ -36,22 +36,26 @@ CharStatsVis.prototype.initVis = function() {
     {
       name: "centrality",
       displayName: "Centrality",
-      format: format1d
+      format: format1d,
+      info: "Centrality info"
     },
     {
       name: "avg_monthly_views",
       displayName: "Average monthly views",
-      format: formatValue
+      format: formatValue,
+      info: "Average monthly views info"
     },
     {
       name: "num_pages",
       displayName: "Number of pages",
-      format: d3.format(".0f")
+      format: d3.format(".0f"),
+      info: "Number of pages info"
     },
     {
       name: "word_count",
       displayName: "Average word count",
-      format: formatValue
+      format: formatValue,
+      info: "Word count info"
     },
   ];
 
@@ -114,6 +118,26 @@ CharStatsVis.prototype.initVis = function() {
       .attr('height', 140)
       .attr('width', 210);
 
+  // Info tooltip
+  vis.infoTip = d3.tip()
+      .attr('class', 'tooltip info-tip')
+      .offset([-10, 0]);
+  vis.infoTip.html(function(d) {
+    return d.info;
+  });
+
+  vis.cols.call(vis.infoTip);
+
+  // Drawing info popups for variables
+  vis.cols.append('image')
+      .attr('xlink:href', 'img/other/info.svg')
+      .attr('width', 10)
+      .attr('height', 10)
+      .attr('x', d => vis.colWidth / 2 + d.displayName.length * 2.5)
+      .attr('y', vis.colHeight + 6)
+      .on('mouseover', vis.infoTip.show)
+      .on('mouseout', vis.infoTip.hide);
+
   vis.wrangleData();
 };
 CharStatsVis.prototype.wrangleData = function() {
@@ -166,4 +190,10 @@ CharStatsVis.prototype.highlight = function(character) {
 
   vis.selected = character;
   vis.wrangleData();
+};
+CharStatsVis.prototype.showInfo = function(d, vis) {
+
+};
+CharStatsVis.prototype.hideInfo = function(d, vis) {
+
 };
