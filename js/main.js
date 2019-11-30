@@ -21,10 +21,14 @@ function createTitleVis(error, matrix_data) {
 //create Vis1:
 queue()
  .defer(d3.csv, 'data/clean/genre_revenue.csv')
+ .defer(d3.json, 'data/clean/cookie_positions/stage1.json')
+ .defer(d3.json, 'data/clean/cookie_positions/stage2.json')
+ .defer(d3.json, 'data/clean/cookie_positions/stage3.json')
+ .defer(d3.json, 'data/clean/cookie_positions/stage4.json')
  .await(createCookieVis);
 
-function createCookieVis(error, data) {
-  cookiechartVis = new CookieChartVis('cookiechart-vis', data);
+function createCookieVis(error, data, data1, data2, data3, data4) {
+  cookiechartVis = new CookieChartVis('cookiechart-vis', data, data1, data2, data3, data4);
 }
 
 // create Vis2: line chart
