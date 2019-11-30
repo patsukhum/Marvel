@@ -103,8 +103,8 @@ MapVis.prototype.initVis = function() {
     .append("text")
     .attr("class", "legend-text")
     .text('Gross Revenue ($)')
-    .attr("x", 0)
-    .attr("y", -45)
+    .attr("x", 23)
+    .attr("y", -10)
     .attr("fill", "black")
     .style("font-size", 15);
 
@@ -211,8 +211,8 @@ MapVis.prototype.updateVis = function() {
   vis.color.range(colors);
 
   var projection = d3.geoMercator()
-    .translate([vis.width / 3, vis.height / 10])
-    .center([0, 0]).scale(70);
+    .translate([320, vis.height-60])
+    .center([0, 0]).scale(73);
 
   var chmap = vis.mapGroup.selectAll(".mapPath")
     .data(vis.countryInfo);
@@ -260,10 +260,10 @@ MapVis.prototype.updateVis = function() {
     .attr("class", "legend-rect")
     .merge(legendRects)
     .attr("x", (d, i) => {
-      return 0;
+      return 30;
     })
     .attr("y", (d, i) => {
-      return yLegend(i) - 55;
+      return yLegend(i) - 20;
     })
     .attr("width", (d) => {
       return 20;
@@ -283,10 +283,10 @@ MapVis.prototype.updateVis = function() {
     .attr("class", "texts")
     .merge(texts)
     .attr("x", (d, i) => {
-      return 30;
+      return 55;
     })
     .attr("y", (d, i) => {
-      return -40 + yLegend(i);
+      return -5 + yLegend(i);
     })
     .text((d, i) => {
       return d;
