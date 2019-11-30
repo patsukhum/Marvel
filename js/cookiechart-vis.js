@@ -10,9 +10,13 @@
  */
 // Forced layout starter reference: https://www.d3indepth.com/force-layout/
 
-CookieChartVis = function(_parentElement, _data) {
+CookieChartVis = function(_parentElement, _data, _data1, _data2, _data3, _data4) {
   this.parentElement = _parentElement;
   this.data = _data;
+  this.dataStage1 = _data1;
+  this.dataStage2 = _data2;
+  this.dataStage3 = _data3;
+  this.dataStage4 = _data4;
   this.drawn = false;
 
   this.initVis();
@@ -22,14 +26,14 @@ CookieChartVis = function(_parentElement, _data) {
 CookieChartVis.prototype.initVis = function() {
   var vis = this;
 
-  vis.stage = 0;
+  vis.stage = 1;
   vis.margin = {
     'top': 100,
     'bottom': 10,
     'left': 20,
     'right': 10
   };
-  vis.width = $('#' + vis.parentElement).width() +30 - vis.margin.left - vis.margin.right;
+  vis.width = $('#' + vis.parentElement).width() + 30 - vis.margin.left - vis.margin.right;
   vis.height = vis.width * 0.8;
   vis.svg = makeSvg(vis, 'cookiechart-vis');
 
@@ -38,23 +42,26 @@ CookieChartVis.prototype.initVis = function() {
     .attr('class', 'tooltip')
     .style('opacity', 0);
 
-    // Generate x and y center locations for clusters
-    vis.xCenter = []
-    for (var i = 0; i < 3; i++) {
-      var init = 90;
-      for (var j = 0; j < 3; j++) {
-        var offset = 220;
-        vis.xCenter.push(init + offset * j);
-      }
+  // Generate x and y center locations for clusters
+  vis.xCenter = []
+  for (var i = 0; i < 3; i++) {
+    var init = 90;
+    for (var j = 0; j < 3; j++) {
+      var offset = 220;
+      vis.xCenter.push(init + offset * j);
     }
+  }
 
-    vis.yCenter = []
-    for (var i = 0; i < 3; i++) {
-      var pos = 200 * i;
-      for (var j = 0; j < 3; j++) {
-        vis.yCenter.push(pos);
-      }
+  vis.yCenter = []
+  for (var i = 0; i < 3; i++) {
+    var pos = 200 * i;
+    for (var j = 0; j < 3; j++) {
+      vis.yCenter.push(pos);
     }
+  }
+
+  // Used to indicate combined genres for stage 2
+  vis.specialGenres = [6, 7, 8];
 
   vis.wrangleData();
 };
@@ -84,17 +91,19 @@ CookieChartVis.prototype.wrangleData = function() {
   console.log(vis.idxToGenre)
 };
 
+CookieChartVis.prototype.toggleCookie2 = function() {
+  var vis = this;
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(vis.titleToInfo));
+  var dlAnchorElem = document.getElementById('downloadAnchorElem');
+  dlAnchorElem.setAttribute("href",     dataStr     );
+  dlAnchorElem.setAttribute("download", "data.json");
+  dlAnchorElem.click();
+  vis.updateVis();
+}
+
 CookieChartVis.prototype.toggleCookie = function() {
   var vis = this;
-  if (vis.stage === 0){
-    vis.genreToIdx['Marvel'] = vis.genreToIdx['Action/Adventure'];
-    vis.genreToIdx['DC'] = vis.genreToIdx['Action/Adventure'];
-  } else {
-    vis.genreToIdx['Marvel'] = 6;
-    vis.genreToIdx['DC'] = 8;
-  }
-  vis.stage = (vis.stage+1)%2;
-
+  vis.stage = vis.stage%4+1;
   vis.updateVis();
 }
 
@@ -104,58 +113,27 @@ CookieChartVis.prototype.updateVis = function() {
   var width = vis.width,
     height = vis.height;
 
-  var colorScale = ['pink', 'darkred', 'black', 'lightblue', 'green', 'orange', "#e23636", 'gray', "#0476F2"];
+  vis.colorScale = ['pink', 'darkred', 'black', 'lightblue', 'green', 'orange', "#e23636", 'gray', "#0476F2"];
+
 
   vis.nodes = [];
   vis.data.forEach((d, i) => {
+    var genre = vis.genreToIdx[d.genres];
+    if (vis.stage === 2 && (genre === 6 || genre === 8)) {
+      genre = 5;
+    }
     vis.nodes.push({
       radius: d.revenues / 60000000,
-      category: vis.genreToIdx[d.genres],
+      category: genre,
       name: d.title,
       revenue: d.revenues
     })
   });
 
-  vis.simulation = d3.forceSimulation(vis.nodes)
-    .force('charge', d3.forceManyBody().strength(0))
-    .force('x', d3.forceX().x(function(d) {
-      return vis.xCenter[d.category];
-    }))
-    .force('y', d3.forceY().y(function(d) {
-      return vis.yCenter[d.category];
-    }))
-    .force('collision', d3.forceCollide().radius(function(d) {
-      return d.radius;
-    }))
-    .on('tick', ticked);
+  // Non-Simulation
+  vis.drawCircles();
 
-  function ticked() {
-    vis.u = vis.svg
-      .selectAll('circle')
-      .data(vis.nodes);
-
-    vis.u.enter()
-      .append('circle')
-      .attr('r', function(d) {
-        return d.radius;
-      })
-      .on('mouseover', d => vis.nodeMouseover(d, vis))
-      .on('mouseout', d => vis.nodeMouseout(d, vis))
-      .style('fill', function(d) {
-        console.log('color')
-        return colorScale[d.category];
-      })
-      .style('opacity', 0.77)
-      .merge(vis.u)
-      .attr('cx', function(d) {
-        return d.x;
-      })
-      .attr('cy', function(d) {
-        return d.y;
-      })
-
-    vis.u.exit().remove();
-  }
+  // vis.runSimulation();
 
   var xOffsetText = 0;
   var yOffsetText = 0;
@@ -173,24 +151,154 @@ CookieChartVis.prototype.updateVis = function() {
       return vis.yCenter[i] - yOffsetText;
     })
     .text((d, i) => {
+      if (vis.stage === 1)
+        return "";
       return d;
     })
     .attr("fill", "black")
-    .style("text-anchor","middle");
+    .style("text-anchor", "middle");
   texts.exit().remove();
 
   vis.drawn = true;
 }
 
+CookieChartVis.prototype.drawCircles = function() {
+  var vis = this;
+  vis.u = vis.svg
+    .selectAll('.cookie-nodes')
+    .data(vis.nodes, (d)=>d.name);
+
+  vis.u.enter()
+    .append('circle')
+    .attr('class', 'cookie-nodes')
+    .on('mouseover', d => vis.nodeMouseover(d, vis))
+    .on('mouseout', d => vis.nodeMouseout(d, vis))
+    .style('opacity', 0.77)
+    .merge(vis.u)
+    .transition()
+    .duration(1000)
+    .attr('r', function(d) {
+      if (vis.stage === 4 && d.category !== 6 && d.category !== 8) {
+        return 0;
+      }
+      return d.radius;
+    })
+    .attr('cx', function(d) {
+      if (vis.stage === 1) {
+        return vis.dataStage1[d.name]['x'];
+      } else if (vis.stage === 2 || ((d.category < 5 || d.category == 7) && vis.stage !== 4)) {
+        return vis.dataStage2[d.name]['x'];
+      } else if (vis.stage === 4) {
+        return vis.dataStage4[d.name]['x'];
+      }
+      return vis.dataStage3[d.name]['x'];
+    })
+    .attr('cy', function(d) {
+      if (vis.stage === 1) {
+        return vis.dataStage1[d.name]['y'];
+      } else if (vis.stage === 2 || ((d.category < 5 || d.category == 7) && vis.stage !== 4)) {
+        return vis.dataStage2[d.name]['y'];
+      } else if (vis.stage === 4) {
+        return vis.dataStage4[d.name]['y'];
+      }
+      return vis.dataStage3[d.name]['y'];
+    })
+    .style('fill', function(d) {
+      if (vis.stage === 1){
+        return 'gray';
+      } else if (vis.stage === 2){
+        return vis.dataStage2[d.name]['color'];
+      } else if (vis.stage === 3){
+        return vis.dataStage3[d.name]['color'];
+      }
+      return vis.dataStage4[d.name]['color'];
+    })
+
+  vis.u.exit().remove();
+}
+
+CookieChartVis.prototype.runSimulation = function() {
+  var vis = this;
+  vis.titleToInfo = {};
+  vis.nodes.forEach((d)=>{
+    vis.titleToInfo[d.name] = {};
+  });
+
+  vis.simulation = d3.forceSimulation(vis.nodes)
+    .force('charge', d3.forceManyBody().strength(0))
+    .force('x', d3.forceX().x(function(d) {
+      if (vis.stage === 1) {
+        // Only one center
+        return vis.xCenter[4];
+      }
+      return vis.xCenter[d.category];
+    }))
+    .force('y', d3.forceY().y(function(d) {
+      if (vis.stage === 1) {
+        // Only one center
+        return vis.yCenter[4];
+      } else if (vis.stage === 4) {
+        return vis.yCenter[d.category]-200;
+      }
+      return vis.yCenter[d.category];
+    }))
+    .force('collision', d3.forceCollide().radius(function(d) {
+      return d.radius+2;
+    }))
+    .on('tick', ticked);
+
+  function ticked() {
+    vis.u = vis.svg
+      .selectAll('.cookie-nodes')
+      .data(vis.nodes);
+
+    vis.u.enter()
+      .append('circle')
+      .attr('class', 'cookie-nodes')
+      .attr('r', function(d) {
+        if (vis.stage === 4 && (d.category !== 6 && d.category !== 8)) {
+          return 0;
+        }
+        return d.radius;
+      })
+      .on('mouseover', d => vis.nodeMouseover(d, vis))
+      .on('mouseout', d => vis.nodeMouseout(d, vis))
+      .style('fill', function(d) {
+        var color = vis.colorScale[d.category];
+        if (vis.stage === 1){
+          color = 'gray';
+        }
+        vis.titleToInfo[d.name]['category'] = d.category;
+        vis.titleToInfo[d.name]['color'] = vis.colorScale[d.category];
+        return color;
+      })
+      .style('opacity', 0.77)
+      .merge(vis.u)
+      .attr('cx', function(d) {
+        vis.titleToInfo[d.name]['x'] = d.x;
+        return d.x;
+      })
+      .attr('cy', function(d) {
+        vis.titleToInfo[d.name]['y'] = d.y;
+        return d.y;
+      })
+
+    vis.u.exit().remove();
+  }
+}
+
+
 CookieChartVis.prototype.nodeMouseover = function(d, vis) {
-  vis.u.filter(function(data) { return data == d; })
+  vis.u.filter(function(data) {
+      return data == d;
+    })
     .style('stroke', 'darkgray')
     .style('stroke-width', '3px');
 
   vis.tooltip.transition()
     .style('opacity', 0.8);
 
-  vis.tooltip.html(`<h4>${d.name}</h4>` +`<p>Revenue: ${formatMillions(d.revenue)}</p>`)
+  vis.tooltip.html(`<h4>${d.name}</h4>` + `<p>Revenue: ${formatMillions(d.revenue)}</p>`)
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY + 10) + "px");
 
@@ -210,8 +318,8 @@ function formatMillions(num) {
   num = +num;
   if (num >= 1000000000) {
     num1 = Math.floor(num / 1000000000);
-    num2 = Math.floor(num%1000000000 / 1000000);
-    return num1+"."+num2 + "B";
+    num2 = Math.floor(num % 1000000000 / 1000000);
+    return num1 + "." + num2 + "B";
   } else if (num >= 1000000) {
     num = Math.floor(num / 1000000);
     return num + "M";
