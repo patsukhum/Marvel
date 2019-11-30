@@ -5,6 +5,7 @@ var plotVis,
     networkIntroVis,
     networkVis,
     charStatsVis,
+    mapVis,
     matrixVis;
 
 // create Vis0 for title slide:
@@ -51,7 +52,7 @@ queue()
 
 function createMapVis(error, data1, data2, data3, data4) {
 
-  var mapVis = new MapVis('map-vis', data1, data2, data3, data4);
+  mapVis = new MapVis('map-vis', data1, data2, data3, data4);
 }
 
 // create Vis2.7: movie flow chart

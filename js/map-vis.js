@@ -18,7 +18,6 @@ MapVis = function(_parentElement, _data, _mapData, _countryCodes, _auxData) {
   this.countryCodes = _countryCodes;
   this.auxData = _auxData;
 
-  console.log(this.data);
   this.initVis();
 };
 
@@ -27,13 +26,13 @@ MapVis.prototype.initVis = function() {
   var vis = this;
 
   vis.margin = {
-    'top': 150,
-    'bottom': 40,
+    'top': 200,
+    'bottom': 30,
     'left': 40,
     'right': 40
   };
-  vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.35;
+  vis.width = 1100- vis.margin.left - vis.margin.right;
+  vis.height = 100;
   vis.svg = makeSvg(vis, 'map-vis');
 
   vis.tooltip = d3.select('body').append('g')
@@ -105,7 +104,7 @@ MapVis.prototype.initVis = function() {
     .attr("class", "legend-text")
     .text('Gross Revenue ($)')
     .attr("x", 0)
-    .attr("y", -35)
+    .attr("y", -45)
     .attr("fill", "black")
     .style("font-size", 15);
 
@@ -156,70 +155,9 @@ MapVis.prototype.wrangleData = function() {
   });
 
   vis.updateDataSelection();
-  vis.initializeBottomPanel();
   vis.updateVis();
 };
 
-MapVis.prototype.initializeBottomPanel = function() {
-  var vis = this;
-
-  var yearRanges = ['2008-2013', '2014-2017', '2018-2019'];
-  vis.movieYearRangeArr.forEach((curMovies, idx) => {
-    var yearText = yearRanges[idx];
-    vis.svg.selectAll('.year-text' + idx)
-      .data([yearText])
-      .enter()
-      .append("text")
-      .attr("class", "year-text" + idx)
-      .text((d) => {
-        return d;
-      })
-      .attr("x", 20 + 430 * idx)
-      .attr("y", 150)
-      .attr("fill", "black");
-
-    vis.svg.selectAll('.year-rect' + idx)
-      .data(curMovies)
-      .enter()
-      .append('rect')
-      .attr('class', 'year-rect' + idx)
-      .attr('x', (d, i) => {
-        return -30 + 430 * idx + 100 * Math.floor(i / 4);
-      })
-      .attr('y', (d, i) => {
-        return 160 + 30 * (i % 4);
-      })
-      .attr('width', 95)
-      .attr('height', 25)
-      .attr('class', 'rect-film')
-
-    vis.svg.selectAll('.text' + idx)
-      .data(curMovies)
-      .enter()
-      .append('text')
-      .attr('class', 'text' + idx)
-      .attr('x', (d, i) => {
-        return 20 + 430 * idx + 100 * Math.floor(i / 4);
-      })
-      .attr('y', (d, i) => {
-        return 170 + 30 * (i % 4);
-      })
-      .text((d) => d)
-      .call(wrap, 80)
-      .on('mouseover', function(d, i) {
-        clicked(vis.nameToAllDataIdx[d], vis);
-        d3.select(this)
-          .style('fill', 'red')
-          .style('text-decoration', 'underline')
-      })
-      .on('mouseout', function(d, i) {
-        d3.select(this)
-          .style('fill', 'black')
-          .style('text-decoration', 'none');
-      });
-
-  })
-}
 
 MapVis.prototype.updateDataSelection = function() {
   var vis = this;
@@ -273,7 +211,7 @@ MapVis.prototype.updateVis = function() {
   vis.color.range(colors);
 
   var projection = d3.geoMercator()
-    .translate([vis.width / 3, vis.height / 8])
+    .translate([vis.width / 3, vis.height / 10])
     .center([0, 0]).scale(70);
 
   var chmap = vis.mapGroup.selectAll(".mapPath")
@@ -325,7 +263,7 @@ MapVis.prototype.updateVis = function() {
       return 0;
     })
     .attr("y", (d, i) => {
-      return yLegend(i) - 40;
+      return yLegend(i) - 55;
     })
     .attr("width", (d) => {
       return 20;
@@ -348,7 +286,7 @@ MapVis.prototype.updateVis = function() {
       return 30;
     })
     .attr("y", (d, i) => {
-      return -25 + yLegend(i);
+      return -40 + yLegend(i);
     })
     .text((d, i) => {
       return d;
@@ -371,9 +309,8 @@ MapVis.prototype.updateVis = function() {
     .text((d) => {
       return d.Name;
     })
-    .call(wrap, 200)
+    .call(wrap, 400)
     .attr("fill", "black")
-    .style('text-decoration', 'underline');
   movieTitle.exit().remove();
 
   // Col 2 Charts
@@ -590,6 +527,7 @@ function mapCountryName(name) {
 }
 
 function clicked(i, vis) {
+  console.log(i);
   vis.selectedMovie = vis.allData[i];
   vis.updateDataSelection();
 }
