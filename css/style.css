@@ -189,6 +189,12 @@ html {
   stroke: white;
 }
 
+.mapPath:hover {
+  paint-order: stroke fill;
+  stroke-width: 3;
+  stroke: black;
+}
+
 /* plot flow */
 .rect-film {
   fill: none;
