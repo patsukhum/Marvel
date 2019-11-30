@@ -31,7 +31,7 @@ MapVis.prototype.initVis = function() {
     'left': 40,
     'right': 40
   };
-  vis.width = 1100- vis.margin.left - vis.margin.right;
+  vis.width = 1100 - vis.margin.left - vis.margin.right;
   vis.height = 100;
   vis.svg = makeSvg(vis, 'map-vis');
 
@@ -65,6 +65,24 @@ MapVis.prototype.initVis = function() {
     .attr("transform", "translate(" + vis.xCol2 +
       ",-120)");
 
+  vis.svgCol2.append("text")
+    .attr("class", "bar-title")
+    .text('Top countries by Gross Revenue')
+    .attr("x", 0)
+    .attr("y", 120)
+    .attr("fill", "gray")
+    .style("font-size", 15)
+    .style("text-decoration", 'underline');
+
+  vis.svgCol2.append("text")
+    .attr("class", "pie-title")
+    .text('Gross Revenue Composition')
+    .attr("x", 310)
+    .attr("y", 30)
+    .attr("fill", "gray")
+    .style("font-size", 13)
+    .style("text-decoration", 'underline')
+    .call(wrap, 100);
 
   vis.svgCol2.append("text")
     .attr("class", "col2-text")
@@ -211,7 +229,7 @@ MapVis.prototype.updateVis = function() {
   vis.color.range(colors);
 
   var projection = d3.geoMercator()
-    .translate([320, vis.height-60])
+    .translate([320, vis.height - 60])
     .center([0, 0]).scale(73);
 
   var chmap = vis.mapGroup.selectAll(".mapPath")
@@ -237,6 +255,8 @@ MapVis.prototype.updateVis = function() {
       vis.tooltip.transition()
         .duration(600).style("opacity", 0);
     })
+    .transition()
+    .duration(800)
     .attr("fill", function(d, i) {
       if (d.id in vis.idToRevenue)
         return vis.color(vis.idToRevenue[d.id]);
@@ -368,8 +388,6 @@ MapVis.prototype.updateVis = function() {
     })
     .attr("transform", function(d) {
       var centroid = arcGenerator.centroid(d);
-      // var x = centroid[0] + pieXOffset;
-      // var y = centroid[1] + pieYOffset;
       var x = centroid[0];
       var y = centroid[1];
       return "translate(" + x + "," + y + ")";
@@ -391,7 +409,7 @@ MapVis.prototype.updateVis = function() {
       return 310;
     })
     .attr("y", (d, i) => {
-      return 30 + 15 * (i);
+      return 60 + 15 * (i);
     })
     .attr("width", (d) => {
       return 10;
@@ -413,7 +431,7 @@ MapVis.prototype.updateVis = function() {
       return 325;
     })
     .attr("y", (d, i) => {
-      return 40 + 15 * (i);
+      return 70 + 15 * (i);
     })
     .text((d) => d)
     .attr("fill", (d, i) => pieColors[i])
@@ -437,10 +455,10 @@ MapVis.prototype.updateVis = function() {
     .transition()
     .duration(800)
     .attr("y", function(d, i) {
-      return 120 + i * 20;
+      return 140 + i * 20;
     })
     .attr("x", function(d) {
-      return 20;
+      return 40;
     })
     .attr("width", function(d) {
       return d.Gross / 3000000;
@@ -461,10 +479,10 @@ MapVis.prototype.updateVis = function() {
     .merge(topCountryNames)
     .attr("class", "top-country-names")
     .attr("x", function(d) {
-      return 0;
+      return 20;
     })
     .attr("y", function(d, i) {
-      return 130 + i * 20;
+      return 150 + i * 20;
     })
     .text((d) => {
       return mapCountryName(d.Market);
@@ -480,12 +498,14 @@ MapVis.prototype.updateVis = function() {
   values.enter()
     .append("text")
     .merge(values)
+    .transition()
+    .duration(800)
     .attr("class", "values")
     .attr("x", function(d) {
-      return d.Gross / 3000000 + 30;
+      return d.Gross / 3000000 + 50;
     })
     .attr("y", function(d, i) {
-      return 130 + i * 20;
+      return 150 + i * 20;
     })
     .text((d) => {
       return formatMillions(d.Gross);
