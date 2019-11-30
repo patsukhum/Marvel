@@ -10,7 +10,7 @@ CharStatsVis = function(_parentElement, _data, _eventHandler) {
   this.parentElement = _parentElement;
   this.data = _data;
   this.eventHandler = _eventHandler;
-  this.selected = null;
+  this.selected = "Iron Man";
 
   this.initVis();
 };
@@ -31,16 +31,34 @@ CharStatsVis.prototype.initVis = function() {
 
   vis.svg = makeSvg(vis, 'char-stats-vis');
 
+  // Defining variables, display names, and format functions
   vis.variables = [
-    "centrality",
-    "avg_monthly_views",
-    "num_pages",
-    "word_count",
+    {
+      name: "centrality",
+      displayName: "Centrality",
+      format: format1d
+    },
+    {
+      name: "avg_monthly_views",
+      displayName: "Average monthly views",
+      format: formatValue
+    },
+    {
+      name: "num_pages",
+      displayName: "Number of pages",
+      format: d3.format(".0f")
+    },
+    {
+      name: "word_count",
+      displayName: "Average word count",
+      format: formatValue
+    },
   ];
 
+
   vis.maxVals = {};
-  vis.variables.forEach(function(v) {
-    vis.maxVals[v] = Math.round(d3.max(vis.data.map(d => d[v])));
+  vis.variables.forEach(function(d) {
+    vis.maxVals[d.name] = Math.round(d3.max(vis.data.map(e => e[d.name])));
   });
   vis.maxVals.centrality = 0.5;
 
@@ -51,12 +69,12 @@ CharStatsVis.prototype.initVis = function() {
       .attr('class', 'col')
       .attr('transform', (d, i) => 'translate(' + (vis.colWidth * (i % 2 + 2)) + ','
           + (clamp(i - 1, 0, 1) * vis.colHeight - 20) + ')')
-      .attr('id', d => 'col-' + d);
+      .attr('id', d => 'col-' + d.name);
 
   vis.cols.append('text')
       .attr('y', vis.height / 2 + 15)
       .attr('x', vis.colWidth / 2)
-      .text(d => titleCase(d))
+      .text(d => d.displayName)
       .style('font-size', '10px')
       .style('text-anchor', 'middle');
 
@@ -91,7 +109,6 @@ CharStatsVis.prototype.initVis = function() {
   // Image of selected character
   vis.charImg = vis.svg.append('image')
       .attr('class', 'char-stats-img')
-
       .attr('x', 70)
       .attr('y', 15)
       .attr('height', 140)
@@ -117,40 +134,32 @@ CharStatsVis.prototype.updateVis = function() {
     vis.gMeters
         .call(vis.drawMeter, vis);
 
-    var meterText = vis.gMeters.selectAll('text')
-        .data(v => [vis.displayData[v]]);
+    var meterText = vis.gMeters.select('text')
+        .datum(d => d);
     meterText.enter()
         .append('text')
         .merge(meterText)
         .attr('x', 0)
         .attr('y', 0)
         .style('text-anchor', 'middle')
-        .text(d => formatValue(d))
+        .text(d => d.format(vis.displayData[d.name]))
         .attr('transform', 'rotate(90)')
         .style('font-size', 10);
     vis.charName.text(vis.selected);
     vis.charImg.attr('xlink:href', getJpgPath(vis.selected));
   }
 };
-CharStatsVis.prototype.clearHighlight = function() {
-  var vis = this;
-};
 CharStatsVis.prototype.drawMeter = function(elem, vis) {
 
-  var arcs = elem.selectAll('path.arc')
-      .data(function(v) {
-        return [
-            {endAngle: Math.PI, type: "background"},
-            {endAngle: vis.displayData[v] / vis.maxVals[v] * Math.PI, type: "foreground"}
-          ];
-      });
+  var arcs = elem.selectAll('path.arc.foreground')
+      .data(d => [{endAngle: vis.displayData[d.name] / vis.maxVals[d.name] * Math.PI}]);
 
   arcs.enter()
       .append('path')
-      .attr('class', d => 'arc ' + d.type)
+      .attr('class', 'arc foreground')
       .merge(arcs)
       .transition(300)
-      .attr('d', vis.arc);
+      .attrTween('d', (d, i) => arc2Tween(d, i, vis.arc));
 };
 CharStatsVis.prototype.highlight = function(character) {
   var vis = this;

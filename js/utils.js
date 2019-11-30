@@ -135,3 +135,45 @@ function translateAlong(path) {
     };
   };
 }
+
+
+// ArcTween for speedometers
+// By Mike Bostock: http://bl.ocks.org/mbostock/5100636
+function arcTween(newAngle) {
+  return function(d) {
+    var interpolate = d3.interpolate(d.endAngle, newAngle);
+    return function(t) {
+      d.endAngle = interpolate(t);
+      return arc(d);
+    };
+  };
+}
+
+
+// From http://bl.ocks.org/cmdoptesc/6228457
+function arc2Tween(d, indx, drawArc) {
+  var interp = d3.interpolate(this._current, d);    // this will return an interpolater
+                                                    //  function that returns values
+                                                    //  between 'this._current' and 'd'
+                                                    //  given an input between 0 and 1
+
+  this._current = d;                    // update this._current to match the new value
+
+  return function(t) {                  // returns a function that attrTween calls with
+    //  a time input between 0-1; 0 as the start time,
+    //  and 1 being the end of the animation
+
+    var tmp = interp(t);                // use the time to get an interpolated value
+                                        //  (between this._current and d)
+
+    return drawArc(tmp, indx);          // pass this new information to the accessor
+                                        //  function to calculate the path points.
+                                        //  make sure sure you return this.
+
+    // n.b. we need to manually pass along the
+    //  index to drawArc so since the calculation of
+    //  the radii depend on knowing the index. if your
+    //  accessor function does not require knowing the
+    //  index, you can omit this argument
+  }
+};
