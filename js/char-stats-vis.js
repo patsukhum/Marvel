@@ -150,7 +150,7 @@ CharStatsVis.prototype.drawMeter = function(elem, vis) {
       .attr('class', d => 'arc ' + d.type)
       .merge(arcs)
       .transition(300)
-      .attr('d', vis.arc);
+      .attrTween('d', (d, t) => arc2Tween(d, t, vis.arc));
 };
 CharStatsVis.prototype.highlight = function(character) {
   var vis = this;
