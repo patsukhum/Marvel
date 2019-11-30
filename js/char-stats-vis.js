@@ -54,7 +54,7 @@ CharStatsVis.prototype.initVis = function() {
       .attr('id', d => 'col-' + d);
 
   vis.cols.append('text')
-      .attr('y', vis.height - 33)
+      .attr('y', vis.height / 2 + 15)
       .attr('x', vis.colWidth / 2)
       .text(d => titleCase(d))
       .style('font-size', '10px')
@@ -85,17 +85,17 @@ CharStatsVis.prototype.initVis = function() {
   vis.charName = vis.svg.append('text')
       .attr('class', 'char-title h4')
       .style("text-anchor","middle")
-      .attr('x', 140)
-      .attr('y', 10);
+      .attr('x', 170)
+      .attr('y', 5);
 
   // Image of selected character
   vis.charImg = vis.svg.append('image')
       .attr('class', 'char-stats-img')
 
       .attr('x', 70)
-      .attr('y', 25)
-      .attr('height', 100)
-      .attr('width', 150);
+      .attr('y', 15)
+      .attr('height', 140)
+      .attr('width', 210);
 
   vis.wrangleData();
 };

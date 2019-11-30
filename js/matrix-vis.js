@@ -24,7 +24,7 @@ Matrix.prototype.initVis = function() {
   vis.margin = {
     'top': 30,
     'bottom': 20,
-    'left': 50,
+    'left': 80,
     'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
@@ -115,7 +115,7 @@ Matrix.prototype.initVis = function() {
 
   // Adding text
   vis.svg.append('text')
-    .attr('y', vis.height + 10)
+    .attr('y', vis.height - 20)
     .attr('x', 0)
     .text('Click the name of an ability to sort the columns!')
     .attr('class', 'annotation');
