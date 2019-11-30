@@ -45,7 +45,7 @@ h4, .h4 {
   position: relative;
 }
 
-#poster {
+#endgame-poster {
   box-shadow: 10px 10px 5px grey;
 
   -webkit-transform:rotate(-4deg);
@@ -143,14 +143,19 @@ div.tooltip {
   font-family: 'Acme', cursive;
 }
 
+.movie-name {
+  font-family: 'Bangers';
+  font-size: 30px;
+}
+
 /* comic book box feel
 code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
 */
 .box {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   max-width: 1200px;
-  max-height: 610px;
+  max-height: 700px;
   padding: 50px;
   background: #fff;
   border: solid black;
@@ -392,6 +397,16 @@ fill: #e23636;
 /* map carousel css */
 /* help from: https://stackoverflow.com/a/51610615 */
 
+.posterContainer {
+  position: relative;
+  top: -280px;
+  margin: 0px;
+}
+.poster {
+  height: 180px;
+  box-shadow: 5px 5px 5px grey;
+}
+
 .carousel-control-prev {
   left: -3%;
 }
@@ -401,7 +416,7 @@ fill: #e23636;
 
 ol.carousel-indicators {
   position: absolute;
-  bottom: 150px;
+  bottom: 200px;
   margin: 0;
   left: 0;
   right: 0;
