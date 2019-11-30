@@ -159,59 +159,61 @@
     <div id="map-sec" class="section global-background">
       <div class="container box box2" style="padding:15px;margin-top:20px;margin-bottom:20px;">
         <h3 style="position:absolute;left:450px;top:30px;margin-bottom:0px;margin-top:0px;">Global Presence of Marvel</h3>
+
         <div class="stars-imdb"></div>
-        <div class="stars-meta"></div>
-        <div id="map-vis" class="vis-container"></div>    
+        <div class="stars-meta"></div> 
+        <div id="map-vis" class="vis-container"></div>   
+
         
         <!-- carousel code adapted from: https://www.codeply.com/go/HDu8lT7NxJ -->
-      <div class="container posterContainer text-center my-3">
-          <div id="posterCarousel" class="carousel slide w-100 carousel-multi-item" data-ride="carousel">
-            <!-- carousel indicator code adapted from: https://mdbootstrap.com/snippets/jquery/temp/1496800?action=prism_export -->
-              <ol class="carousel-indicators">
-                  <li data-target="#posterCarousel" data-slide-to="0" class="active secondary-color"></li>
-                  <li data-target="#posterCarousel" data-slide-to="1" class="secondary-color"></li>
-                  <li data-target="#posterCarousel" data-slide-to="2" class="secondary-color"></li>
-                  <li data-target="#posterCarousel" data-slide-to="3" class="secondary-color"></li>
-                </ol>
+        <div class="container posterContainer text-center my-3">
+            <div id="posterCarousel" class="carousel slide w-100" data-ride="carousel">
+              <!-- carousel indicator code adapted from: https://mdbootstrap.com/snippets/jquery/temp/1496800?action=prism_export -->
+                <ol class="carousel-indicators">
+                    <li data-target="#posterCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#posterCarousel" data-slide-to="1"></li>
+                    <li data-target="#posterCarousel" data-slide-to="2"></li>
+                    <li data-target="#posterCarousel" data-slide-to="3"></li>
+                  </ol>
 
-              <div class="carousel-inner w-100" role="listbox">
-                  <div class="carousel-item row no-gutters active">
-                      <div class="col-2 float-left"><img data-movie="13" class="img-fluid poster" src="img/poster/ironman.jpg" alt="ironman" width=140 height=180></div>
-                      <div class="col-2 float-left"><img data-movie="19" class="img-fluid poster" src="img/poster/theincrediblehulk.jpg" alt="hulk" width=140 height=180></div>
-                      <div class="col-2 float-left"><img data-movie="14" class="img-fluid poster" src="img/poster/ironman2.jpg" alt="ironman2" width=140 height=180></div>
-                      <div class="col-2 float-left"><img data-movie="20" class="img-fluid poster" src="img/poster/thor.jpg" alt="thor" width=140 height=180></div>
-                      <div class="col-2 float-left"><img data-movie="7" class="img-fluid poster" src="img/poster/captainamericathefirstavenger.jpg" alt="captainamerica" width=140 height=180></div>
-                      <div class="col-2 float-left"><img data-movie="18" class="img-fluid poster" src="img/poster/avengers.jpg" alt="avengers" width=140 height=180></div>
-                  </div>
-                  <div class="carousel-item row no-gutters">
-                    <div class="col-2 float-left"><img data-movie="15" class="img-fluid poster" src="img/poster/ironman3.jpg" alt="ironman3" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="22" class="img-fluid poster" src="img/poster/thorthedarkworld.jpg" alt="thorthedarkworld" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="8" class="img-fluid poster" src="img/poster/wintersoldier.jpg" alt="wintersoldier" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="11" class="img-fluid poster" src="img/poster/guardiansofthegalaxy.jpg" alt="guardiansofthegalaxy" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="2" class="img-fluid poster" src="img/poster/ageofultron.jpg" alt="ageofultron" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="0" class="img-fluid poster" src="img/poster/antman.jpg" alt="antman" width=140 height=180></div>
-                  </div>
-                  <div class="carousel-item row no-gutters">
-                    <div class="col-2 float-left"><img data-movie="6" class="img-fluid poster" src="img/poster/civilwar.jpg" alt="civilwar" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="10" class="img-fluid poster" src="img/poster/drstrange.jpg" alt="doctorstrange" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="12" class="img-fluid poster" src="img/poster/guardiansofthegalaxy2.jpg" alt="gg2" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="17" class="img-fluid poster" src="img/poster/spiderman.jpg" alt="spiderman" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="21" class="img-fluid poster" src="img/poster/thorragnarok.jpg" alt="thorragnarok" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="5" class="img-fluid poster" src="img/poster/blackpanther.jpg" alt="blackpanther" width=140 height=180></div>
-                    
-                  </div>
-                  <div class="carousel-item row no-gutters">
-                    <div class="col-2 float-left"><img data-movie="4" class="img-fluid poster" src="img/poster/infinitywar.jpg" alt="infinitywar" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="1" class="img-fluid poster" src="img/poster/antmanandwasp.jpg" alt="antmanandwasp" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="9" class="img-fluid poster" src="img/poster/captainmarvel.jpg" alt="captainmarvel" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="3" class="img-fluid poster" src="img/poster/endgame.jpg" alt="endgame" width=140 height=180></div>
-                    <div class="col-2 float-left"><img data-movie="16" class="img-fluid poster" src="img/poster/farfromhome.jpg" alt="spidermanfarfromhome" width=140 height=140></div>
-                  </div>
+                <div class="carousel-inner w-100" role="listbox">
+                    <div class="carousel-item row no-gutters active">
+                        <div class="col-2 float-left"><img data-movie="13" class="img-fluid poster" src="img/poster/ironman.jpg" alt="ironman" width=140 height=180></div>
+                        <div class="col-2 float-left"><img data-movie="19" class="img-fluid poster" src="img/poster/theincrediblehulk.jpg" alt="hulk" width=140 height=180></div>
+                        <div class="col-2 float-left"><img data-movie="14" class="img-fluid poster" src="img/poster/ironman2.jpg" alt="ironman2" width=140 height=180></div>
+                        <div class="col-2 float-left"><img data-movie="20" class="img-fluid poster" src="img/poster/thor.jpg" alt="thor" width=140 height=180></div>
+                        <div class="col-2 float-left"><img data-movie="7" class="img-fluid poster" src="img/poster/captainamericathefirstavenger.jpg" alt="captainamerica" width=140 height=180></div>
+                        <div class="col-2 float-left"><img data-movie="18" class="img-fluid poster" src="img/poster/avengers.jpg" alt="avengers" width=140 height=180></div>
+                    </div>
+                    <div class="carousel-item row no-gutters">
+                      <div class="col-2 float-left"><img data-movie="15" class="img-fluid poster" src="img/poster/ironman3.jpg" alt="ironman3" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="22" class="img-fluid poster" src="img/poster/thorthedarkworld.jpg" alt="thorthedarkworld" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="8" class="img-fluid poster" src="img/poster/wintersoldier.jpg" alt="wintersoldier" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="11" class="img-fluid poster" src="img/poster/guardiansofthegalaxy.jpg" alt="guardiansofthegalaxy" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="2" class="img-fluid poster" src="img/poster/ageofultron.jpg" alt="ageofultron" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="0" class="img-fluid poster" src="img/poster/antman.jpg" alt="antman" width=140 height=180></div>
+                    </div>
+                    <div class="carousel-item row no-gutters">
+                      <div class="col-2 float-left"><img data-movie="6" class="img-fluid poster" src="img/poster/civilwar.jpg" alt="civilwar" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="10" class="img-fluid poster" src="img/poster/drstrange.jpg" alt="doctorstrange" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="12" class="img-fluid poster" src="img/poster/guardiansofthegalaxy2.jpg" alt="gg2" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="17" class="img-fluid poster" src="img/poster/spiderman.jpg" alt="spiderman" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="21" class="img-fluid poster" src="img/poster/thorragnarok.jpg" alt="thorragnarok" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="5" class="img-fluid poster" src="img/poster/blackpanther.jpg" alt="blackpanther" width=140 height=180></div>
+                      
+                    </div>
+                    <div class="carousel-item row no-gutters">
+                      <div class="col-2 float-left"><img data-movie="4" class="img-fluid poster" src="img/poster/infinitywar.jpg" alt="infinitywar" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="1" class="img-fluid poster" src="img/poster/antmanandwasp.jpg" alt="antmanandwasp" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="9" class="img-fluid poster" src="img/poster/captainmarvel.jpg" alt="captainmarvel" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="3" class="img-fluid poster" src="img/poster/endgame.jpg" alt="endgame" width=140 height=180></div>
+                      <div class="col-2 float-left"><img data-movie="16" class="img-fluid poster" src="img/poster/farfromhome.jpg" alt="spidermanfarfromhome" width=140 height=140></div>
+                    </div>
+                </div>
               </div>
-          </div>
-        </div>
+            </div>
 
-          
+            
       
       </div>
     </div>

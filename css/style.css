@@ -152,10 +152,10 @@ div.tooltip {
 code adapted from: https://codemyui.com/comicbook-inspired-hand-drawn-borders/
 */
 .box {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   max-width: 1200px;
-  max-height: 700px;
+  max-height: 680px;
   padding: 50px;
   background: #fff;
   border: solid black;
@@ -399,7 +399,7 @@ fill: #e23636;
 
 .posterContainer {
   position: relative;
-  top: -280px;
+  top: -60px;
   margin: 0px;
 }
 .poster {
@@ -416,7 +416,7 @@ fill: #e23636;
 
 ol.carousel-indicators {
   position: absolute;
-  bottom: 200px;
+  bottom: 0px;
   margin: 0;
   left: 0;
   right: 0;
@@ -436,4 +436,7 @@ ol.carousel-indicators li.active {
   width: 15px;
   height: 15px;
 
+}
+.carousel .fp-tableCell {
+  height: 240px !important;
 }
