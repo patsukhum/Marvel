@@ -55,30 +55,19 @@
     var vis = this;
 
 
-
-    // titlegroup.append("ellipse")
-    //   .attr("cx", 600)
-    //   .attr("cy", 230)
-    //   .attr("rx", 500)
-    //   .attr("ry", 120)
-    //   .style("stroke", "black")
-    //   .style("fill", "white")
-    //   .style("stroke-width", 3)
-
-
     // icon movement along path code help from: https://bl.ocks.org/mbostock/1705868
     var points = [
-      [180, 270],
-      [180, 80],
-      [950, 80],
-      [950, 270],
+      [150, 320],
+      [150, 30],
+      [980, 30],
+      [980, 320],
     ];
 
     var points2 = [
-      [200, 360],
-      [200, 70],
-      [1000, 70],
-      [1000, 360],
+      [200, 310],
+      [200, 120],
+      [1000, 120],
+      [1000, 310],
     ];
 
     // draw invisible icon moving path
@@ -86,14 +75,14 @@
     .data([points])
     .attr("class","icon-path")
     .attr("d", d3.line()
-    .curve(d3.curveCardinalClosed));
+    .curve(d3.curveCardinalClosed.tension(0)));
 
     // draw white bubble
     vis.svg.append("path")
     .data([points2])
     .attr("class","bubble-path")
     .attr("d", d3.line()
-    .curve(d3.curveCardinalClosed));
+    .curve(d3.curveCardinalClosed.tension(0.2)));
 
     this.svg.selectAll(".point")
         .data(points)
