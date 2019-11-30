@@ -54,7 +54,7 @@ CharStatsVis.prototype.initVis = function() {
       .attr('id', d => 'col-' + d);
 
   vis.cols.append('text')
-      .attr('y', vis.height - 33)
+      .attr('y', vis.height / 2 + 15)
       .attr('x', vis.colWidth / 2)
       .text(d => titleCase(d))
       .style('font-size', '10px')
