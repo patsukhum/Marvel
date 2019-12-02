@@ -429,6 +429,11 @@ fill: #e23636;
   box-shadow: 5px 5px 5px grey;
 }
 
+.poster:hover {
+  height: 180px;
+  box-shadow: 8px 8px 8px grey;
+}
+
 .carousel-control-prev {
   left: -3%;
 }
