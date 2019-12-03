@@ -40,6 +40,10 @@ PlotFlowVis.prototype.initVis = function() {
   var yearCounts = {};
   vis.data.forEach((d) => {
     d.flows_into = d.flows_into.split(", ").filter(s => s !== "");
+    d.characters = d.characters.split(", ").filter(s => s !== "");
+    if (!d.characters.includes(d.group)) {
+      d.characters.push(d.group);
+    }
     d.year = new Date(+d.year, 0, 1);
     if (d.year in yearCounts) {
       d.yearCount = yearCounts[d.year];
@@ -367,6 +371,7 @@ PlotFlowVis.prototype.drawLab = function(elem, vis, delay) {
 // Need to add arrowheads
 PlotFlowVis.prototype.drawArrow = function(elem, vis) {
   elem.attr('d', d => {
+    // console.log(d);
     return vis.line({
       source: [vis.x(d[0].x) + vis.rectWidth / 2, vis.y(d[0].y)],
       target: [vis.x(d[1].x) - vis.rectWidth / 2 - 5, vis.y(d[1].y)]
@@ -391,7 +396,8 @@ function charboxClick(d, vis) {
     vis.groupSelected = d;
 
     vis.films
-        .style('fill', e => e.group === d ? heroColors[e.group] : 'none');
+        .style('fill', e => e.characters.includes(d) ? heroColors[e.group] : 'none')
+        .style('stroke', e => e.characters.includes(d) ? 'none': '#aeaeae');
 
     vis.svg.select('defs > marker#selected path')
         .style('stroke', heroColors[d])
@@ -399,16 +405,17 @@ function charboxClick(d, vis) {
     vis.gArrows.selectAll('path')
         .data(vis.edges)
         .style('stroke', e => {
-          return [e[0].group, e[1].group].includes(d) ? heroColors[d] : 'darkgray';
+          return matchEdge(e, d) ? heroColors[d] : 'darkgray';
         })
-        .style('stroke-width', e => [e[0].group, e[1].group].includes(d) ? 4 : 1)
-        .attr('marker-end', e => [e[0].group, e[1].group].includes(d) ? 'url(#selected)' : 'url(#arrowhead)');
+        .style('stroke-width', e => matchEdge(e, d) ? 4 : 1)
+        .attr('marker-end', e => matchEdge(e, d) ? 'url(#selected)' : 'url(#arrowhead)');
   }
 }
 function resetSelected(vis) {
   vis.groupSelected = null;
   vis.films
-      .style('fill', d => heroColors[d.group]);
+      .style('fill', d => heroColors[d.group])
+      .style('stroke', 'none');
   vis.gArrows.selectAll('path')
       .style('stroke', 'black')
       .style('stroke-width', 1)
@@ -427,4 +434,7 @@ function unfocus(elem) {
 function unfocusAll(vis) {
   vis.svg.selectAll('.character circle')
       .call(unfocus);
+}
+function matchEdge(e, d) {
+  return e[0].characters.includes(d) && e[1].characters.includes(d)
 }
