@@ -109,6 +109,7 @@ NetworkVis.prototype.updateVis = function() {
       .force('center', d3.forceCenter()
           .x(vis.width / 2)
           .y(vis.height / 2))
+      .force('collision', d3.forceCollide().radius(d => vis.scaleNodeRadius(d.centrality)))
       .alphaDecay(0);
 
   vis.edges = vis.gEdges.selectAll('.edge')

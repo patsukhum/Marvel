@@ -198,7 +198,8 @@ html {
 /* plot flow */
 .rect-film {
   fill: none;
-  stroke: black;
+  stroke: none;
+  rx: 8;
 }
 .film-title {
   fill: black;

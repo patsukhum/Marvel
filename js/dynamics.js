@@ -15,6 +15,11 @@ var myFullpage = new fullpage('#fullpage', {
       case 'plot-flow-sec':
         drawPlotVis();
         break;
+      case 'characters-sec':
+        if (!doneIntro) {
+          // charactersIntro();
+        }
+        break;
       case 'network-intro-vis':
         drawNetworkIntroVis();
         break;
@@ -118,3 +123,32 @@ $(eventHandler).bind("selectionClear", function() {
   matrixVis.clearHighlight();
   networkVis.clearHighlight();
 });
+
+// ********** Characters Intro ********** //
+var doneIntro = false;
+function charactersIntro() {
+  doneIntro = true;
+  fadeAll();
+}
+
+function fadeAll() {
+  var characterVis = [networkVis, charStatsVis, matrixVis];
+  characterVis.forEach(d => fadeOut(d));
+  introNetwork();
+}
+function introNetwork() {
+  console.log("Intro network");
+  networkVis.force.stop();
+
+  // Show tooltip
+
+  // Punch out hole in cover to show a couple of nodes in the network
+
+  // Recover and transition to introMatrix
+}
+function introMatrix() {
+  console.log("Intro matrix");
+}
+function introCharStats() {
+  console.log("Intro charStats");
+}
