@@ -63,6 +63,25 @@ CookieChartVis.prototype.initVis = function() {
   // Used to indicate combined genres for stage 2
   vis.specialGenres = [6, 7, 8];
 
+  var rect = [5];
+  vis.svg.select('.scroll-rect')
+    .data(rect)
+    .enter()
+    .append('rect')
+    .attr("x", (d, i) => {
+      return 30;
+    })
+    .attr("y", (d, i) => {
+      return 50;
+    })
+    .attr("width", (d) => {
+      return 320;
+    })
+    .attr("height", (d) => {
+      return 320;
+    })
+    .attr("fill", 'black');
+
   vis.wrangleData();
 };
 
