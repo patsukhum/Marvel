@@ -132,6 +132,7 @@ function charactersIntro() {
 }
 function startIntro() {
   fadeOutAll();
+  drawSkipButton();
   introNetwork();
 }
 
@@ -150,7 +151,7 @@ function introNetwork() {
   networkVis.force.restart();
 
   // Show text
-  var divRight = $( "<div></div>" ).addClass('tutorial');
+  var divRight = $( "<div></div>" ).addClass('tutorial middle');
   divRight.appendTo(".col-right");
   divRight.append("<p>" +
       "This is a network of the links between the Wikipedia pages associated with each character." +
@@ -165,7 +166,7 @@ function introNetwork() {
   $( "#tutorial1" ).on('click', function() {
     fadeOut(networkVis);
     networkVis.force.stop();
-    divRight.fadeOut(200, function() { $(this).remove(); });
+    divRight.remove();
     introMatrix();
   });
 }
@@ -188,7 +189,7 @@ function introMatrix() {
 
   $( "#tutorial2" ).on('click', function() {
     fadeOut(matrixVis);
-    divLeft.fadeOut(200, function() { $(this).remove(); });
+    divLeft.remove();
     introCharStats();
   })
 }
@@ -208,11 +209,22 @@ function introCharStats() {
       "<button class='btn btn-danger btn-tutorial' id='tutorial3'>Let me explore!</button>");
 
   $( "#tutorial3" ).on('click', function() {
-    divLeft.fadeOut(200, function() { $(this).remove(); });
+    divLeft.remove();
     endIntro();
   })
 
 }
 function endIntro() {
+  $( ".tutorial" ).remove();
   fadeInAll();
+}
+function drawSkipButton() {
+  var button = $( "<div class='tutorial top-left'>" +
+        "<button class='btn btn-danger btn-tutorial' id='tutorial-skip'>Skip tutorial</button>" +
+      "</div>" );
+  button.appendTo('.col-left');
+  button.on('click', skipIntro);
+}
+function skipIntro() {
+  endIntro();
 }
