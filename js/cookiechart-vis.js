@@ -224,7 +224,7 @@ CookieChartVis.prototype.drawCircles = function() {
     })
     .style('fill', function(d) {
       if (vis.stage === 1){
-        return 'gray';
+        return 'lightgreen';
       } else if (vis.stage === 2){
         return vis.dataStage2[d.name]['color'];
       } else if (vis.stage === 3){

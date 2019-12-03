@@ -55,6 +55,11 @@ h4, .h4 {
   transform: rotate(-4deg);
 }
 
+.white-background {
+  background-color: white;
+  background-image: none;
+}
+
 .global-background {
   /* background-image: url("../img/other/global.jpg"); */
   background-image: url("../img/other/global3.png");
