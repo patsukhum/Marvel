@@ -33,7 +33,7 @@ CookieChartVis.prototype.initVis = function() {
     'left': 20,
     'right': 10
   };
-  vis.width = $('#' + vis.parentElement).width() + 30 - vis.margin.left - vis.margin.right;
+  vis.width = $('#' + vis.parentElement).width() + 90 - vis.margin.left - vis.margin.right;
   vis.height = vis.width * 0.8;
   vis.svg = makeSvg(vis, 'cookiechart-vis');
 
@@ -224,7 +224,7 @@ CookieChartVis.prototype.drawCircles = function() {
     })
     .style('fill', function(d) {
       if (vis.stage === 1){
-        return 'gray';
+        return 'lightgreen';
       } else if (vis.stage === 2){
         return vis.dataStage2[d.name]['color'];
       } else if (vis.stage === 3){

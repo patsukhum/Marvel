@@ -70,12 +70,12 @@
       [1000, 310],
     ];
 
-    // draw invisible icon moving path
-    var path = vis.svg.append("path")
-    .data([points])
-    .attr("class","icon-path")
-    .attr("d", d3.line()
-    .curve(d3.curveCardinalClosed.tension(0)));
+    // // draw invisible icon moving path
+    // var path = vis.svg.append("path")
+    // .data([points])
+    // .attr("class","icon-path")
+    // .attr("d", d3.line()
+    // .curve(d3.curveCardinalClosed.tension(0)));
 
     // draw white bubble
     vis.svg.append("path")
@@ -84,20 +84,20 @@
     .attr("d", d3.line()
     .curve(d3.curveCardinalClosed.tension(0.2)));
 
-    this.svg.selectAll(".point")
-        .data(points)
-      .enter().append("circle")
-        .attr("r", 0.1)
-        .attr("transform", function(d) { return "translate(" + d + ")"; });
+    // this.svg.selectAll(".point")
+    //     .data(points)
+    //   .enter().append("circle")
+    //     .attr("r", 0.1)
+    //     .attr("transform", function(d) { return "translate(" + d + ")"; });
 
 
-    var circle= vis.svg.append('image')
-      .attr('xlink:href', getSvgIcon('Avengers'))
-      //.attr("transform",`translate(${points[0]})`)
-      .attr('width', 70)
-      .attr('height', 70);
+    // var circle= vis.svg.append('image')
+    //   .attr('xlink:href', getSvgIcon('Avengers'))
+    //   //.attr("transform",`translate(${points[0]})`)
+    //   .attr('width', 70)
+    //   .attr('height', 70);
     
-    repeat();
+    // repeat();
 
     function repeat() {
       circle.transition()
