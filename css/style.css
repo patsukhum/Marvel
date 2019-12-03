@@ -230,6 +230,11 @@ html {
 }
 
 
+.caption {
+  font-size: 14px;
+}
+
+
 /* #################### */
 /* for vis2: line chart */
 
@@ -440,13 +445,7 @@ fill: #e23636;
   box-shadow: 8px 8px 8px grey;
 }
 
-.carousel-control-prev {
-  left: -3%;
-}
-.carousel-control-next{
-  right: -3%;
-}
-
+/* carousel dot navigator */
 ol.carousel-indicators {
   position: absolute;
   bottom: 0px;
@@ -474,6 +473,48 @@ ol.carousel-indicators li.active {
   height: 240px !important;
 }
 
-.caption {
-  font-size: 14px;
+.carousel {
+  height: 240px !important;
+  width: 1100px !important;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
+.carousel-control-prev {
+  position: absolute;
+  left: 0.5%;
+  top: 3%;
+  height: 180px !important;
+  width: 30px !important;
+}
+.carousel-control-next {
+  position: absolute;
+  right: 1%;
+  top: 3%;
+  height: 180px !important;
+  width: 30px !important;
+}
+
+/* changing carousel arrow style code adapted from: https://stackoverflow.com/a/46250461 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 20px;
+  width: 20px;
+  background-size: 50%, 50%;
+  background-image: none;
+}
+
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 50px;
+  color: black;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 50px;
+  color: black;
 }
