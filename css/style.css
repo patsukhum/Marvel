@@ -393,6 +393,14 @@ fill: #e23636;
   stroke: black;
   fill: none;
 }
+rect.highlight-box.selected {
+  fill: #c69500;
+  opacity: 0.3;
+}
+rect.highlight-box {
+  fill: none;
+  stroke: none;
+}
 
 /*** Stats Meters ***/
 .arc {
@@ -547,4 +555,11 @@ div.tutorial.bottom {
 div.tutorial.top {
   margin-top: 0;
   top: 0
+}
+div.tutorial.top-left {
+  margin-top: 0;
+  margin-left: 0;
+  top: 0;
+  border: none;
+  padding: 0
 }

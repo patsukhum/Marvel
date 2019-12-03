@@ -132,6 +132,7 @@ function charactersIntro() {
 }
 function startIntro() {
   fadeOutAll();
+  drawSkipButton();
   introNetwork();
 }
 
@@ -215,4 +216,15 @@ function introCharStats() {
 }
 function endIntro() {
   fadeInAll();
+}
+function drawSkipButton() {
+  var button = $( "<div class='tutorial top-left'>" +
+        "<button class='btn btn-danger btn-tutorial' id='tutorial-skip'>Skip tutorial</button>" +
+      "</div>" );
+  button.appendTo('.col-left');
+  button.on('click', skipIntro);
+}
+function skipIntro() {
+  $( ".tutorial" ).remove();
+  endIntro();
 }
