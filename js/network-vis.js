@@ -89,7 +89,25 @@ NetworkVis.prototype.wrangleData = function() {
   var vis = this;
 
   // Filtering out all edges below 10 counts
-  // vis.displayData.edges = vis.data.edges.filter(d => d.count >= 5);
+  vis.displayData.edges = vis.data.edges.filter(d => d.count >= 3);
+
+  console.log(vis.displayData);
+  // Finding all links from each character to the others
+  vis.connections = {};
+  vis.displayData.nodes.forEach(d => vis.connections[d.name] = []);
+  console.log(vis.connections);
+  vis.displayData.edges.forEach(function(d) {
+    var source = vis.displayData.nodes[d.source].name,
+        target = vis.displayData.nodes[d.target].name;
+    if (!(vis.connections[source].includes(target))) {
+      vis.connections[source].push(target)
+    }
+    if (!(vis.connections[target].includes(source))) {
+      vis.connections[target].push(source);
+    }
+
+  });
+  console.log(vis.connections);
 
   vis.updateVis();
 };
@@ -109,7 +127,7 @@ NetworkVis.prototype.updateVis = function() {
       .force('center', d3.forceCenter()
           .x(vis.width / 2)
           .y(vis.height / 2))
-      .alphaDecay(0);
+      .force('collision', d3.forceCollide().radius(d => vis.scaleNodeRadius(d.centrality)));
 
   vis.edges = vis.gEdges.selectAll('.edge')
       .data(vis.displayData.edges)
@@ -174,16 +192,31 @@ NetworkVis.prototype.dragEnd = function(d, vis) {
 NetworkVis.prototype.highlight = function(character) {
   var vis = this;
 
-  vis.edges.style('stroke', l => edgeMatchesCharacter(l, character) ? '#f78f3f' : 'darkgray' )
-      .style('opacity', l => edgeMatchesCharacter(l, character) ? 1.0 : vis.scaleEdgeOpacity(l.count));
-  vis.nodes.style('stroke', n => nodeMatchesCharacter(n, character) ? "#f78f3f" : 'darkgray')
-      .style('stroke-width', n => nodeMatchesCharacter(n, character) ? '3px' : '2px');
+  vis.edges.style('stroke', l => edgeMatchesCharacter(l, character) ? '#f78f3f' : 'darkgray')
+      .style('opacity', l => edgeMatchesCharacter(l, character) ? 1.0 : vis.scaleEdgeOpacity(l.count) / 3);
+  vis.nodes.style('stroke', n => {
+      if (nodeMatchesCharacter(n, character)) {
+        return '#f78f3f';
+      } else if (nodeConnectedToCharacter(n, character, vis.connections)) {
+        return 'rgba(247,143,63,0.5)'
+      } else{
+        return 'darkgray';
+      }
+    })
+      .style('stroke-width', n => nodeMatchesCharacter(n, character) ? '3px' : '2px')
+      .style('opacity', n => {
+          if (nodeMatchesCharacter(n, character) || nodeConnectedToCharacter(n, character, vis.connections)) {
+            return 1;
+          } else {
+            return 0.5;
+          }
+        });
 };
 NetworkVis.prototype.clearHighlight = function() {
   var vis = this;
 
   vis.edges.style('stroke', 'darkgray').style('opacity', l => vis.scaleEdgeOpacity(l.count));
-  vis.nodes.style('stroke', 'darkgray').style('stroke-width', '2px');
+  vis.nodes.style('stroke', 'darkgray').style('stroke-width', '2px').style('opacity', 1);
 };
 
 NetworkVis.prototype.nodeMouseover = function(d, vis) {
@@ -210,4 +243,7 @@ function edgeMatchesCharacter(l, character) {
 }
 function nodeMatchesCharacter(n, character) {
   return n.name === character;
+}
+function nodeConnectedToCharacter(n, character, connections) {
+  return connections[character].includes(n.name);
 }

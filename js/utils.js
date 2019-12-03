@@ -204,3 +204,13 @@ function arc2Tween(d, indx, drawArc) {
     //  index, you can omit this argument
   }
 };
+
+function fadeOut(vis) {
+  vis.svg.append('rect')
+      .attr('x', -vis.margin.left)
+      .attr('y', -vis.margin.top)
+      .attr('height', vis.height + vis.margin.top + vis.margin.bottom)
+      .attr('width', vis.width + vis.margin.left + vis.margin.right)
+      .style('fill', 'white')
+      .style('opacity', 0.8)
+}

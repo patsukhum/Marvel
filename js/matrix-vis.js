@@ -120,6 +120,12 @@ Matrix.prototype.initVis = function() {
     .text('Click the name of an ability to sort the columns!')
     .attr('class', 'annotation');
 
+  // Adding highlighting rectangle
+  vis.highlightBox = vis.svg.append('rect')
+      .attr('y', 0)
+      .attr('x', 0)
+      .attr('class', 'highlight-box');
+
   vis.wrangleData();
 };
 

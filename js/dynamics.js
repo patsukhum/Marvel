@@ -4,7 +4,7 @@ var myFullpage = new fullpage('#fullpage', {
   navigationPosition: 'right',
 
   afterLoad: function(origin, destination, direction) {
-    secId = destination.item.getAttribute('id');
+    var secId = destination.item.getAttribute('id');
     switch(secId) {
       case 'cookiechart-sec':
           drawCookieChartVis();
@@ -14,6 +14,11 @@ var myFullpage = new fullpage('#fullpage', {
           break;
       case 'plot-flow-sec':
         drawPlotVis();
+        break;
+      case 'characters-sec':
+        if (!doneIntro) {
+          // charactersIntro();
+        }
         break;
       case 'network-intro-vis':
         drawNetworkIntroVis();
@@ -27,10 +32,10 @@ var myFullpage = new fullpage('#fullpage', {
 
 // ********** Plot plot ********** //
 function drawPlotVis() {
-  $(`#${secId} .caption span`).each(function(index) {
-    $(this).delay(1000 + 2000 * (index)).fadeTo(1000, 1);
+  $('#plot-flow-sec .caption span').each(function(index) {
+    $(this).delay(1000 + 1500 * (index)).fadeTo(1000, 1);
   });
-  $(`#${secId} .caption button`).delay(4000).fadeTo(1000, 1);
+  $('#plot-flow-sec .caption button, #plot-flow-sec .caption span').delay(4000).fadeTo(1000, 1);
   if (!plotVis.drawn) {
     plotVis.drawVis();
   }
@@ -44,7 +49,7 @@ $('#plot-flow-sec button').on('click', function(event) {
         .fadeOut(1000, function() { $(this).remove() })
         .end()
         .append('span')
-        .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.<br/>Click to toggle between the linear and branching timeline.")
+        .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.")
         .css('opacity', 0)
         .fadeTo(500, 1);
   }
@@ -118,3 +123,32 @@ $(eventHandler).bind("selectionClear", function() {
   matrixVis.clearHighlight();
   networkVis.clearHighlight();
 });
+
+// ********** Characters Intro ********** //
+var doneIntro = false;
+function charactersIntro() {
+  doneIntro = true;
+  fadeAll();
+}
+
+function fadeAll() {
+  var characterVis = [networkVis, charStatsVis, matrixVis];
+  characterVis.forEach(d => fadeOut(d));
+  introNetwork();
+}
+function introNetwork() {
+  console.log("Intro network");
+  networkVis.force.stop();
+
+  // Show tooltip
+
+  // Punch out hole in cover to show a couple of nodes in the network
+
+  // Recover and transition to introMatrix
+}
+function introMatrix() {
+  console.log("Intro matrix");
+}
+function introCharStats() {
+  console.log("Intro charStats");
+}

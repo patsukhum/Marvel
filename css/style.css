@@ -203,7 +203,8 @@ html {
 /* plot flow */
 .rect-film {
   fill: none;
-  stroke: black;
+  stroke: none;
+  rx: 8;
 }
 .film-title {
   fill: black;
@@ -471,4 +472,8 @@ ol.carousel-indicators li.active {
 }
 .carousel .fp-tableCell {
   height: 240px !important;
+}
+
+.caption {
+  font-size: 14px;
 }
