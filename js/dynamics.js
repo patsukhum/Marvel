@@ -4,7 +4,7 @@ var myFullpage = new fullpage('#fullpage', {
   navigationPosition: 'right',
 
   afterLoad: function(origin, destination, direction) {
-    secId = destination.item.getAttribute('id');
+    var secId = destination.item.getAttribute('id');
     switch(secId) {
       case 'cookiechart-sec':
           drawCookieChartVis();
@@ -14,6 +14,11 @@ var myFullpage = new fullpage('#fullpage', {
           break;
       case 'plot-flow-sec':
         drawPlotVis();
+        break;
+      case 'characters-sec':
+        if (!doneIntro) {
+          charactersIntro();
+        }
         break;
       case 'network-intro-vis':
         drawNetworkIntroVis();
@@ -27,10 +32,10 @@ var myFullpage = new fullpage('#fullpage', {
 
 // ********** Plot plot ********** //
 function drawPlotVis() {
-  $(`#${secId} .caption span`).each(function(index) {
-    $(this).delay(1000 + 2000 * (index)).fadeTo(1000, 1);
+  $('#plot-flow-sec .caption span').each(function(index) {
+    $(this).delay(1000 + 1500 * (index)).fadeTo(1000, 1);
   });
-  $(`#${secId} .caption button`).delay(4000).fadeTo(1000, 1);
+  $('#plot-flow-sec .caption button, #plot-flow-sec .caption span').delay(4000).fadeTo(1000, 1);
   if (!plotVis.drawn) {
     plotVis.drawVis();
   }
@@ -44,7 +49,7 @@ $('#plot-flow-sec button').on('click', function(event) {
         .fadeOut(1000, function() { $(this).remove() })
         .end()
         .append('span')
-        .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.<br/>Click to toggle between the linear and branching timeline.")
+        .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.")
         .css('opacity', 0)
         .fadeTo(500, 1);
   }
@@ -118,3 +123,96 @@ $(eventHandler).bind("selectionClear", function() {
   matrixVis.clearHighlight();
   networkVis.clearHighlight();
 });
+
+// ********** Characters Intro ********** //
+var doneIntro = false;
+function charactersIntro() {
+  doneIntro = true;
+  startIntro();
+}
+function startIntro() {
+  fadeOutAll();
+  introNetwork();
+}
+
+function fadeOutAll() {
+  [networkVis, charStatsVis, matrixVis].forEach(d => fadeOut(d));
+}
+function fadeInAll() {
+  [networkVis, charStatsVis, matrixVis].forEach(d => fadeIn(d));
+}
+function introNetwork() {
+  console.log("Intro network");
+  networkVis.force.stop();
+
+  // Show the network
+  fadeIn(networkVis);
+  networkVis.force.restart();
+
+  // Show text
+  var divRight = $( "<div></div>" ).addClass('tutorial');
+  divRight.appendTo(".col-right");
+  divRight.append("<p>" +
+      "This is a network of the links between the Wikipedia pages associated with each character." +
+      "Presumably, each link represents some sort of relation between the two characters. E.g. if " +
+      "<span class='iron-man'>Iron Man</span> links to <span class='hulk'>Hulk</span>, then somewhere on" +
+      "<span class='iron-man'>Iron Man</span>'s page is a reference to <span class='hulk'>Hulk</span>," +
+      "meaning that the two characters did something together." +
+      "</p>" +
+      "<button class='btn btn-danger btn-tutorial' id='tutorial1'>Continue</button>");
+
+  // Re-cover and transition to introMatrix
+  $( "#tutorial1" ).on('click', function() {
+    fadeOut(networkVis);
+    networkVis.force.stop();
+    divRight.fadeOut(200, function() { $(this).remove(); });
+    introMatrix();
+  });
+}
+function introMatrix() {
+  console.log("Intro matrix");
+  fadeIn(matrixVis);
+
+  // Show text
+  var divLeft = $( "<div></div>" ).addClass('tutorial bottom');
+  divLeft.appendTo(".col-left");
+  divLeft.append("<p>" +
+      "In this matrix, we can see the superpowers and abilities of each of the avengers (and their enemeies) " +
+      "Each row represents a type of ability and each column is a character. If a character has that ability, an " +
+      "icon will be displayed. " +
+      "<br/>" +
+      "Try clicking the names of the powers to sort the matrix based on that power and try hovering " +
+      "over the columns to see more stats on that character! " +
+      "</p>" +
+      "<button class='btn btn-danger btn-tutorial' id='tutorial2'>Continue</button>");
+
+  $( "#tutorial2" ).on('click', function() {
+    fadeOut(matrixVis);
+    divLeft.fadeOut(200, function() { $(this).remove(); });
+    introCharStats();
+  })
+}
+function introCharStats() {
+  console.log("Intro charStats");
+
+  fadeIn(charStatsVis);
+
+  // Show text
+  var divLeft = $( "<div></div>" ).addClass('tutorial top');
+  divLeft.appendTo('.col-left');
+  divLeft.append("<p>" +
+      "When you hover over a character in the network or matrix, corresponding stats about their Wikipedia " +
+      "presence are displayed, including their network centrality, views, page count, and word count. Hover " +
+      "over the question marks to see more information on those measures!" +
+      "</p>" +
+      "<button class='btn btn-danger btn-tutorial' id='tutorial3'>Let me explore!</button>");
+
+  $( "#tutorial3" ).on('click', function() {
+    divLeft.fadeOut(200, function() { $(this).remove(); });
+    endIntro();
+  })
+
+}
+function endIntro() {
+  fadeInAll();
+}

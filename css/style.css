@@ -55,6 +55,11 @@ h4, .h4 {
   transform: rotate(-4deg);
 }
 
+.white-background {
+  background-color: white;
+  background-image: none;
+}
+
 .global-background {
   /* background-image: url("../img/other/global.jpg"); */
   background-image: url("../img/other/global3.png");
@@ -198,7 +203,8 @@ html {
 /* plot flow */
 .rect-film {
   fill: none;
-  stroke: black;
+  stroke: none;
+  rx: 8;
 }
 .film-title {
   fill: black;
@@ -221,6 +227,11 @@ html {
 }
 .hulk {
   color: #A2CD48;
+}
+
+
+.caption {
+  font-size: 14px;
 }
 
 
@@ -378,6 +389,10 @@ fill: #e23636;
 .row_label {
   font-size: 9px;
 }
+.highlight-box {
+  stroke: black;
+  fill: none;
+}
 
 /*** Stats Meters ***/
 .arc {
@@ -426,21 +441,15 @@ fill: #e23636;
 }
 .poster {
   height: 180px;
-  box-shadow: 5px 5px 5px grey;
+  box-shadow: 2px 2px 5px grey;
 }
 
 .poster:hover {
-  height: 180px;
+  /* height: 180px; */
   box-shadow: 8px 8px 8px grey;
 }
 
-.carousel-control-prev {
-  left: -3%;
-}
-.carousel-control-next{
-  right: -3%;
-}
-
+/* carousel dot navigator */
 ol.carousel-indicators {
   position: absolute;
   bottom: 0px;
@@ -466,4 +475,68 @@ ol.carousel-indicators li.active {
 }
 .carousel .fp-tableCell {
   height: 240px !important;
+}
+
+.carousel {
+  height: 240px !important;
+  width: 1100px !important;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
+.carousel-control-prev {
+  position: absolute;
+  left: 0.5%;
+  top: 3%;
+  height: 180px !important;
+  width: 30px !important;
+}
+.carousel-control-next {
+  position: absolute;
+  right: 1%;
+  top: 3%;
+  height: 180px !important;
+  width: 30px !important;
+}
+
+/* changing carousel arrow style code adapted from: https://stackoverflow.com/a/46250461 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 20px;
+  width: 20px;
+  background-size: 50%, 50%;
+  background-image: none;
+}
+
+
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 50px;
+  color: black;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 50px;
+  color: black;
+}
+.caption {
+  font-size: 14px;
+}
+
+/****** TUTORIAL FOR CHARACTERS ******/
+div.tutorial {
+  alignment-baseline: middle;
+  position: absolute;
+  padding-top: 25%;
+  top: 0;
+  left: 0;
+}
+div.tutorial.bottom {
+  padding-top: 40%;
+}
+div.tutorial.top {
+  padding-top: 0;
 }
