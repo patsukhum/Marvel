@@ -530,13 +530,21 @@ ol.carousel-indicators li.active {
 div.tutorial {
   alignment-baseline: middle;
   position: absolute;
-  padding-top: 25%;
-  top: 0;
+  margin-top: 25%;
+  padding: 1em;
   left: 0;
+  border: black 1px solid;
+  border-radius: 20px;
+}
+div.tutorial.middle {
+  margin-top: 25%;
+  top: 0
 }
 div.tutorial.bottom {
-  padding-top: 40%;
+  margin-top: 40%;
+  bottom: 0;
 }
 div.tutorial.top {
-  padding-top: 0;
+  margin-top: 0;
+  top: 0
 }
