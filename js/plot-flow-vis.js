@@ -199,9 +199,9 @@ PlotFlowVis.prototype.drawVis = function() {
       .append('g')
       .attr('class', 'character')
       .attr('transform', (d, i) => 'translate(' + (i * 3 * radius) + ',0)')
-      .on('mouseover', function() {
+      .on('mouseover', function(d) {
         d3.select(this).select('circle')
-            .call(focus);
+            .call(focus, d);
       })
       .on('mouseout', function(d) {
         if (vis.groupSelected !== d) {
@@ -212,7 +212,7 @@ PlotFlowVis.prototype.drawVis = function() {
       .on('click', function(d) {
         unfocusAll(vis);
         d3.select(this).select('circle')
-            .call(focus);
+            .call(focus, d);
         charboxClick(d, vis);
       });
 
@@ -422,8 +422,8 @@ function resetSelected(vis) {
       .attr('marker-end', 'url(#arrowhead)');
   unfocusAll(vis);
 }
-function focus(elem) {
-  elem.style('fill', '#f78f3f')
+function focus(elem, d) {
+  elem.style('fill', heroColors[d])
       .style('stroke', '#f78f3f');
 }
 

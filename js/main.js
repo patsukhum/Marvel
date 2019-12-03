@@ -66,7 +66,6 @@ queue()
     .defer(d3.json, 'data/clean/all_character_links.json')
     .await((error, nodes, edges) => {
       createNetworkVis(error, nodes, edges);
-      createNetworkIntroVis(error, nodes, edges);
       createCharStatsVis(nodes);
     });
 
@@ -76,30 +75,13 @@ function createNetworkVis(error, nodes, edges) {
     height: 400,
     minNodeRadius: 10,
     maxNodeRadius: 30,
-    strength: -400,
+    strength: -50,
     distance: 150,
     margin: {top: 30, bottom: 20, left: 20, right: 20},
     linkToMatrix: true,
     topText: "Hover over the bubbles to see more stats on their Wikipedia presence! (And drag them because it's fun!)"
 };
   networkVis = new NetworkVis('network-vis', data, config, eventHandler);
-}
-function createNetworkIntroVis(error, nodes, edges) {
-  var namesToKeep = ['Iron Man', 'Hulk'];
-  var nodesFilt = nodes.filter(d => namesToKeep.includes(d.name));
-  var edgesFilt = edges.filter(d => namesToKeep.includes(d.source.name) && namesToKeep.includes(d.target.name));
-  var data = {'nodes': nodesFilt, 'edges': edgesFilt};
-  var config = {
-    height: 370,
-    margin: { top: 10, bottom: 10, left: 10, right: 10},
-    strength: -100,
-    distance: 120,
-    minNodeRadius: 35,
-    maxNodeRadius: 35,
-    hideTooltip: true,
-    linkToMatrix: false
-  };
-  networkIntroVis = new NetworkVis('network-intro-vis', data, config);
 }
 
 // Character stats vis
