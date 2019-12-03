@@ -121,13 +121,13 @@ Matrix.prototype.initVis = function() {
     .attr('class', 'annotation');
 
   // Adding highlighting rectangle
-  vis.highlightBox = vis.svg.append('rect')
-      .attr('y', 0)
-      .attr('x', vis.innerPadding)
-      .attr('height', (vis.rectWidth + vis.innerPadding) * vis.attributes.length)
-      .attr('width', vis.rectWidth)
-      .attr('class', 'highlight-box')
-      .style('opacity', 0.3);
+  // vis.highlightBox = vis.svg.append('rect')
+  //     .attr('y', 0)
+  //     .attr('x', vis.innerPadding)
+  //     .attr('height', (vis.rectWidth + vis.innerPadding) * vis.attributes.length)
+  //     .attr('width', vis.rectWidth)
+  //     .attr('class', 'highlight-box')
+  //     .style('opacity', 0.3);
 
   vis.wrangleData();
 };
@@ -240,18 +240,18 @@ Matrix.prototype.sortMatrix = function(power, vis) {
 Matrix.prototype.highlight = function(character) {
   var vis = this;
   vis.cols.style('opacity', d => d.name === character ? 1 : 0.3);
-  vis.highlightBox.transition()
-      .attr('x',
-      vis.innerPadding
-      + vis.displayData.findIndex(d => d.name === character)
-      * (vis.innerPadding + vis.rectWidth)
-  ).style('opacity', 1);
+  // vis.highlightBox.transition()
+  //     .attr('x',
+  //     vis.innerPadding
+  //     + vis.displayData.findIndex(d => d.name === character)
+  //     * (vis.innerPadding + vis.rectWidth)
+  // ).style('opacity', 1);
 };
 Matrix.prototype.clearHighlight = function() {
   var vis = this;
 
   vis.cols.style('opacity', 1);
-  vis.highlightBox.style('opacity', 0.3)
+  // vis.highlightBox.style('opacity', 0.3)
 };
 Matrix.prototype.colMouseover = function(d, vis) {
   $(vis.eventHandler).trigger("mouseover", d.name);

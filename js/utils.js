@@ -207,10 +207,17 @@ function arc2Tween(d, indx, drawArc) {
 
 function fadeOut(vis) {
   vis.svg.append('rect')
+      .attr('class', 'cover')
       .attr('x', -vis.margin.left)
       .attr('y', -vis.margin.top)
       .attr('height', vis.height + vis.margin.top + vis.margin.bottom)
       .attr('width', vis.width + vis.margin.left + vis.margin.right)
       .style('fill', 'white')
-      .style('opacity', 0.8)
+      .style('opacity', 0.9)
+}
+function fadeIn(vis) {
+  vis.svg.select('rect.cover')
+      .transition()
+      .style('opacity', 0)
+      .remove();
 }
