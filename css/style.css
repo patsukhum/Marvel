@@ -468,3 +468,7 @@ ol.carousel-indicators li.active {
 .carousel .fp-tableCell {
   height: 240px !important;
 }
+
+.caption {
+  font-size: 14px;
+}
