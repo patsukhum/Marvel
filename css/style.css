@@ -389,6 +389,10 @@ fill: #e23636;
 .row_label {
   font-size: 9px;
 }
+.highlight-box {
+  stroke: black;
+  fill: none;
+}
 
 /*** Stats Meters ***/
 .arc {
@@ -517,4 +521,22 @@ ol.carousel-indicators li.active {
   content: '<';
   font-size: 50px;
   color: black;
+}
+.caption {
+  font-size: 14px;
+}
+
+/****** TUTORIAL FOR CHARACTERS ******/
+div.tutorial {
+  alignment-baseline: middle;
+  position: absolute;
+  padding-top: 25%;
+  top: 0;
+  left: 0;
+}
+div.tutorial.bottom {
+  padding-top: 40%;
+}
+div.tutorial.top {
+  padding-top: 0;
 }
