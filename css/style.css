@@ -379,6 +379,10 @@ fill: #e23636;
 .row_label {
   font-size: 9px;
 }
+.highlight-box {
+  stroke: black;
+  fill: none;
+}
 
 /*** Stats Meters ***/
 .arc {
