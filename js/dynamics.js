@@ -215,6 +215,7 @@ function introCharStats() {
 
 }
 function endIntro() {
+  $( ".tutorial" ).remove();
   fadeInAll();
 }
 function drawSkipButton() {
@@ -225,6 +226,5 @@ function drawSkipButton() {
   button.on('click', skipIntro);
 }
 function skipIntro() {
-  $( ".tutorial" ).remove();
   endIntro();
 }

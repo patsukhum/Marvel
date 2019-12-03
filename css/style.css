@@ -559,7 +559,8 @@ div.tutorial.top {
 div.tutorial.top-left {
   margin-top: 0;
   margin-left: 0;
-  top: 0;
+  top: -5em;
+  left: 1em;
   border: none;
   padding: 0
 }
