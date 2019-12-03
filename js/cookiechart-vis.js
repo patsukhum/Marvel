@@ -34,7 +34,7 @@ CookieChartVis.prototype.initVis = function() {
     'right': 10
   };
   vis.width = $('#' + vis.parentElement).width() + 30 - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.8;
+  vis.height = vis.width ;
   vis.svg = makeSvg(vis, 'cookiechart-vis');
 
   vis.tooltip = d3.select('body').append('g')
@@ -81,6 +81,34 @@ CookieChartVis.prototype.initVis = function() {
       return 320;
     })
     .attr("fill", 'black');
+
+  //// slider /////
+
+  vis.slidersvg = d3
+      .select('#slider')
+      .append('svg')
+      .attr('width', vis.margin.width)
+      .attr('height', 30)
+      .append('g')
+      .attr('transform', 'translate(0,0)');
+
+  // vis.slidersvg.append("line")
+  //     .attr("class", "track")
+  //     // .attr("x1", x.range()[0])
+  //     // .attr("x2", x.range()[1])
+  //     .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+  //     .attr("class", "track-inset")
+  //     .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+  //     .attr("class", "track-overlay")
+  //     .call(d3.drag()
+  //         .on("start.interrupt", function() { slider.interrupt(); })
+  //         .on("start drag", function() {
+  //           currentValue = d3.event.x;
+  //           update(x.invert(currentValue));
+  //         })
+  //     );
+
+
 
   vis.wrangleData();
 };
