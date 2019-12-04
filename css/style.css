@@ -203,7 +203,7 @@ html {
   rx: 8;
 }
 .film-title {
-  fill: black;
+  fill: white;
   font-size: 9px;
   alignment-baseline: middle;
   text-anchor: middle;
@@ -223,6 +223,21 @@ html {
 }
 .hulk {
   color: #A2CD48;
+}
+.captain-america {
+  color: rgb(0,0,255);
+}
+.thor {
+  color: rgb(3,173,233);
+}
+.captain-marvel {
+  color: rgb(243,212,3);
+}
+.vision {
+  color: crimson;
+}
+.black-panther {
+  color: rgb(35,9,47);
 }
 
 
@@ -394,8 +409,10 @@ rect.highlight-box.selected {
   opacity: 0.3;
 }
 rect.highlight-box {
-  fill: none;
+  fill: #c69500;
   stroke: none;
+  rx: 5px;
+  opacity: 0;
 }
 
 /*** Stats Meters ***/
@@ -431,6 +448,7 @@ rect.highlight-box {
   color: black;
   font-family: 'Pangolin', cursive;
   font-size: 10px;
+  max-width: 150px;
 }
 
 
@@ -539,6 +557,7 @@ div.tutorial {
   left: 0;
   border: black 1px solid;
   border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 div.tutorial.middle {
   margin-top: 25%;

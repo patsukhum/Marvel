@@ -243,7 +243,7 @@ Matrix.prototype.highlight = function(character) {
   vis.cols.style('opacity', d => d.name === character ? 1 : 0.3);
   vis.cols.select('rect.highlight-box')
       .datum(d => d)
-      .classed('selected', d => d.name === character);
+      .style('opacity', d => d.name === character ? 0.3 : 0);
   // vis.highlightBox.transition()
   //     .attr('x',
   //     vis.innerPadding

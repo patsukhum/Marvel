@@ -154,10 +154,10 @@ function introNetwork() {
   var divRight = $( "<div></div>" ).addClass('tutorial middle');
   divRight.appendTo(".col-right");
   divRight.append("<p>" +
-      "This is a network of the links between the Wikipedia pages associated with each character." +
+      "This is a network of the links between the Wikipedia pages associated with each character. " +
       "Presumably, each link represents some sort of relation between the two characters. E.g. if " +
-      "<span class='iron-man'>Iron Man</span> links to <span class='hulk'>Hulk</span>, then somewhere on" +
-      "<span class='iron-man'>Iron Man</span>'s page is a reference to <span class='hulk'>Hulk</span>," +
+      "<span class='iron-man'>Iron Man</span> links to <span class='hulk'>Hulk</span>, then somewhere on " +
+      "<span class='iron-man'>Iron Man</span>'s page is a reference to <span class='hulk'>Hulk</span>, " +
       "meaning that the two characters did something together." +
       "</p>" +
       "<button class='btn btn-danger btn-tutorial' id='tutorial1'>Continue</button>");
