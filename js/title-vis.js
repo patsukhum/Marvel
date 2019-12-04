@@ -28,8 +28,8 @@
       'left': 50,
       'right': 50
     };
-    vis.width = 1400 - vis.margin.left - vis.margin.right;
-    vis.height = vis.width * 0.4;
+    vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
+    vis.height = $(window).height() - vis.margin.top - vis.margin.bottom;
   
     vis.svg = makeSvg(vis, vis.parentElement);
   
@@ -58,11 +58,20 @@
     // bouncing icons code help from: http://bl.ocks.org/HarryStevens/f59cf33cfe5ea05adec113c64daef59b
 
     var points2 = [
-      [230, 350],
-      [230, 160],
-      [1030, 160],
-      [1030, 350],
+      [vis.width/6, 2*vis.height/3-20],
+      [vis.width/6, vis.height/3-10],
+      [5*vis.width/6, vis.height/3-10],
+      [5*vis.width/6, 2*vis.height/3-20],
     ];
+
+    
+    // var points2 = [
+    //   [230, 390],
+    //   [230, 200],
+    //   [1030, 200],
+    //   [1030, 390],
+    // ];
+
 
     var variables = {
 			radius: 28,
@@ -95,9 +104,7 @@
       .attr('cx', d=> d.x)
       .attr('cy', d => d.y)
       .style("opacity", 0)
-      // .style("fill", "white")
-      // .style("stroke", "grey")
-      // .style("stroke-width", 1)
+
     group.append('image')
         .attr('xlink:href', d => getSvgIcon(d.id))
         .attr('width', 70)
@@ -166,24 +173,19 @@
     titlegroup.append("text")
       .attr("class","h1")
       .style("text-anchor", "middle")
-      .attr("transform", "translate(630,260)")
+      // .attr("transform", `translate(620,300)`)
+      .style("font-size","350%")
+      .attr("transform", `translate(${vis.width/2},${vis.height/2-20})`)
       .text("Marvel Cinematic Universe")
 
     titlegroup.append("text")
       .attr("class","h2")
       .style("text-anchor", "middle")
-      .attr("transform", "translate(630,310)")
+      // .attr("transform","translate(620,350)")
+      .style("font-size","160%")
+      .attr("transform", `translate(${vis.width/2},${vis.height/2+20})`)
       .text("How Marvel superheroes took over our world")
       
-    // vis.titlegroup = vis.svg.selectAll('g.title')
-    //   .data(vis.displayData);
-
-    // vis.titlegroup.enter().append('image')
-    //   .attr('xlink:href', d => getSvgIcon(d))
-    //   .attr('x', function(d) { return vis.displayData.indexOf(d)*35+200; })
-    //   .attr('y', 300)
-    //   .attr('width', 40)
-    //   .attr('height', 40);
 
     vis.drawn = true;
   };
