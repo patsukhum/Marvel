@@ -74,18 +74,18 @@ function wrapDelimited(text, width, delimiter) {
 
 
 var heroColors = {
-  avengers: 'rgba(85,46,137,0.35)',
-  guardians: 'rgba(54,159,77,0.23)',
-  black_panther: 'rgba(12,11,19,0.24)',
-  captain_america: 'rgba(0,0,255, 0.25)',
-  thor: 'rgba(3,173,233,0.14)',
-  iron_man: 'rgba(227,0,34,0.18)',
-  hulk: 'rgba(162,205,72,0.18)',
-  captain_marvel: 'rgba(243,212,3,0.24)',
-  doctor_strange: 'rgba(202,116,27,0.29)',
-  ant_man: 'rgba(94,102,116,0.34)',
-  spider_man: 'rgba(126,31,39,0.25)',
-  black_widow: 'rgba(0,0,0,0.19)'
+  avengers: 'rgba(85,46,137,1)',
+  guardians: 'rgba(54,159,77,1)',
+  black_panther: 'rgba(35,9,47,1)',
+  captain_america: 'rgba(0,0,255, 1)',
+  thor: 'rgba(3,173,233,1)',
+  iron_man: 'rgba(227,0,34,1)',
+  hulk: 'rgba(162,205,72,1)',
+  captain_marvel: 'rgba(243,212,3,1)',
+  doctor_strange: 'rgba(202,116,27,1)',
+  ant_man: 'rgba(94,102,116,1)',
+  spider_man: 'rgba(126,31,39,1)',
+  black_widow: 'rgba(0,0,0,1)'
 };
 
 var iconDir = 'img/characters/';
