@@ -34,7 +34,7 @@ PlotFlowVis.prototype.initVis = function() {
   vis.svg = makeSvg(vis, 'plot-flow-vis');
 
   vis.rectHeight = 35;
-  vis.rectWidth = 78;
+  vis.rectWidth = 80;
 
   // Parsing data
   var yearCounts = {};
@@ -137,6 +137,8 @@ PlotFlowVis.prototype.wrangleData = function() {
     return (a.year * 100 + a.yearCount) - (b.year * 100 + b.yearCount);
   });
 
+  console.log(vis.displayData);
+
   // vis.drawVis()
 
 };
@@ -180,8 +182,9 @@ PlotFlowVis.prototype.drawVis = function() {
         .duration(300)
         .style('opacity', 1)
       .selection()
+      .merge(vis.titles)
         .call(vis.drawLab, vis)
-        .call(wrap, vis.rectWidth - 3);
+        .call(wrap, vis.rectWidth - 4);
 
   // Drawing character selectbox
   vis.gCharacters = vis.svg.append('g')
@@ -250,8 +253,6 @@ PlotFlowVis.prototype.drawVis = function() {
 PlotFlowVis.prototype.updateVis = function() {
   var vis = this;
 
-  // vis.films = vis.gFilms.selectAll('rect')
-  //     .data(vis.displayData, d => d.movie);
   vis.titles = vis.gFilms.selectAll('text')
       .data(vis.displayData, d => d.movie);
   vis.arrows = vis.gArrows.selectAll('path')
@@ -272,7 +273,6 @@ PlotFlowVis.prototype.updateVis = function() {
       .call(vis.drawLab, vis, delay);
 
   // Drawing arrows
-  // TODO: Get the arrows to fade in (ideally draw themselves using attrTween)
   var triangle = d3.symbol(d3.symbolTriangle);
   if (vis.branching) {
     var arrowEnter = vis.arrows.enter()
@@ -399,6 +399,10 @@ function charboxClick(d, vis) {
         .style('fill', e => e.characters.includes(d) ? heroColors[e.group] : 'none')
         .style('stroke', e => e.characters.includes(d) ? 'none': '#aeaeae');
 
+    vis.gFilms.selectAll('text')
+        .data(vis.displayData, d => d.movie)
+        .style('fill', e => e.characters.includes(d) ? 'white' : 'black');
+
     vis.svg.select('defs > marker#selected path')
         .style('stroke', heroColors[d])
         .style('fill', heroColors[d]);
@@ -420,6 +424,7 @@ function resetSelected(vis) {
       .style('stroke', 'black')
       .style('stroke-width', 1)
       .attr('marker-end', 'url(#arrowhead)');
+  vis.gFilms.selectAll('text').style('fill', 'white');
   unfocusAll(vis);
 }
 function focus(elem, d) {
