@@ -23,13 +23,13 @@
     var vis = this;
   
     vis.margin = {
-      'top': 40,
-      'bottom': 100,
+      'top': 30,
+      'bottom': 0,
       'left': 50,
       'right': 50
     };
     vis.width = 1400 - vis.margin.left - vis.margin.right;
-    vis.height = vis.width * 0.45;
+    vis.height = vis.width * 0.4;
   
     vis.svg = makeSvg(vis, vis.parentElement);
   
@@ -66,7 +66,7 @@
 
     var variables = {
 			radius: 28,
-			distance: 5
+			distance: 4
 		}
 
 		var data = [];
@@ -82,6 +82,28 @@
 			});
     }
 
+    // draw initial icons
+    var nodes = vis.svg.selectAll('g.characters')
+    .data(data, function(d){ return d.id; });
+
+    var group = nodes.enter()
+      .append('g')
+      .attr('class', 'characters');
+
+    group.append('circle')
+      .attr('r', d => variables.radius)
+      .attr('cx', d=> d.x)
+      .attr('cy', d => d.y)
+      .style("opacity", 0)
+      // .style("fill", "white")
+      // .style("stroke", "grey")
+      // .style("stroke-width", 1)
+    group.append('image')
+        .attr('xlink:href', d => getSvgIcon(d.id))
+        .attr('width', 70)
+        .attr('height', 70)
+        .attr('x', d=> d.x-variables.radius)
+        .attr('y', d => d.y-variables.radius);
 
 		redraw(data);
 
@@ -89,39 +111,16 @@
 
 		function redraw(data){
 
-      var nodes = vis.svg.selectAll('g.characters')
+      var groups = vis.svg.selectAll('g.characters')
       .data(data, function(d){ return d.id; });
-      if(nodes.empty()) {
-        nodes.enter()
-        .append('g')
-        .attr('class', 'characters');
-      }
-     
-      nodes.selectAll("circle")
+
+      groups.selectAll("circle")
           .attr("cx", function(d){ return d.x; })
           .attr("cy", function(d){ return d.y; })
 
-      nodes.selectAll("image")
+      groups.selectAll("image")
           .attr("x", function(d){ return d.x-variables.radius; })
           .attr("y", function(d){ return d.y-variables.radius; })
-
-      nodes.append('circle')
-        .attr('r', d => variables.radius)
-        .attr('cx', d=> d.x)
-        .attr('cy', d => d.y)
-        .style("opacity", 0)
-        // .style("fill", "white")
-        // .style("stroke", "grey")
-        // .style("stroke-width", 1)
-        
-
-      nodes.append('image')
-          .attr('xlink:href', d => getSvgIcon(d.id))
-          .attr('width', 70)
-          .attr('height', 70)
-          .attr('x', d=> d.x-variables.radius)
-          .attr('y', d => d.y-variables.radius);
-
 		}
 
 		function update(data){
@@ -161,7 +160,7 @@
     .curve(d3.curveCardinalClosed.tension(0.2)));
 
 
-var titlegroup = vis.svg.append("g");
+    var titlegroup = vis.svg.append("g");
     // append title
     titlegroup.append("text")
       .attr("class","h1")
