@@ -81,7 +81,7 @@ var heroColors = {
   thor: 'rgba(3,173,233,1)',
   iron_man: 'rgba(227,0,34,1)',
   hulk: 'rgba(162,205,72,1)',
-  captain_marvel: 'rgba(243,212,3,1)',
+  captain_marvel: 'rgb(232,169,2)',
   doctor_strange: 'rgba(202,116,27,1)',
   ant_man: 'rgba(94,102,116,1)',
   spider_man: 'rgba(126,31,39,1)',
