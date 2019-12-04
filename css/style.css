@@ -90,14 +90,10 @@ h4, .h4 {
   stroke-width: 3px;
 }
 
-.icon-path {
-  fill: none;
-  stroke: none;
-}
-
 select {
   font-size: 15px;
 }
+
 
 /*** Network ***/
 .edge {
@@ -393,6 +389,14 @@ fill: #e23636;
   stroke: black;
   fill: none;
 }
+rect.highlight-box.selected {
+  fill: #c69500;
+  opacity: 0.3;
+}
+rect.highlight-box {
+  fill: none;
+  stroke: none;
+}
 
 /*** Stats Meters ***/
 .arc {
@@ -530,13 +534,29 @@ ol.carousel-indicators li.active {
 div.tutorial {
   alignment-baseline: middle;
   position: absolute;
-  padding-top: 25%;
-  top: 0;
+  margin-top: 25%;
+  padding: 1em;
   left: 0;
+  border: black 1px solid;
+  border-radius: 20px;
+}
+div.tutorial.middle {
+  margin-top: 25%;
+  top: 0
 }
 div.tutorial.bottom {
-  padding-top: 40%;
+  margin-top: 40%;
+  bottom: 0;
 }
 div.tutorial.top {
-  padding-top: 0;
+  margin-top: 0;
+  top: 0
+}
+div.tutorial.top-left {
+  margin-top: 0;
+  margin-left: 0;
+  top: -5em;
+  left: 1em;
+  border: none;
+  padding: 0
 }

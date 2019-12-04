@@ -120,14 +120,6 @@ Matrix.prototype.initVis = function() {
     .text('Click the name of an ability to sort the columns!')
     .attr('class', 'annotation');
 
-  // Adding highlighting rectangle
-  // vis.highlightBox = vis.svg.append('rect')
-  //     .attr('y', 0)
-  //     .attr('x', vis.innerPadding)
-  //     .attr('height', (vis.rectWidth + vis.innerPadding) * vis.attributes.length)
-  //     .attr('width', vis.rectWidth)
-  //     .attr('class', 'highlight-box')
-  //     .style('opacity', 0.3);
 
   vis.wrangleData();
 };
@@ -161,6 +153,15 @@ Matrix.prototype.updateVis = function() {
   var colEnter = vis.cols.enter()
     .append('g')
     .attr('class', 'col');
+
+  // Adding highlighting rectangles
+  colEnter.append('rect')
+      .attr('x', 0)
+      .attr('y', -vis.rectWidth - vis.innerPadding)
+      .attr('width', vis.rectWidth)
+      .attr('height', (vis.rectWidth + vis.innerPadding) * (vis.attributes.length + 1))
+      .classed('highlight-box', true)
+      .classed('selected', false);
 
   colEnter.append('image')
     .attr('xlink:href', d => getSvgIcon(d.name))
@@ -240,6 +241,9 @@ Matrix.prototype.sortMatrix = function(power, vis) {
 Matrix.prototype.highlight = function(character) {
   var vis = this;
   vis.cols.style('opacity', d => d.name === character ? 1 : 0.3);
+  vis.cols.select('rect.highlight-box')
+      .datum(d => d)
+      .classed('selected', d => d.name === character);
   // vis.highlightBox.transition()
   //     .attr('x',
   //     vis.innerPadding

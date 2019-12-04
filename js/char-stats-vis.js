@@ -37,25 +37,27 @@ CharStatsVis.prototype.initVis = function() {
       name: "centrality",
       displayName: "Centrality",
       format: format1d,
-      info: "Centrality info"
+      info: "Network centrality was calculated using the <i>Eigenvector Centrality</i> algorithm, which measures how " +
+          "influential a node is in the network (more <a href='https://en.wikipedia.org/wiki/Eigenvector_centrality' target='_blank'>here</a>)."
     },
     {
       name: "avg_monthly_views",
       displayName: "Average monthly views",
       format: formatValue,
-      info: "Average monthly views info"
+      info: "For each page associated with the character, we averaged the monthly views from 2015 to November 2019."
     },
     {
       name: "num_pages",
       displayName: "Number of pages",
       format: d3.format(".0f"),
-      info: "Number of pages info"
+      info: "Each character has multiple pages associated with them, both from movies and the comics. We counted up " +
+          "each one and used it to compute the other statistics."
     },
     {
       name: "word_count",
       displayName: "Average word count",
       format: formatValue,
-      info: "Word count info"
+      info: "We counted the words on each page associated with a character and averaged them together."
     },
   ];
 
