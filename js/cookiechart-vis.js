@@ -163,21 +163,40 @@ CookieChartVis.prototype.updateVis = function() {
     .append("text")
     .attr("class", "texts genre-label")
     .merge(texts)
+    // .transition()
+    // .duration(800)
     .attr("x", (d, i) => {
+      if (vis.stage === 1)
+        return vis.xCenter[4] - xOffsetText;
+      if (vis.stage === 4 && d === 'Marvel') {
+          return vis.xCenter[3] - xOffsetText;
+      } else if (vis.stage === 4 && d === 'DC') {
+          return vis.xCenter[5] - xOffsetText;
+      }
       return vis.xCenter[i] - xOffsetText;
     })
     .attr("y", (d, i) => {
+      if (vis.stage === 1)
+        return vis.yCenter[4] - yOffsetText;
+      if (vis.stage === 4 && d === 'Marvel') {
+          return vis.yCenter[3] - yOffsetText;
+      } else if (vis.stage === 4 && d === 'DC') {
+          return vis.yCenter[5] - yOffsetText;
+      }
       return vis.yCenter[i] * 1.1 - yOffsetText - 25;
     })
     .text((d, i) => {
-      if (vis.stage === 1)
+      if (vis.stage === 1) {
+        if (i === 0) {
+          return 'All Genres'
+        }
         return "";
-      else if (vis.stage === 2) {
+      } else if (vis.stage === 2) {
         if (d === 'Marvel' || d === 'DC') {
           return "";
         }
       } else if (vis.stage === 4) {
-        if (d !== 'Fantasy/Sci-Fi' && d !== 'Action/Adventure') {
+        if (d !== 'Marvel' && d !== 'DC') {
           return "";
         }
       }
@@ -238,12 +257,27 @@ CookieChartVis.prototype.drawCircles = function() {
       if (vis.stage === 1) {
         return 'lightgreen';
       } else if (vis.stage === 2) {
+        if (vis.dataStage2[d.name]['color'] === 'pink')
+          return 'purple';
+        if (vis.dataStage2[d.name]['color'] === 'lightblue')
+          return 'darkblue';
         return vis.dataStage2[d.name]['color'];
       } else if (vis.stage === 3) {
+        if (vis.dataStage2[d.name]['color'] === 'pink')
+          return 'purple';
+        if (vis.dataStage2[d.name]['color'] === 'lightblue')
+          return 'darkblue';
         return vis.dataStage3[d.name]['color'];
       }
       return vis.dataStage4[d.name]['color'];
     })
+    // .style('stroke', (d,i) => {
+    //     if (i%2 == 0) return 'darkblue';
+    //     return 'darkgreen';
+    // })
+    // .style('stroke-width', '5px')
+
+
 
   vis.u.exit().remove();
 }
@@ -324,7 +358,7 @@ CookieChartVis.prototype.nodeMouseover = function(d, vis) {
       return data == d;
     })
     .style('stroke', 'darkgray')
-    .style('stroke-width', '3px');
+    .style('stroke-width', '8px');
 
   vis.tooltip.transition()
     .style('opacity', 0.8);
@@ -341,8 +375,13 @@ CookieChartVis.prototype.nodeMouseout = function(d, vis) {
     .duration(100)
     .style("opacity", 0);
 
-  vis.u.style('stroke', 'none')
-    .style('stroke-width', 'none');
+  vis.u.filter(function(data) {
+      return data == d;
+    })
+    .style('stroke', 'darkgray')
+    .style('stroke-width', '3px');
+  // vis.u.style('stroke', 'none')
+  //   .style('stroke-width', 'none');
 };
 
 function formatMillions(num) {
