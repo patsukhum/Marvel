@@ -193,7 +193,7 @@ html {
 .mapPath:hover {
   paint-order: stroke fill;
   stroke-width: 3;
-  stroke: black;
+  stroke: gray;
 }
 
 /* plot flow */
@@ -578,4 +578,8 @@ div.tutorial.top-left {
   left: 1em;
   border: none;
   padding: 0
+}
+
+.genre-label {
+  pointer-events: none;
 }

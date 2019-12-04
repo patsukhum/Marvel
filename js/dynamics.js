@@ -5,13 +5,13 @@ var myFullpage = new fullpage('#fullpage', {
 
   afterLoad: function(origin, destination, direction) {
     var secId = destination.item.getAttribute('id');
-    switch(secId) {
+    switch (secId) {
       case 'cookiechart-sec':
-          drawCookieChartVis();
-          break;
+        drawCookieChartVis();
+        break;
       case 'linechart-sec':
-          drawLineChartVis();
-          break;
+        drawLineChartVis();
+        break;
       case 'plot-flow-sec':
         drawPlotVis();
         break;
@@ -45,13 +45,15 @@ $('#plot-flow-sec button').on('click', function(event) {
 
   if (!plotVis.toggledBefore) {
     $("#plot-flow-sec .caption.text")
-        .children('span')
-        .fadeOut(1000, function() { $(this).remove() })
-        .end()
-        .append('span')
-        .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.")
-        .css('opacity', 0)
-        .fadeTo(500, 1);
+      .children('span')
+      .fadeOut(1000, function() {
+        $(this).remove()
+      })
+      .end()
+      .append('span')
+      .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.")
+      .css('opacity', 0)
+      .fadeTo(500, 1);
   }
 
   plotVis.toggleBranching();
@@ -86,6 +88,14 @@ function drawLineChartVis() {
 function drawCookieChartVis() {
   if (!cookiechartVis.drawn) {
     cookiechartVis.updateVis();
+    // $(".genre-label").hover(
+    //   function() {
+    //     $(".genre-label").css("display", "none");
+    //   },
+    //   function() {
+    //     $(".genre-label").css("display", "block");
+    //   }
+    // );
   }
 }
 
@@ -126,10 +136,12 @@ $(eventHandler).bind("selectionClear", function() {
 
 // ********** Characters Intro ********** //
 var doneIntro = false;
+
 function charactersIntro() {
   doneIntro = true;
   startIntro();
 }
+
 function startIntro() {
   fadeOutAll();
   drawSkipButton();
@@ -139,9 +151,11 @@ function startIntro() {
 function fadeOutAll() {
   [networkVis, charStatsVis, matrixVis].forEach(d => fadeOut(d));
 }
+
 function fadeInAll() {
   [networkVis, charStatsVis, matrixVis].forEach(d => fadeIn(d));
 }
+
 function introNetwork() {
   console.log("Intro network");
   networkVis.force.stop();
@@ -151,80 +165,85 @@ function introNetwork() {
   networkVis.force.restart();
 
   // Show text
-  var divRight = $( "<div></div>" ).addClass('tutorial middle');
+  var divRight = $("<div></div>").addClass('tutorial middle');
   divRight.appendTo(".col-right");
   divRight.append("<p>" +
-      "This is a network of the links between the Wikipedia pages associated with each character. " +
-      "Presumably, each link represents some sort of relation between the two characters. E.g. if " +
-      "<span class='iron-man'>Iron Man</span> links to <span class='hulk'>Hulk</span>, then somewhere on " +
-      "<span class='iron-man'>Iron Man</span>'s page is a reference to <span class='hulk'>Hulk</span>, " +
-      "meaning that the two characters did something together." +
-      "</p>" +
-      "<button class='btn btn-danger btn-tutorial' id='tutorial1'>Continue</button>");
+    "This is a network of the links between the Wikipedia pages associated with each character. " +
+    "Presumably, each link represents some sort of relation between the two characters. E.g. if " +
+    "<span class='iron-man'>Iron Man</span> links to <span class='hulk'>Hulk</span>, then somewhere on " +
+    "<span class='iron-man'>Iron Man</span>'s page is a reference to <span class='hulk'>Hulk</span>, " +
+    "meaning that the two characters did something together." +
+    "</p>" +
+    "<button class='btn btn-danger btn-tutorial' id='tutorial1'>Continue</button>");
 
   // Re-cover and transition to introMatrix
-  $( "#tutorial1" ).on('click', function() {
+  $("#tutorial1").on('click', function() {
     fadeOut(networkVis);
     networkVis.force.stop();
     divRight.remove();
     introMatrix();
   });
 }
+
 function introMatrix() {
   console.log("Intro matrix");
   fadeIn(matrixVis);
 
   // Show text
-  var divLeft = $( "<div></div>" ).addClass('tutorial bottom');
+  var divLeft = $("<div></div>").addClass('tutorial bottom');
   divLeft.appendTo(".col-left");
   divLeft.append("<p>" +
-      "In this matrix, we can see the superpowers and abilities of each of the avengers (and their enemeies) " +
-      "Each row represents a type of ability and each column is a character. If a character has that ability, an " +
-      "icon will be displayed. " +
-      "<br/>" +
-      "Try clicking the names of the powers to sort the matrix based on that power and try hovering " +
-      "over the columns to see more stats on that character! " +
-      "</p>" +
-      "<button class='btn btn-danger btn-tutorial' id='tutorial2'>Continue</button>");
+    "In this matrix, we can see the superpowers and abilities of each of the avengers (and their enemeies) " +
+    "Each row represents a type of ability and each column is a character. If a character has that ability, an " +
+    "icon will be displayed. " +
+    "<br/>" +
+    "Try clicking the names of the powers to sort the matrix based on that power and try hovering " +
+    "over the columns to see more stats on that character! " +
+    "</p>" +
+    "<button class='btn btn-danger btn-tutorial' id='tutorial2'>Continue</button>");
 
-  $( "#tutorial2" ).on('click', function() {
+  $("#tutorial2").on('click', function() {
     fadeOut(matrixVis);
     divLeft.remove();
     introCharStats();
   })
 }
+
 function introCharStats() {
   console.log("Intro charStats");
 
   fadeIn(charStatsVis);
 
   // Show text
-  var divLeft = $( "<div></div>" ).addClass('tutorial top');
+  var divLeft = $("<div></div>").addClass('tutorial top');
   divLeft.appendTo('.col-left');
   divLeft.append("<p>" +
-      "When you hover over a character in the network or matrix, corresponding stats about their Wikipedia " +
-      "presence are displayed, including their network centrality, views, page count, and word count. Hover " +
-      "over the question marks to see more information on those measures!" +
-      "</p>" +
-      "<button class='btn btn-danger btn-tutorial' id='tutorial3'>Let me explore!</button>");
+    "When you hover over a character in the network or matrix, corresponding stats about their Wikipedia " +
+    "presence are displayed, including their network centrality, views, page count, and word count. Hover " +
+    "over the question marks to see more information on those measures!" +
+    "</p>" +
+    "<button class='btn btn-danger btn-tutorial' id='tutorial3'>Let me explore!</button>");
 
-  $( "#tutorial3" ).on('click', function() {
+  $("#tutorial3").on('click', function() {
     divLeft.remove();
     endIntro();
   })
 
 }
+
 function endIntro() {
-  $( ".tutorial" ).remove();
+  $(".tutorial").remove();
   fadeInAll();
 }
+
 function drawSkipButton() {
-  var button = $( "<div class='tutorial top-left'>" +
-        "<button class='btn btn-danger btn-tutorial' id='tutorial-skip'>Skip tutorial</button>" +
-      "</div>" );
+  var button = $("<div class='tutorial top-left'>" +
+    "<button class='btn btn-danger btn-tutorial' id='tutorial-skip'>Skip tutorial</button>" +
+    "</div>");
   button.appendTo('.col-left');
   button.on('click', skipIntro);
 }
+
 function skipIntro() {
   endIntro();
 }

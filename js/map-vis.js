@@ -67,7 +67,7 @@ MapVis.prototype.initVis = function() {
 
   vis.svgCol2.append("text")
     .attr("class", "bar-title")
-    .text('Top countries by Gross Revenue')
+    .text('Top 3 countries by Gross Revenue')
     .attr("x", 0)
     .attr("y", 120)
     .attr("fill", "gray")
