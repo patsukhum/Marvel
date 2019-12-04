@@ -35,7 +35,7 @@ CookieChartVis.prototype.initVis = function() {
   };
 
   vis.width = $('#' + vis.parentElement).width() + 30 - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.8;
+  vis.height = vis.width * 0.8 - vis.margin.top;
 
   vis.svg = makeSvg(vis, 'cookiechart-vis');
 
@@ -141,6 +141,24 @@ CookieChartVis.prototype.initVis = function() {
     vis.toggleCookie(h);
   }
 
+  //start automatically with play/pause button
+  var moving = false;
+  var playButton = d3.select("#play-button");
+  playButton
+      .on("click", function() {
+        var button = d3.select(this);
+        if (button.text() == "Pause") {
+          moving = false;
+          // clearInterval(timer);
+          // timer = 0;
+          button.text("Play");
+        } else {
+          moving = true;
+          // timer = setInterval(step, 100);
+          button.text("Pause");
+        }
+        console.log("Slider moving: " + moving);
+      })
 
   vis.wrangleData();
 };
