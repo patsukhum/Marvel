@@ -109,6 +109,7 @@
 
 		d3.interval(function(){ redraw(update(data)); }, 30)
 
+    // update icon positions
 		function redraw(data){
 
       var groups = vis.svg.selectAll('g.characters')
