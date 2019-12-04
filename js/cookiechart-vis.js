@@ -33,8 +33,10 @@ CookieChartVis.prototype.initVis = function() {
     'left': 20,
     'right': 10
   };
-  vis.width = $('#' + vis.parentElement).width() + 90 - vis.margin.left - vis.margin.right;
+
+  vis.width = $('#' + vis.parentElement).width() + 30 - vis.margin.left - vis.margin.right;
   vis.height = vis.width * 0.8;
+
   vis.svg = makeSvg(vis, 'cookiechart-vis');
 
   vis.tooltip = d3.select('body').append('g')
@@ -82,6 +84,64 @@ CookieChartVis.prototype.initVis = function() {
     })
     .attr("fill", 'black');
 
+  //// slider ///// https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763?fbclid=IwAR2cq8_8uLWVqEyuU-XYEY-m6g4yIoUmXuiV3X0TUgnzJBTKQ_a_4WAc24w
+
+  vis.slidersvg = d3.select('#slider')
+      .append('svg')
+      .attr('width', vis.width)
+      .attr('height', 60);
+
+  var currentValue = 0;
+
+  var x = d3.scaleLinear()
+      .domain([0, 3])
+      .range([0, vis.width - vis.margin.left - vis.margin.right])
+      .clamp(true);
+
+  var slider = vis.slidersvg.append("g")
+      .attr("class", "slider")
+      .attr("transform", "translate(" + vis.margin.left + "," + 30 + ")");
+
+  slider.append("line")
+      .attr("class", "track")
+      .attr("x1", x.range()[0])
+      .attr("x2", x.range()[1])
+      .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+      .attr("class", "track-inset")
+      .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+      .attr("class", "track-overlay")
+      .call(d3.drag()
+          .on("start.interrupt", function() { slider.interrupt(); })
+          .on("start drag", function() {
+            currentValue = d3.event.x;
+            update(x.invert(currentValue));
+          })
+      );
+
+  slider.insert("g", ".track-overlay")
+      .attr("class", "ticks")
+      .attr("transform", "translate(0," + 18 + ")")
+      .selectAll("text")
+      .data(x.ticks(3))
+      .enter()
+      .append("text")
+      .attr("x", x)
+      .attr("y", 10)
+      .attr("text-anchor", "middle")
+      .text(function(d) { return d });
+
+  //dragging handle
+  var handle = slider.insert("circle", ".track-overlay")
+      .attr("class", "handle")
+      .attr("r", 9);
+
+  function update(h) {
+    var h = Math.round(h)
+    handle.attr("cx", x(h));
+    vis.toggleCookie(h);
+  }
+
+
   vis.wrangleData();
 };
 
@@ -120,9 +180,11 @@ CookieChartVis.prototype.toggleCookie2 = function() {
   vis.updateVis();
 }
 
-CookieChartVis.prototype.toggleCookie = function() {
+CookieChartVis.prototype.toggleCookie = function(h) {
   var vis = this;
-  vis.stage = vis.stage % 4 + 1;
+
+  vis.stage = Math.floor(h)%4 +1;
+
   vis.updateVis();
 }
 
@@ -226,7 +288,7 @@ CookieChartVis.prototype.drawCircles = function() {
     .style('opacity', 0.77)
     .merge(vis.u)
     .transition()
-    .duration(1000)
+    .duration(500)
     .attr('r', function(d) {
       if (vis.stage === 4 && d.category !== 6 && d.category !== 8) {
         return 0;

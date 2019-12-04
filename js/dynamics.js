@@ -61,9 +61,9 @@ $('#btn-cookie').on('click', function(event) {
   cookiechartVis.toggleCookie();
 });
 
-$('#btn-cookie2').on('click', function(event) {
-  cookiechartVis.toggleCookie2();
-});
+// $('#btn-cookie2').on('click', function(event) {
+//   cookiechartVis.toggleCookie2();
+// });
 
 // ********** Network intro ********** //
 function drawNetworkIntroVis() {
