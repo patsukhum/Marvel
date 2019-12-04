@@ -114,7 +114,7 @@ CookieChartVis.prototype.toggleCookie2 = function() {
   var vis = this;
   var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(vis.titleToInfo));
   var dlAnchorElem = document.getElementById('downloadAnchorElem');
-  dlAnchorElem.setAttribute("href",     dataStr     );
+  dlAnchorElem.setAttribute("href", dataStr);
   dlAnchorElem.setAttribute("download", "data.json");
   dlAnchorElem.click();
   vis.updateVis();
@@ -122,7 +122,7 @@ CookieChartVis.prototype.toggleCookie2 = function() {
 
 CookieChartVis.prototype.toggleCookie = function() {
   var vis = this;
-  vis.stage = vis.stage%4+1;
+  vis.stage = vis.stage % 4 + 1;
   vis.updateVis();
 }
 
@@ -163,19 +163,50 @@ CookieChartVis.prototype.updateVis = function() {
     .append("text")
     .attr("class", "texts genre-label")
     .merge(texts)
+    // .transition()
+    // .duration(800)
     .attr("x", (d, i) => {
+      if (vis.stage === 1)
+        return vis.xCenter[4] - xOffsetText;
+      if (vis.stage === 4 && d === 'Marvel') {
+          return vis.xCenter[3] - xOffsetText;
+      } else if (vis.stage === 4 && d === 'DC') {
+          return vis.xCenter[5] - xOffsetText;
+      }
       return vis.xCenter[i] - xOffsetText;
     })
     .attr("y", (d, i) => {
-      return vis.yCenter[i] - yOffsetText;
+      if (vis.stage === 1)
+        return vis.yCenter[4] - yOffsetText;
+      if (vis.stage === 4 && d === 'Marvel') {
+          return vis.yCenter[3] - yOffsetText;
+      } else if (vis.stage === 4 && d === 'DC') {
+          return vis.yCenter[5] - yOffsetText;
+      }
+      return vis.yCenter[i] * 1.1 - yOffsetText - 25;
     })
     .text((d, i) => {
-      if (vis.stage === 1)
+      if (vis.stage === 1) {
+        if (i === 0) {
+          return 'All Genres'
+        }
         return "";
+      } else if (vis.stage === 2) {
+        if (d === 'Marvel' || d === 'DC') {
+          return "";
+        }
+      } else if (vis.stage === 4) {
+        if (d !== 'Marvel' && d !== 'DC') {
+          return "";
+        }
+      }
       return d;
     })
-    .attr("fill", "black")
-    .style("text-anchor", "middle");
+    .attr("fill", "white")
+    .style("text-anchor", "middle")
+    .style("font-size", "18px")
+    .style('text-shadow', ' -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black')
+    .call(wrapDelimited, 70, '/');
   texts.exit().remove();
 
   vis.drawn = true;
@@ -185,7 +216,7 @@ CookieChartVis.prototype.drawCircles = function() {
   var vis = this;
   vis.u = vis.svg
     .selectAll('.cookie-nodes')
-    .data(vis.nodes, (d)=>d.name);
+    .data(vis.nodes, (d) => d.name);
 
   vis.u.enter()
     .append('circle')
@@ -223,15 +254,30 @@ CookieChartVis.prototype.drawCircles = function() {
       return vis.dataStage3[d.name]['y'];
     })
     .style('fill', function(d) {
-      if (vis.stage === 1){
+      if (vis.stage === 1) {
         return 'lightgreen';
-      } else if (vis.stage === 2){
+      } else if (vis.stage === 2) {
+        if (vis.dataStage2[d.name]['color'] === 'pink')
+          return 'purple';
+        if (vis.dataStage2[d.name]['color'] === 'lightblue')
+          return 'darkblue';
         return vis.dataStage2[d.name]['color'];
-      } else if (vis.stage === 3){
+      } else if (vis.stage === 3) {
+        if (vis.dataStage2[d.name]['color'] === 'pink')
+          return 'purple';
+        if (vis.dataStage2[d.name]['color'] === 'lightblue')
+          return 'darkblue';
         return vis.dataStage3[d.name]['color'];
       }
       return vis.dataStage4[d.name]['color'];
     })
+    // .style('stroke', (d,i) => {
+    //     if (i%2 == 0) return 'darkblue';
+    //     return 'darkgreen';
+    // })
+    // .style('stroke-width', '5px')
+
+
 
   vis.u.exit().remove();
 }
@@ -239,7 +285,7 @@ CookieChartVis.prototype.drawCircles = function() {
 CookieChartVis.prototype.runSimulation = function() {
   var vis = this;
   vis.titleToInfo = {};
-  vis.nodes.forEach((d)=>{
+  vis.nodes.forEach((d) => {
     vis.titleToInfo[d.name] = {};
   });
 
@@ -257,12 +303,12 @@ CookieChartVis.prototype.runSimulation = function() {
         // Only one center
         return vis.yCenter[4];
       } else if (vis.stage === 4) {
-        return vis.yCenter[d.category]-200;
+        return vis.yCenter[d.category] - 200;
       }
       return vis.yCenter[d.category];
     }))
     .force('collision', d3.forceCollide().radius(function(d) {
-      return d.radius+2;
+      return d.radius + 2;
     }))
     .on('tick', ticked);
 
@@ -284,7 +330,7 @@ CookieChartVis.prototype.runSimulation = function() {
       .on('mouseout', d => vis.nodeMouseout(d, vis))
       .style('fill', function(d) {
         var color = vis.colorScale[d.category];
-        if (vis.stage === 1){
+        if (vis.stage === 1) {
           color = 'gray';
         }
         vis.titleToInfo[d.name]['category'] = d.category;
@@ -312,7 +358,7 @@ CookieChartVis.prototype.nodeMouseover = function(d, vis) {
       return data == d;
     })
     .style('stroke', 'darkgray')
-    .style('stroke-width', '3px');
+    .style('stroke-width', '8px');
 
   vis.tooltip.transition()
     .style('opacity', 0.8);
@@ -329,8 +375,13 @@ CookieChartVis.prototype.nodeMouseout = function(d, vis) {
     .duration(100)
     .style("opacity", 0);
 
-  vis.u.style('stroke', 'none')
-    .style('stroke-width', 'none');
+  vis.u.filter(function(data) {
+      return data == d;
+    })
+    .style('stroke', 'darkgray')
+    .style('stroke-width', '3px');
+  // vis.u.style('stroke', 'none')
+  //   .style('stroke-width', 'none');
 };
 
 function formatMillions(num) {
