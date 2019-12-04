@@ -35,7 +35,7 @@ CookieChartVis.prototype.initVis = function() {
   };
 
   vis.width = $('#' + vis.parentElement).width() + 30 - vis.margin.left - vis.margin.right;
-  vis.height = vis.width * 0.8;
+  vis.height = vis.width * 0.8 - vis.margin.top;
 
   vis.svg = makeSvg(vis, 'cookiechart-vis');
 
