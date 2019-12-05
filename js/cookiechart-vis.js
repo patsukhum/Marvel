@@ -201,6 +201,14 @@ CookieChartVis.prototype.toggleCookie = function(h) {
 
   vis.stage = Math.floor(h) % 4 + 1;
 
+  $('#cookie-text-'+vis.stage).show();
+  console.log('showing'+vis.stage);
+  for (var i=1;i<=4;i++) {
+    if (i !== vis.stage){
+      $('#cookie-text-'+i).hide();
+      console.log('hiding'+vis.stage);
+    }
+  }
   vis.updateVis();
 }
 
