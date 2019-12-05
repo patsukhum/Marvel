@@ -255,8 +255,6 @@ MapVis.prototype.updateVis = function() {
       vis.tooltip.transition()
         .duration(600).style("opacity", 0);
     })
-    .transition()
-    .duration(800)
     .attr("fill", function(d, i) {
       if (d.id in vis.idToRevenue)
         return vis.color(vis.idToRevenue[d.id]);
