@@ -12,6 +12,11 @@ var myFullpage = new fullpage('#fullpage', {
       case 'linechart-sec':
         drawLineChartVis();
         break;
+      case 'mcu-intro-sec':
+        console.log($('#fp-nav ul li a span').css('background'));
+        // $('#fp-nav ul li a span').css({'background': 'white !important'});
+        // $('.fp-slidesNav ul li a span').css({'background': 'white !important'});
+        break;
       case 'plot-flow-sec':
         drawPlotVis();
         break;
@@ -88,14 +93,6 @@ function drawLineChartVis() {
 function drawCookieChartVis() {
   if (!cookiechartVis.drawn) {
     cookiechartVis.updateVis();
-    // $(".genre-label").hover(
-    //   function() {
-    //     $(".genre-label").css("display", "none");
-    //   },
-    //   function() {
-    //     $(".genre-label").css("display", "block");
-    //   }
-    // );
   }
 }
 
