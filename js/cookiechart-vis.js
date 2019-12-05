@@ -114,6 +114,8 @@ CookieChartVis.prototype.initVis = function() {
           .on("start.interrupt", function() { slider.interrupt(); })
           .on("start drag", function() {
             currentValue = d3.event.x;
+            // console.log(currentValue)
+            // console.log(x.invert(currentValue))
             update(x.invert(currentValue));
           })
       );
@@ -135,12 +137,6 @@ CookieChartVis.prototype.initVis = function() {
       .attr("class", "handle")
       .attr("r", 9);
 
-  function update(h) {
-    var h = Math.round(h)
-    handle.attr("cx", x(h));
-    vis.toggleCookie(h);
-  }
-
   //start automatically with play/pause button
   var moving = false;
   var playButton = d3.select("#play-button");
@@ -149,16 +145,40 @@ CookieChartVis.prototype.initVis = function() {
         var button = d3.select(this);
         if (button.text() == "Pause") {
           moving = false;
-          // clearInterval(timer);
+          clearInterval(timer);
           // timer = 0;
           button.text("Play");
         } else {
           moving = true;
-          // timer = setInterval(step, 100);
+          // console.log(x.invert(currentValue))
+          // update(x.invert(currentValue))
+          timer = setInterval(step, 500);
           button.text("Pause");
         }
-        console.log("Slider moving: " + moving);
-      })
+        // console.log("Slider moving: " + moving);
+      });
+
+  var targetValue = vis.width;
+  function step() {
+    update(x.invert(currentValue));
+    currentValue = currentValue + (targetValue/10);
+    if (currentValue > targetValue) {
+      moving = false;
+      currentValue = 0;
+      clearInterval(timer);
+      // timer = 0;
+      playButton.text("Play");
+      console.log("Slider moving: " + moving);
+    }
+  }
+
+
+  function update(h) {
+    // console.log(h);
+    var h = Math.round(h);
+    handle.transition().duration(500).attr("cx", x(h));
+    vis.toggleCookie(h);
+  }
 
   vis.wrangleData();
 };
