@@ -156,21 +156,29 @@ CookieChartVis.prototype.initVis = function() {
   var playButton = d3.select("#play-button");
   playButton
       .on("click", function() {
-        var button = d3.select(this);
-        if (button.text() == "Pause") {
+        // var button = d3.select(this);
+        var img_src = document.getElementById('play').src;
+        change()
+        if(img_src == "img/other/pause.png"){
           moving = false;
           clearInterval(timer);
-          // timer = 0;
-          button.text("Play");
-        } else {
+        } else if(img_src == "img/other/play.png"){
           moving = true;
-          // console.log(x.invert(currentValue))
-          // update(x.invert(currentValue))
           timer = setInterval(step, 500);
-          button.text("Pause");
         }
-        // console.log("Slider moving: " + moving);
       });
+
+  function change() {
+    var image = document.getElementById('play');
+    currentValue = d3.event.x;
+    update(x.invert(currentValue));
+    if (image.src.match("play.png")) {
+      image.src = "img/other/pause.png";
+    }
+    else {
+      image.src = "img/other/play.png";
+    }
+  }
 
   var targetValue = vis.width;
   function step() {
@@ -180,20 +188,15 @@ CookieChartVis.prototype.initVis = function() {
       moving = false;
       currentValue = 0;
       clearInterval(timer);
-      // timer = 0;
-      playButton.text("Play");
-      console.log("Slider moving: " + moving);
+      // playButton.text("Play");
     }
   }
 
-
   function update(h) {
-    // console.log(h);
     var h = Math.round(h);
     handle.transition().duration(500).attr("cx", x(h));
     vis.toggleCookie(h);
   }
-
   vis.wrangleData();
 };
 
@@ -242,7 +245,7 @@ CookieChartVis.prototype.toggleCookie = function(h) {
   for (var i=1;i<=4;i++) {
     if (i !== vis.stage){
       $('#cookie-text-'+i).hide();
-      console.log('hiding'+vis.stage);
+      // console.log('hiding'+vis.stage);
     }
   }
   vis.updateVis();
