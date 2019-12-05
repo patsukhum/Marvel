@@ -275,7 +275,7 @@ CookieChartVis.prototype.updateVis = function() {
     .text((d, i) => {
       if (vis.stage === 1) {
         if (i === 0) {
-          return 'All Genres'
+          return ''
         }
         return "";
       } else if (vis.stage === 2) {
