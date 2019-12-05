@@ -63,7 +63,7 @@ d3.csv('data/clean/mcu_plot_flow.csv', function(data) {
 // create Vis3: network chart
 queue()
     .defer(d3.json, 'data/clean/all_character_nodes_centrality.json')
-    .defer(d3.json, 'data/clean/all_character_links.json')
+    .defer(d3.json, 'data/clean/all_character_links_undirected.json')
     .await((error, nodes, edges) => {
       createNetworkVis(error, nodes, edges);
       createCharStatsVis(nodes);
