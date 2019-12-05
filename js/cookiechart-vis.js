@@ -332,7 +332,7 @@ CookieChartVis.prototype.drawCircles = function() {
       return radiusArr[i];
     })
     .style('fill', 'white')
-    .style('stroke', 'black')
+    // .style('stroke', 'black')
     .on('mouseover', (d, i) => vis.setGenreTextVisible(i, vis))
     .on('mouseout', (d, i) => vis.setGenreTextInvisible(i, vis))
   vis.enclosingCircles.exit();
