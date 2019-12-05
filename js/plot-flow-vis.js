@@ -296,7 +296,7 @@ PlotFlowVis.prototype.drawVis = function() {
         }
       });
   legendEnter.append('text')
-      .attr('class', 'annotation')
+      .attr('class', 'film-title')
       .text(d => d.text)
       .attr('y', d => (d.color && !d.filledIn) ? vis.rectHeight / 2 - 3 : vis.rectHeight / 2)
       .attr('x', vis.rectWidth / 2)
