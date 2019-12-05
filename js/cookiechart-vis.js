@@ -325,14 +325,14 @@ CookieChartVis.prototype.drawCircles = function() {
       if (vis.stage === 3 && i === 5)
         return 100;
       if (vis.stage === 4) {
-        if (i === 3) return 90;
-        if (i === 5) return 50;
+        if (i === 3) return 100;
+        if (i === 5) return 60;
         return 0;
       }
       return radiusArr[i];
     })
     .style('fill', 'white')
-    // .style('stroke', 'white')
+    .style('stroke', 'black')
     .on('mouseover', (d, i) => vis.setGenreTextVisible(i, vis))
     .on('mouseout', (d, i) => vis.setGenreTextInvisible(i, vis))
   vis.enclosingCircles.exit();
@@ -491,6 +491,9 @@ CookieChartVis.prototype.runSimulation = function() {
 // }
 
 CookieChartVis.prototype.setGenreTextVisible = function(category, vis) {
+  if (vis.stage === 4 && (category === 3 || category === 5)) {
+    category += 3;
+  };
   vis.u.filter(function(data) {
       return data.category !== category;
     })
@@ -513,6 +516,9 @@ CookieChartVis.prototype.setGenreTextVisible = function(category, vis) {
 }
 
 CookieChartVis.prototype.setGenreTextInvisible = function(category, vis) {
+  if (vis.stage === 4 && (category === 3 || category === 5)) {
+    category += 3;
+  };
   vis.u.filter(function(data) {
       return data.category !== category;
     })
