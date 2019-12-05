@@ -622,3 +622,8 @@ div.tutorial.top-left {
 .genre-label {
   pointer-events: none;
 }
+
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+    background: black !important;
+}
