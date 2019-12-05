@@ -37,8 +37,8 @@ CharStatsVis.prototype.initVis = function() {
       name: "centrality",
       displayName: "Centrality",
       format: format1d,
-      info: "Network centrality was calculated using the <i>Eigenvector Centrality</i> algorithm, which measures how " +
-          "influential a node is in the network (more <a href='https://en.wikipedia.org/wiki/Eigenvector_centrality' target='_blank'>here</a>)."
+      info: "Network centrality measures how influential a node is in the network and" +
+          " was calculated using the <i>Eigenvector Centrality</i> algorithm."
     },
     {
       name: "avg_monthly_views",
@@ -122,7 +122,7 @@ CharStatsVis.prototype.initVis = function() {
 
   // Info tooltip
   vis.infoTip = d3.tip()
-      .attr('class', 'tooltip info-tip')
+      .attr('class', 'tooltip stats-tooltip')
       .offset([-10, 0]);
   vis.infoTip.html(function(d) {
     return d.info;

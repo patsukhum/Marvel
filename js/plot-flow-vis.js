@@ -127,6 +127,17 @@ PlotFlowVis.prototype.initVis = function() {
   // Line generator function
   vis.line = d3.linkHorizontal();
 
+  // Tooltip for Iron Man 2 when Spiderman is selected
+  vis.spiderTip = d3.tip()
+      .offset([5, -5])
+      .attr('class', 'tooltip stats-tooltip')
+      .html('Spiderman shows up as a child here and is saved by Iron Man. Look it up on YouTube!')
+      .attr('max-width', '30px');
+
+  // Explanatory rectangles in the legend
+  vis.gLegend = vis.svg.append('g')
+      .attr('class', 'films');
+
   vis.wrangleData();
 };
 PlotFlowVis.prototype.wrangleData = function() {
@@ -165,6 +176,8 @@ PlotFlowVis.prototype.drawVis = function() {
         .style('opacity', 1)
       .selection()
         .call(vis.drawRect, vis);
+
+  vis.films.call(vis.spiderTip);
 
   vis.titles = vis.gFilms.selectAll('text')
       .data(vis.displayData, d => d.movie);
@@ -247,6 +260,49 @@ PlotFlowVis.prototype.drawVis = function() {
 
   vis.xAxis.scale(vis.x);
   vis.gX.call(vis.xAxis);
+
+  // Drawing legend rectangles
+  vis.gLegend.attr('transform', 'translate(' + (vis.width - 3 * (vis.rectWidth + 10)) + ',' + (vis.height + 75) + ')');
+  vis.gLegend.append('text')
+      .text('How to read this')
+      .attr('x', 0)
+      .attr('y', -10)
+      .style('font-size', 15);
+  var legendData = [
+    {color: true, filledIn: true, text: 'Full appearance'},
+    {color: true, filledIn: false, text: 'Post-credits appearance'},
+    {color: false, filledIn: false, text: 'No appearance'}
+  ];
+  var legendEnter = vis.gLegend.selectAll('g.legend-element')
+      .data(legendData)
+      .enter()
+      .append('g')
+      .attr('class', 'legend-element')
+      .attr('transform', (d, i) => 'translate(' + (i * (vis.rectWidth + 10) - 5) + ',0)');
+  legendEnter.append('rect')
+      .attr('width', vis.rectWidth)
+      .attr('height', vis.rectHeight)
+      .attr('class', 'rect-film')
+      .style('fill', d => d.filledIn ? '#f78f3f' : 'none')
+      .style('stroke', d => d.color ? '#f78f3f' : '#aeaeae')
+      .style('stroke-width', d => {
+        console.log(d);
+        if (d.filledIn) {
+          return 0;
+        } else if (d.color) {
+          return 4;
+        } else {
+          return 1;
+        }
+      });
+  legendEnter.append('text')
+      .attr('class', 'annotation')
+      .text(d => d.text)
+      .attr('y', d => (d.color && !d.filledIn) ? vis.rectHeight / 2 - 3 : vis.rectHeight / 2)
+      .attr('x', vis.rectWidth / 2)
+      .style('dominant-baseline', 'middle')
+      .style('text-anchor', 'middle')
+      .call(wrap, vis.rectWidth - 3);
 
   vis.drawn = true;
 };
@@ -397,11 +453,23 @@ function charboxClick(d, vis) {
 
     vis.films
         .style('fill', e => e.characters.includes(d) ? heroColors[e.group] : 'none')
-        .style('stroke', e => e.characters.includes(d) ? 'none': '#aeaeae');
-
-    vis.gFilms.selectAll('text')
-        .data(vis.displayData, d => d.movie)
-        .style('fill', e => e.characters.includes(d) ? 'white' : 'black');
+        .style('stroke', e => {
+          if (e.characters.includes(d)) {
+            return 'none';
+          } else if (e.post_creds.includes(d)) {
+            return heroColors[e.group];
+          } else {
+            return '#aeaeae';
+          }
+        })
+        .style('stroke-width', e => e.post_creds.includes(d) ? 4 : 1)
+        .on('mouseover', function(e, i) {
+          if (d === 'spider_man' && e.movie === 'Iron Man 2') {
+            console.log('Spider man + Iron Man 2');
+            vis.spiderTip.show(e, i);
+          }
+        })
+        .on('mouseout', vis.spiderTip.hide);
 
     vis.svg.select('defs > marker#selected path')
         .style('stroke', heroColors[d])
@@ -419,12 +487,12 @@ function resetSelected(vis) {
   vis.groupSelected = null;
   vis.films
       .style('fill', d => heroColors[d.group])
-      .style('stroke', 'none');
+      .style('stroke', 'none')
+      .style('stroke-width', 1);
   vis.gArrows.selectAll('path')
       .style('stroke', 'black')
       .style('stroke-width', 1)
       .attr('marker-end', 'url(#arrowhead)');
-  vis.gFilms.selectAll('text').style('fill', 'white');
   unfocusAll(vis);
 }
 function focus(elem, d) {

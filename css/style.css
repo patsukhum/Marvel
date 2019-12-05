@@ -238,7 +238,7 @@ html {
   rx: 8;
 }
 .film-title {
-  fill: white;
+  fill: black;
   font-size: 9px;
   alignment-baseline: middle;
   text-anchor: middle;
