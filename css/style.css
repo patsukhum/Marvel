@@ -623,7 +623,8 @@ div.tutorial.top-left {
   pointer-events: none;
 }
 
-#fp-nav ul li a span,
-.fp-slidesNav ul li a span {
-    background: black !important;
+
+.bright-navdots {
+  background: white !important;
+  border: 1px solid black !important;
 }
