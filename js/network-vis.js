@@ -55,7 +55,7 @@ NetworkVis.prototype.initVis = function() {
   vis.scaleEdgeWidth = d3.scaleLinear()
       .range([1, 5]);
   vis.scaleEdgeOpacity = d3.scaleLinear()
-      .range([0.01, 1.0]);
+      .range([0.1, 1.0]);
 
   var minNodeRadius = vis.config.minNodeRadius || 5,
       maxNodeRadius = vis.config.maxNodeRadius || 30;
@@ -88,8 +88,9 @@ NetworkVis.prototype.initVis = function() {
 NetworkVis.prototype.wrangleData = function() {
   var vis = this;
 
+
   // Filtering out all edges below 10 counts
-  vis.displayData.edges = vis.data.edges.filter(d => d.count >= 3);
+  vis.displayData.edges = vis.data.edges.filter(d => d.count >= 5);
 
   console.log(vis.displayData);
   // Finding all links from each character to the others
@@ -193,7 +194,7 @@ NetworkVis.prototype.highlight = function(character) {
   var vis = this;
 
   vis.edges.style('stroke', l => edgeMatchesCharacter(l, character) ? '#f78f3f' : 'darkgray')
-      .style('opacity', l => edgeMatchesCharacter(l, character) ? 1.0 : vis.scaleEdgeOpacity(l.count) / 3);
+      .style('opacity', l => edgeMatchesCharacter(l, character) ? clamp(vis.scaleEdgeOpacity(l.count) * 2, 0.3, 1) : 0.15);
   vis.nodes.style('stroke', n => {
       if (nodeMatchesCharacter(n, character)) {
         return '#f78f3f';
@@ -208,7 +209,7 @@ NetworkVis.prototype.highlight = function(character) {
           if (nodeMatchesCharacter(n, character) || nodeConnectedToCharacter(n, character, vis.connections)) {
             return 1;
           } else {
-            return 0.5;
+            return 0.3;
           }
         });
 };

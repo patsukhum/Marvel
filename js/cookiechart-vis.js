@@ -45,20 +45,28 @@ CookieChartVis.prototype.initVis = function() {
     .style('opacity', 0);
 
   // Generate x and y center locations for clusters
-  vis.xCenter = []
+  vis.xCenter = [];
+  vis.xCenterText = [];
   for (var i = 0; i < 3; i++) {
     var init = 90;
     for (var j = 0; j < 3; j++) {
       var offset = 220;
       vis.xCenter.push(init + offset * j);
+      vis.xCenterText.push(init + offset * j);
     }
   }
 
-  vis.yCenter = []
+  vis.yCenter = [];
+  vis.yCenterText = [];
   for (var i = 0; i < 3; i++) {
     var pos = 200 * i;
     for (var j = 0; j < 3; j++) {
       vis.yCenter.push(pos);
+      var textOffset = 100;
+      if (i === 2)
+        vis.yCenterText.push(pos - textOffset * 1.1);
+      else
+        vis.yCenterText.push(pos + textOffset);
     }
   }
 
@@ -87,55 +95,61 @@ CookieChartVis.prototype.initVis = function() {
   //// slider ///// https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763?fbclid=IwAR2cq8_8uLWVqEyuU-XYEY-m6g4yIoUmXuiV3X0TUgnzJBTKQ_a_4WAc24w
 
   vis.slidersvg = d3.select('#slider')
-      .append('svg')
-      .attr('width', vis.width)
-      .attr('height', 60);
+    .append('svg')
+    .attr('width', vis.width)
+    .attr('height', 60);
 
   var currentValue = 0;
 
   var x = d3.scaleLinear()
-      .domain([0, 3])
-      .range([0, vis.width - vis.margin.left - vis.margin.right])
-      .clamp(true);
+    .domain([0, 3])
+    .range([0, vis.width - vis.margin.left - vis.margin.right])
+    .clamp(true);
 
   var slider = vis.slidersvg.append("g")
-      .attr("class", "slider")
-      .attr("transform", "translate(" + vis.margin.left + "," + 30 + ")");
+    .attr("class", "slider")
+    .attr("transform", "translate(" + vis.margin.left + "," + 30 + ")");
 
   slider.append("line")
-      .attr("class", "track")
-      .attr("x1", x.range()[0])
-      .attr("x2", x.range()[1])
-      .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-      .attr("class", "track-inset")
-      .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-      .attr("class", "track-overlay")
-      .call(d3.drag()
-          .on("start.interrupt", function() { slider.interrupt(); })
-          .on("start drag", function() {
-            currentValue = d3.event.x;
-            // console.log(currentValue)
-            // console.log(x.invert(currentValue))
-            update(x.invert(currentValue));
-          })
-      );
+    .attr("class", "track")
+    .attr("x1", x.range()[0])
+    .attr("x2", x.range()[1])
+    .select(function() {
+      return this.parentNode.appendChild(this.cloneNode(true));
+    })
+    .attr("class", "track-inset")
+    .select(function() {
+      return this.parentNode.appendChild(this.cloneNode(true));
+    })
+    .attr("class", "track-overlay")
+    .call(d3.drag()
+      .on("start.interrupt", function() {
+        slider.interrupt();
+      })
+      .on("start drag", function() {
+        currentValue = d3.event.x;
+        update(x.invert(currentValue));
+      })
+    );
 
   slider.insert("g", ".track-overlay")
-      .attr("class", "ticks")
-      .attr("transform", "translate(0," + 18 + ")")
-      .selectAll("text")
-      .data(x.ticks(3))
-      .enter()
-      .append("text")
-      .attr("x", x)
-      .attr("y", 10)
-      .attr("text-anchor", "middle")
-      .text(function(d) { return d });
+    .attr("class", "ticks")
+    .attr("transform", "translate(0," + 18 + ")")
+    .selectAll("text")
+    .data(x.ticks(3))
+    .enter()
+    .append("text")
+    .attr("x", x)
+    .attr("y", 10)
+    .attr("text-anchor", "middle")
+    .text(function(d) {
+      return d
+    });
 
   //dragging handle
   var handle = slider.insert("circle", ".track-overlay")
-      .attr("class", "handle")
-      .attr("r", 9);
+    .attr("class", "handle")
+    .attr("r", 9);
 
   //start automatically with play/pause button
   var moving = false;
@@ -221,8 +235,16 @@ CookieChartVis.prototype.toggleCookie2 = function() {
 CookieChartVis.prototype.toggleCookie = function(h) {
   var vis = this;
 
-  vis.stage = Math.floor(h)%4 +1;
+  vis.stage = Math.floor(h) % 4 + 1;
 
+  $('#cookie-text-'+vis.stage).show();
+  console.log('showing'+vis.stage);
+  for (var i=1;i<=4;i++) {
+    if (i !== vis.stage){
+      $('#cookie-text-'+i).hide();
+      console.log('hiding'+vis.stage);
+    }
+  }
   vis.updateVis();
 }
 
@@ -232,7 +254,7 @@ CookieChartVis.prototype.updateVis = function() {
   var width = vis.width,
     height = vis.height;
 
-  vis.colorScale = ['pink', 'darkred', 'black', 'lightblue', 'green', 'orange', "#e23636", 'gray', "#0476F2"];
+  vis.colorScale = ['purple', 'darkred', 'black', 'darkblue', 'green', 'orange', "#e23636", 'gray', "#0476F2"];
 
 
   vis.nodes = [];
@@ -253,25 +275,34 @@ CookieChartVis.prototype.updateVis = function() {
   vis.drawCircles();
 
   // vis.runSimulation();
+  vis.yOffsetTextHover = {
+    0: 120,
+    1: 120,
+    2: 80,
+    3: 120,
+    4: 120,
+    5: 130,
+    6: -130,
+    7: -80,
+    8: -70
+  };
 
   var xOffsetText = 0;
   var yOffsetText = 0;
-  var texts = vis.svg.selectAll("text")
+  vis.texts = vis.svg.selectAll("text")
     .data(vis.idxToGenre);
 
-  texts.enter()
+  vis.texts.enter()
     .append("text")
     .attr("class", "texts genre-label")
-    .merge(texts)
-    // .transition()
-    // .duration(800)
+    .merge(vis.texts)
     .attr("x", (d, i) => {
       if (vis.stage === 1)
         return vis.xCenter[4] - xOffsetText;
       if (vis.stage === 4 && d === 'Marvel') {
-          return vis.xCenter[3] - xOffsetText;
+        return vis.xCenter[3] - xOffsetText;
       } else if (vis.stage === 4 && d === 'DC') {
-          return vis.xCenter[5] - xOffsetText;
+        return vis.xCenter[5] - xOffsetText;
       }
       return vis.xCenter[i] - xOffsetText;
     })
@@ -279,16 +310,16 @@ CookieChartVis.prototype.updateVis = function() {
       if (vis.stage === 1)
         return vis.yCenter[4] - yOffsetText;
       if (vis.stage === 4 && d === 'Marvel') {
-          return vis.yCenter[3] - yOffsetText;
+        return vis.yCenter[3] - yOffsetText;
       } else if (vis.stage === 4 && d === 'DC') {
-          return vis.yCenter[5] - yOffsetText;
+        return vis.yCenter[5] - yOffsetText;
       }
       return vis.yCenter[i] * 1.1 - yOffsetText - 25;
     })
     .text((d, i) => {
       if (vis.stage === 1) {
         if (i === 0) {
-          return 'All Genres'
+          return ''
         }
         return "";
       } else if (vis.stage === 2) {
@@ -302,18 +333,54 @@ CookieChartVis.prototype.updateVis = function() {
       }
       return d;
     })
+    // .on('mouseover', (d)=>vis.textMouseover(d))
+    // .on('mouseout', (d)=>vis.textMouseout(d))
     .attr("fill", "white")
     .style("text-anchor", "middle")
     .style("font-size", "18px")
     .style('text-shadow', ' -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black')
     .call(wrapDelimited, 70, '/');
-  texts.exit().remove();
+  vis.texts.exit().remove();
 
   vis.drawn = true;
 }
 
 CookieChartVis.prototype.drawCircles = function() {
   var vis = this;
+  var categoriesArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  var radiusArr = [70, 70, 50, 90, 100, 140, 90, 50, 50];
+  vis.enclosingCircles = vis.svg
+    .selectAll('.big-cookie-nodes')
+    .data(categoriesArr);
+  vis.enclosingCircles.enter()
+    .append('circle')
+    .attr('class', 'big-cookie-nodes')
+    .merge(vis.enclosingCircles)
+    .attr('cx', function(d, i) {
+      return vis.xCenter[i];
+    })
+    .attr('cy', function(d, i) {
+      return vis.yCenter[i];
+    })
+    .attr('r', (d, i) => {
+      if (vis.stage === 1) return 0;
+      if (vis.stage === 2 && (i === 6 || i === 8))
+        return 0;
+      if (vis.stage === 3 && i === 5)
+        return 100;
+      if (vis.stage === 4) {
+        if (i === 3) return 100;
+        if (i === 5) return 60;
+        return 0;
+      }
+      return radiusArr[i];
+    })
+    .style('fill', 'white')
+    // .style('stroke', 'black')
+    .on('mouseover', (d, i) => vis.setGenreTextVisible(i, vis))
+    .on('mouseout', (d, i) => vis.setGenreTextInvisible(i, vis))
+  vis.enclosingCircles.exit();
+
   vis.u = vis.svg
     .selectAll('.cookie-nodes')
     .data(vis.nodes, (d) => d.name);
@@ -321,8 +388,12 @@ CookieChartVis.prototype.drawCircles = function() {
   vis.u.enter()
     .append('circle')
     .attr('class', 'cookie-nodes')
-    .on('mouseover', d => vis.nodeMouseover(d, vis))
-    .on('mouseout', d => vis.nodeMouseout(d, vis))
+    .on('mouseover', function(d) {
+      vis.nodeMouseover(d, vis, d3.select(this))
+    })
+    .on('mouseout', function(d) {
+      vis.nodeMouseout(d, vis, d3.select(this))
+    })
     .style('opacity', 0.77)
     .merge(vis.u)
     .transition()
@@ -355,7 +426,11 @@ CookieChartVis.prototype.drawCircles = function() {
     })
     .style('fill', function(d) {
       if (vis.stage === 1) {
-        return 'lightgreen';
+        if (vis.dataStage3[d.name]['color'] === 'pink')
+          return 'purple';
+        if (vis.dataStage3[d.name]['color'] === 'lightblue')
+          return 'darkblue';
+        return vis.dataStage3[d.name]['color'];
       } else if (vis.stage === 2) {
         if (vis.dataStage2[d.name]['color'] === 'pink')
           return 'purple';
@@ -371,13 +446,6 @@ CookieChartVis.prototype.drawCircles = function() {
       }
       return vis.dataStage4[d.name]['color'];
     })
-    // .style('stroke', (d,i) => {
-    //     if (i%2 == 0) return 'darkblue';
-    //     return 'darkgreen';
-    // })
-    // .style('stroke-width', '5px')
-
-
 
   vis.u.exit().remove();
 }
@@ -452,13 +520,76 @@ CookieChartVis.prototype.runSimulation = function() {
   }
 }
 
+// CookieChartVis.prototype.textMouseover = function(d, vis) {
+//   var vis = this;
+//   vis.texts.filter((data)=>{
+//     return data === d;
+//   }).style('opacity',0)
+// }
+//
+// CookieChartVis.prototype.textMouseout = function(d, vis) {
+//   var vis = this;
+//   vis.texts.filter((data)=>{
+//     return data === d;
+//   }).style('opacity',1)
+// }
 
-CookieChartVis.prototype.nodeMouseover = function(d, vis) {
+CookieChartVis.prototype.setGenreTextVisible = function(category, vis) {
+  if (vis.stage === 4 && (category === 3 || category === 5)) {
+    category += 3;
+  };
   vis.u.filter(function(data) {
-      return data == d;
+      return data.category !== category;
     })
+    .style('opacity', '0.1')
+
+  vis.texts.filter((data, idx) => {
+    return idx !== category;
+  }).style('opacity', '0')
+
+  vis.texts.filter((data, idx) => {
+      return idx === category;
+    }).attr("transform", (_, i) => {
+      if (vis.stage === 2 && category === 5)
+        return "translate(0 180)";
+      return "translate(0 " + vis.yOffsetTextHover[category] + ")";
+    }).attr("fill", (_, i) => {
+      return vis.colorScale[category];
+    }).style('text-shadow', ' -0px 0 black, 0 0px black, 0px 0 black, 0 -0px black')
+    .style("font-size", "23px")
+}
+
+CookieChartVis.prototype.setGenreTextInvisible = function(category, vis) {
+  if (vis.stage === 4 && (category === 3 || category === 5)) {
+    category += 3;
+  };
+  vis.u.filter(function(data) {
+      return data.category !== category;
+    })
+    .style('opacity', '0.77')
+
+  vis.texts.filter((data, idx) => {
+    return idx !== category;
+  }).style('opacity', '1')
+
+  vis.texts.filter((data, idx) => {
+      return idx === category;
+    }).attr("transform", (d, i) => {
+      return "translate(0 0)";
+    }).attr("fill", 'white')
+    .style('text-shadow', ' -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black')
+    .style("font-size", "18px")
+}
+
+CookieChartVis.prototype.nodeMouseover = function(d, vis, hoveredCircle) {
+  hoveredCircle
     .style('stroke', 'darkgray')
-    .style('stroke-width', '8px');
+    .style('stroke-width', '5px');
+
+  if (vis.stage !== 1) {
+    vis.setGenreTextVisible(d.category, vis);
+  }
+
 
   vis.tooltip.transition()
     .style('opacity', 0.8);
@@ -470,18 +601,18 @@ CookieChartVis.prototype.nodeMouseover = function(d, vis) {
 
 };
 
-CookieChartVis.prototype.nodeMouseout = function(d, vis) {
+CookieChartVis.prototype.nodeMouseout = function(d, vis, hoveredCircle) {
   vis.tooltip.transition()
     .duration(100)
     .style("opacity", 0);
 
-  vis.u.filter(function(data) {
-      return data == d;
-    })
+  hoveredCircle
     .style('stroke', 'darkgray')
-    .style('stroke-width', '3px');
-  // vis.u.style('stroke', 'none')
-  //   .style('stroke-width', 'none');
+    .style('stroke-width', '0px');
+
+  if (vis.stage !== 1) {
+    vis.setGenreTextInvisible(d.category, vis);
+  }
 };
 
 function formatMillions(num) {

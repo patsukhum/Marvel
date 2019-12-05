@@ -234,7 +234,7 @@ html {
 .mapPath:hover {
   paint-order: stroke fill;
   stroke-width: 3;
-  stroke: black;
+  stroke: gray;
 }
 
 /* plot flow */
@@ -244,7 +244,7 @@ html {
   rx: 8;
 }
 .film-title {
-  fill: white;
+  fill: black;
   font-size: 9px;
   alignment-baseline: middle;
   text-anchor: middle;
@@ -507,8 +507,12 @@ rect.highlight-box {
   box-shadow: 2px 2px 5px grey;
 }
 
-.poster:hover {
-  /* height: 180px; */
+/* .poster:hover {
+  height: 180px;
+  box-shadow: 8px 8px 8px grey;
+} */
+
+.shadowOn {
   box-shadow: 8px 8px 8px grey;
 }
 
@@ -619,4 +623,14 @@ div.tutorial.top-left {
   left: 1em;
   border: none;
   padding: 0
+}
+
+.genre-label {
+  pointer-events: none;
+}
+
+
+.bright-navdots {
+  background: white !important;
+  border: 1px solid black !important;
 }

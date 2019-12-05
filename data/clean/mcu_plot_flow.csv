@@ -1,24 +1,24 @@
-movie,flows_into,year,group,x,y,characters
-Iron Man,Iron Man 2,2008,iron_man,0,0,iron_man
-Iron Man 2,The Avengers,2010,iron_man,1,0,"iron_man, spider_man"
-Iron Man 3,Avengers: Age of Ultron,2015,iron_man,3,0,iron_man
-The Incredible Hulk,The Avengers,2008,hulk,1,3,"hulk, iron_man"
-Thor,The Avengers,2011,thor,1,2,thor
-Thor: The Dark World,Avengers: Age of Ultron,2013,thor,3,2,"thor, captain_america"
-Thor: Ragnarok,Avengers: Infinity War,2017,thor,7,2,"thor, hulk, doctor_strange"
-Captain America: The First Avenger,The Avengers,2011,captain_america,1,1,captain_america
-Captain America: The Winter Soldier,Avengers: Age of Ultron,2014,captain_america,3,1,captain_america
-Captain America: Civil War,"Spider-Man: Homecoming, Black Panther",2018,captain_america,6,1,"iron_man, captain_america, ant_man, spider_man, black_panther"
-The Avengers,"Iron Man 3, Thor: The Dark World, Captain America: The Winter Soldier",2012,avengers,2,1,"iron_man, hulk, captain_america, thor"
-Avengers: Age of Ultron,"Thor: Ragnarok, Ant-Man, Captain America: Civil War",2015,avengers,4,1,"iron_man, hulk, captain_america, thor"
-Avengers: Infinity War,"Captain Marvel, Avengers: Endgame, Spider-Man: Far from Home",2018,avengers,8,1,"iron_man, hulk, captain_america, thor, guardians, spider_man, black_panther, doctor_strange"
-Avengers: Endgame,,2019,avengers,10,1,"iron_man, hulk, captain_america, thor, guardians, ant_man, spider_man, black_panther, doctor_strange, captain_marvel"
-Guardians of the Galaxy,Guardians of the Galaxy Vol. 2,2014,guardians,6,4,guardians
-Guardians of the Galaxy Vol. 2,Avengers: Infinity War,2018,guardians,7,4,guardians
-Ant-Man,Captain America: Civil War,2015,ant_man,5,0,"ant_man, captain_america"
-Ant-Man and the Wasp,Avengers: Endgame,2018,ant_man,9,3,ant_man
-Doctor Strange,Thor: Ragnarok,2016,doctor_strange,6,3,"thor, doctor_strange"
-Spider-Man: Homecoming,Avengers: Infinity War,2018,spider_man,7,0,"iron_man, captain_america, spider_man"
-Spider-Man: Far from Home,,2019,spider_man,9,0,spider_man
-Black Panther,Avengers: Infinity War,2018,black_panther,7,1,black_panther
-Captain Marvel,Avengers: Endgame,2019,captain_marvel,9,2,"captain_america, captain_marvel"
+movie,flows_into,year,group,x,y,characters,post_creds
+Iron Man,Iron Man 2,2008,iron_man,0,0,iron_man,
+Iron Man 2,The Avengers,2010,iron_man,1,0,"iron_man, spider_man",
+Iron Man 3,Avengers: Age of Ultron,2015,iron_man,3,0,iron_man,hulk
+The Incredible Hulk,The Avengers,2008,hulk,1,3,hulk,iron_man
+Thor,The Avengers,2011,thor,1,2,thor,
+Thor: The Dark World,Avengers: Age of Ultron,2013,thor,3,2,"thor, captain_america",
+Thor: Ragnarok,Avengers: Infinity War,2017,thor,7,3,"thor, hulk, doctor_strange",
+Captain America: The First Avenger,The Avengers,2011,captain_america,1,1,captain_america,
+Captain America: The Winter Soldier,Avengers: Age of Ultron,2014,captain_america,3,1,"captain_america, iron_man",
+Captain America: Civil War,"Spider-Man: Homecoming, Black Panther",2018,captain_america,6,1,"iron_man, captain_america, ant_man, spider_man, black_panther",
+The Avengers,"Iron Man 3, Thor: The Dark World, Captain America: The Winter Soldier",2012,avengers,2,1,"iron_man, hulk, captain_america, thor",
+Avengers: Age of Ultron,"Thor: Ragnarok, Ant-Man, Captain America: Civil War",2015,avengers,4,1,"iron_man, hulk, captain_america, thor",
+Avengers: Infinity War,"Captain Marvel, Avengers: Endgame",2018,avengers,8,1,"iron_man, hulk, captain_america, thor, guardians, spider_man, black_panther, doctor_strange",
+Avengers: Endgame,Spider-Man: Far from Home,2019,avengers,10,1,"iron_man, hulk, captain_america, thor, guardians, ant_man, spider_man, black_panther, doctor_strange, captain_marvel",
+Guardians of the Galaxy,Guardians of the Galaxy Vol. 2,2014,guardians,6,4,guardians,
+Guardians of the Galaxy Vol. 2,Avengers: Infinity War,2018,guardians,7,4,guardians,
+Ant-Man,"Captain America: Civil War, Ant-Man and the Wasp",2015,ant_man,5,0,ant_man,captain_america
+Ant-Man and the Wasp,Avengers: Endgame,2018,ant_man,9,0,ant_man,
+Doctor Strange,Thor: Ragnarok,2016,doctor_strange,5,3,doctor_strange,thor
+Spider-Man: Homecoming,Avengers: Infinity War,2018,spider_man,7,1,"iron_man, spider_man",captain_america
+Spider-Man: Far from Home,,2019,spider_man,11,1,spider_man,
+Black Panther,Avengers: Infinity War,2018,black_panther,7,2,black_panther,
+Captain Marvel,Avengers: Endgame,2019,captain_marvel,9,2,captain_marvel,"captain_america, hulk"
