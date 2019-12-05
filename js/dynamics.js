@@ -5,6 +5,16 @@ var myFullpage = new fullpage('#fullpage', {
 
   afterLoad: function(origin, destination, direction) {
     var secId = destination.item.getAttribute('id');
+
+    // update nav dots accordingly
+    if(secId == 'mcu-intro-sec' || secId == 'map-sec' || secId == 'future-sec') {
+ 
+      $('#fp-nav ul li a span').addClass('bright-navdots');
+    }
+    else {
+      $('#fp-nav ul li a span').removeClass('bright-navdots');
+    }
+
     switch (secId) {
       case 'cookiechart-sec':
         drawCookieChartVis();
@@ -13,9 +23,6 @@ var myFullpage = new fullpage('#fullpage', {
         drawLineChartVis();
         break;
       case 'mcu-intro-sec':
-        console.log($('#fp-nav ul li a span').css('background'));
-        // $('#fp-nav ul li a span').css({'background': 'white !important'});
-        // $('.fp-slidesNav ul li a span').css({'background': 'white !important'});
         break;
       case 'plot-flow-sec':
         drawPlotVis();
