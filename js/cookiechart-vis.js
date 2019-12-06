@@ -97,7 +97,7 @@ CookieChartVis.prototype.initVis = function() {
   vis.slidersvg = d3.select('#slider')
     .append('svg')
     .attr('width', vis.width)
-    .attr('height', 60);
+    .attr('height', 50);
 
   var currentValue = 0;
 
@@ -109,7 +109,7 @@ CookieChartVis.prototype.initVis = function() {
 
   var slider = vis.slidersvg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + vis.margin.left + "," + 30 + ")");
+    .attr("transform", "translate(" + vis.margin.left + "," + 15 + ")");
 
   slider.append("line")
     .attr("class", "track")
@@ -135,7 +135,7 @@ CookieChartVis.prototype.initVis = function() {
 
   slider.insert("g", ".track-overlay")
     .attr("class", "ticks")
-    .attr("transform", "translate(0," + 18 + ")")
+    .attr("transform", "translate(0," + 10 + ")")
     .selectAll("text")
     .data(x.ticks(3))
     .enter()
