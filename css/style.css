@@ -637,4 +637,13 @@ div.tutorial.top-left {
 
 #play-button {
   background-color: #ff7921;
+  text-align: center;
+  font-size: 20px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 25px;
+  padding-right: 22px;
+  margin-top: 0px;
+  margin-left: 40%;
+  margin-bottom: 0px;
 }
