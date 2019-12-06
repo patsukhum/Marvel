@@ -101,8 +101,9 @@ CookieChartVis.prototype.initVis = function() {
 
   var currentValue = 0;
 
+  vis.sliderStage = 1;
   var x = d3.scaleLinear()
-    .domain([0, 3])
+    .domain([1, 4])
     .range([0, vis.width - vis.margin.left - vis.margin.right])
     .clamp(true);
 
@@ -156,45 +157,50 @@ CookieChartVis.prototype.initVis = function() {
   var playButton = d3.select("#play-button");
   playButton
       .on("click", function() {
+        // timer = setInterval(step, 500);
+        step();
         // var button = d3.select(this);
-        var img_src = document.getElementById('play').src;
-        change()
-        if(img_src == "img/other/pause.png"){
-          moving = false;
-          clearInterval(timer);
-        } else if(img_src == "img/other/play.png"){
-          moving = true;
-          timer = setInterval(step, 500);
-        }
+        // var img_src = document.getElementById('play').src;
+        // change()
+        // if(img_src == "img/other/pause.png"){
+        //   moving = false;
+        //   // clearInterval(timer);
+        // } else if(img_src == "img/other/play.png"){
+        //   moving = true;
+        //   // timer = setInterval(step, 500);
+        // }
       });
 
-  function change() {
-    var image = document.getElementById('play');
-    currentValue = d3.event.x;
-    update(x.invert(currentValue));
-    if (image.src.match("play.png")) {
-      image.src = "img/other/pause.png";
-    }
-    else {
-      image.src = "img/other/play.png";
-    }
-  }
+  // function change() {
+  //   var image = document.getElementById('play');
+  //   currentValue = d3.event.x;
+  //   update(x.invert(currentValue));
+  //   if (image.src.match("play.png")) {
+  //     image.src = "img/other/pause.png";
+  //   }
+  //   else {
+  //     image.src = "img/other/play.png";
+  //   }
+  // }
 
   var targetValue = vis.width;
   function step() {
-    update(x.invert(currentValue));
-    console.log("bye")
+    // update(x.invert(currentValue));
+    vis.sliderStage = vis.sliderStage%4+1;
+    console.log(vis.sliderStage);
+    update(vis.sliderStage);
     currentValue = currentValue + (targetValue/10);
     if (currentValue > targetValue) {
       moving = false;
       currentValue = 0;
-      clearInterval(timer);
+      // clearInterval(timer);
       // playButton.text("Play");
     }
   }
 
   function update(h) {
-    var h = Math.round(h);
+    // var h = Math.round(h);
+    // console.log(h);
     handle.transition().duration(500).attr("cx", x(h));
     vis.toggleCookie(h);
   }
@@ -239,7 +245,7 @@ CookieChartVis.prototype.toggleCookie2 = function() {
 CookieChartVis.prototype.toggleCookie = function(h) {
   var vis = this;
 
-  vis.stage = Math.floor(h) % 4 + 1;
+  vis.stage = vis.sliderStage;
 
   $('#cookie-text-'+vis.stage).show();
   console.log('showing'+vis.stage);
