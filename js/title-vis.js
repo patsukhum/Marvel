@@ -29,7 +29,7 @@
       'right': 50
     };
     vis.width = $('#' + vis.parentElement).width() - vis.margin.left - vis.margin.right;
-    vis.height = $(window).height() - vis.margin.top - vis.margin.bottom;
+    vis.height = $(window).height()- 50 - vis.margin.top - vis.margin.bottom;
   
     vis.svg = makeSvg(vis, vis.parentElement);
   
