@@ -199,7 +199,8 @@ CookieChartVis.prototype.initVis = function() {
   }
 
   function update(h) {
-    // var h = Math.round(h);
+    var h = Math.round(h);
+    vis.sliderStage = h;
     // console.log(h);
     handle.transition().duration(500).attr("cx", x(h));
     vis.toggleCookie(h);
