@@ -29,7 +29,7 @@ CookieChartVis.prototype.initVis = function() {
   vis.stage = 1;
   vis.margin = {
     'top': 100,
-    'bottom': 10,
+    'bottom': 25,
     'left': 20,
     'right': 10
   };
