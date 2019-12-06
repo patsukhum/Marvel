@@ -7,7 +7,7 @@ var myFullpage = new fullpage('#fullpage', {
     var secId = destination.item.getAttribute('id');
 
     // update nav dots accordingly
-    if(secId == 'mcu-intro-sec' || secId == 'map-sec' || secId == 'future-sec') {
+    if(secId == 'mcu-intro-sec' || secId == 'map-sec' || secId == 'future-sec' || secId == 'summary-sec') {
  
       $('#fp-nav ul li a span').addClass('bright-navdots');
     }

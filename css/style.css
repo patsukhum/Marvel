@@ -66,16 +66,17 @@ h4, .h4 {
   background-size: 100%;
 }
 
+.superpower-background {
+  background-image: url("../img/other/MCU_superpower.jpg");
+  background-size: 100% 100%;
+}
 
 .characters-background {
   background-image: url("../img/other/mcu_all_80.jpg");
   background-size: 100% 100%;
   /* background-image: url("../img/marvel_characters_80.jpg"); */
 }
-.captain-america-background {
-  background-image: url("../img/other/captain_america_80.jpg");
-  background-size: 100% 100%;
-}
+
 
 .conclusion-background {
   background-image: url("../img/other/marvel_characters_80.jpg");
