@@ -183,6 +183,7 @@ CookieChartVis.prototype.initVis = function() {
   var targetValue = vis.width;
   function step() {
     update(x.invert(currentValue));
+    console.log("bye")
     currentValue = currentValue + (targetValue/10);
     if (currentValue > targetValue) {
       moving = false;
