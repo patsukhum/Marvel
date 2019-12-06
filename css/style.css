@@ -130,6 +130,12 @@ select {
   stroke-width: 1.25px;
 }
 
+.play_btn{
+  display: block;
+  margin: auto;
+
+}
+
 /*** Network ***/
 .edge {
   stroke: darkgray;
@@ -238,7 +244,7 @@ html {
   rx: 8;
 }
 .film-title {
-  fill: white;
+  fill: black;
   font-size: 9px;
   alignment-baseline: middle;
   text-anchor: middle;

@@ -151,13 +151,52 @@ CookieChartVis.prototype.initVis = function() {
     .attr("class", "handle")
     .attr("r", 9);
 
-  function update(h) {
-    var h = Math.round(h)
-    handle.attr("cx", x(h));
-    vis.toggleCookie(h);
+  //start automatically with play/pause button
+  var moving = false;
+  var playButton = d3.select("#play-button");
+  playButton
+      .on("click", function() {
+        // var button = d3.select(this);
+        var img_src = document.getElementById('play').src;
+        change()
+        if(img_src == "img/other/pause.png"){
+          moving = false;
+          clearInterval(timer);
+        } else if(img_src == "img/other/play.png"){
+          moving = true;
+          timer = setInterval(step, 500);
+        }
+      });
+
+  function change() {
+    var image = document.getElementById('play');
+    currentValue = d3.event.x;
+    update(x.invert(currentValue));
+    if (image.src.match("play.png")) {
+      image.src = "img/other/pause.png";
+    }
+    else {
+      image.src = "img/other/play.png";
+    }
   }
 
+  var targetValue = vis.width;
+  function step() {
+    update(x.invert(currentValue));
+    currentValue = currentValue + (targetValue/10);
+    if (currentValue > targetValue) {
+      moving = false;
+      currentValue = 0;
+      clearInterval(timer);
+      // playButton.text("Play");
+    }
+  }
 
+  function update(h) {
+    var h = Math.round(h);
+    handle.transition().duration(500).attr("cx", x(h));
+    vis.toggleCookie(h);
+  }
   vis.wrangleData();
 };
 
@@ -201,6 +240,14 @@ CookieChartVis.prototype.toggleCookie = function(h) {
 
   vis.stage = Math.floor(h) % 4 + 1;
 
+  $('#cookie-text-'+vis.stage).show();
+  console.log('showing'+vis.stage);
+  for (var i=1;i<=4;i++) {
+    if (i !== vis.stage){
+      $('#cookie-text-'+i).hide();
+      // console.log('hiding'+vis.stage);
+    }
+  }
   vis.updateVis();
 }
 
