@@ -77,7 +77,7 @@ MapVis.prototype.initVis = function() {
   vis.svgCol2.append("text")
     .attr("class", "pie-title")
     .text('Gross Revenue Composition')
-    .attr("x", 310)
+    .attr("x", 315)
     .attr("y", 30)
     .attr("fill", "gray")
     .style("font-size", 13)
@@ -126,7 +126,7 @@ MapVis.prototype.initVis = function() {
     .attr("fill", "black")
     .style("font-size", 15);
 
-  var pieXOffset = 250;
+  var pieXOffset = 270;
   var pieYOffset = 60;
   vis.pieGroup = vis.svgCol2.append("g")
     .attr("class", "pie-group")
@@ -336,8 +336,61 @@ MapVis.prototype.updateVis = function() {
     return vis.selectedMovie.Name === d.Title;
   })[0];
 
+  var year = vis.svgCol2.selectAll('.year-released')
+    .data([selectedMovieAux.Year])
+
+  year.enter()
+    .append("text")
+    .attr("class", "year-released")
+    .merge(year)
+    .text((d)=> 'Year Released: '+d)
+    .attr("x", 0)
+    .attr("y", 40)
+    .attr("fill", "black")
+    .style("font-size", 13)
+
+  year.exit().remove();
+
   $(".stars-imdb .rate-select-layer").css("width", selectedMovieAux['imdbRating'] / 5 * 100);
   $(".stars-meta .rate-select-layer").css("width", selectedMovieAux['Metascore'] / 5 * 100);
+
+  var imdbText = vis.svgCol2.selectAll('.imdb-rating')
+    .data([selectedMovieAux['imdbRating']])
+
+  imdbText.enter()
+    .append("text")
+    .attr("class", "imdb-rating")
+    .merge(imdbText)
+    .text((d)=> d.toFixed(2))
+    .attr("x", 180)
+    .attr("y", 70)
+    .attr("fill", "#cea731")
+    .style("font-size", 13)
+
+  imdbText.exit().remove();
+
+  var metaText = vis.svgCol2.selectAll('.meta-rating')
+    .data([selectedMovieAux['Metascore']])
+
+  metaText.enter()
+    .append("text")
+    .attr("class", "meta-rating")
+    .merge(metaText)
+    .text((d)=> d.toFixed(2))
+    .attr("x", 180)
+    .attr("y", 90)
+    .attr("fill", "#cea731")
+    .style("font-size", 13)
+
+  metaText.exit().remove();
+
+  // vis.svgCol2.append("text")
+  //   .attr("class", "meta-rating")
+  //   .text(()=> selectedMovieAux['Metascore'])
+  //   .attr("x", 180)
+  //   .attr("y", 90)
+  //   .attr("fill", "black")
+  //   .style("font-size", 13)
 
   // Pie chart
   var pieData = {
@@ -357,8 +410,6 @@ MapVis.prototype.updateVis = function() {
     })
   var data_ready = pie(d3.entries(pieData))
 
-  var pieXOffset = 250;
-  var pieYOffset = 60;
   var u = vis.pieGroup.selectAll(".pie")
     .data(data_ready)
 
@@ -404,7 +455,7 @@ MapVis.prototype.updateVis = function() {
     .attr("class", "pie-legend")
     .merge(legendPie)
     .attr("x", (d, i) => {
-      return 310;
+      return 320;
     })
     .attr("y", (d, i) => {
       return 60 + 15 * (i);
@@ -426,7 +477,7 @@ MapVis.prototype.updateVis = function() {
     .attr("class", "pie-legend-text")
     .merge(legendPieText)
     .attr("x", (d, i) => {
-      return 325;
+      return 335;
     })
     .attr("y", (d, i) => {
       return 70 + 15 * (i);

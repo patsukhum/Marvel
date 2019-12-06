@@ -412,14 +412,14 @@ fill: #e23636;
 .stars-imdb {
   position: absolute;
   top: 190px;
-  right: -770px;
+  right: -760px;
   color: #F7BC06;
 }
 
 .stars-meta {
   position: absolute;
   top: 180px;
-  right: -770px;
+  right: -760px;
   color: #F7BC06;
 }
 
@@ -634,5 +634,5 @@ div.tutorial.top-left {
   background: white !important;
   border: 1px solid black !important;
 
-  
+
 }
