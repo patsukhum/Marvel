@@ -149,23 +149,23 @@
 
     <div id="map-sec" class="section global-background">
       <div class="container box box2" style="padding:15px;margin-top:20px;margin-bottom:20px;">
+      <!-- <div class="container box box2" style="position:absolute;padding:15px;top:10px;left:8%;"> -->
         <h3 style="position:absolute;left:32%;top:5%;margin-bottom:0px;margin-top:0px;">2. Strong Global Presence</h3>
 
         <div class="stars-imdb"></div>
         <div class="stars-meta"></div>
         <div id="map-vis" class="vis-container"></div>
 
-
         <!-- carousel code adapted from: https://www.codeply.com/go/HDu8lT7NxJ -->
         <div class="container posterContainer text-center my-3">
             <div id="posterCarousel" class="carousel slide w-100" data-ride="carousel">
               <!-- carousel indicator code adapted from: https://mdbootstrap.com/snippets/jquery/temp/1496800?action=prism_export -->
                 <ol class="carousel-indicators">
-                    <li data-target="#posterCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#posterCarousel" data-slide-to="1"></li>
-                    <li data-target="#posterCarousel" data-slide-to="2"></li>
-                    <li data-target="#posterCarousel" data-slide-to="3"></li>
-                  </ol>
+                  <li data-target="#posterCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#posterCarousel" data-slide-to="1"></li>
+                  <li data-target="#posterCarousel" data-slide-to="2"></li>
+                  <li data-target="#posterCarousel" data-slide-to="3"></li>
+                </ol>
 
                 <div class="carousel-inner w-100" role="listbox">
                     <div class="carousel-item row no-gutters active">
@@ -210,7 +210,7 @@
                     <span class="sr-only">Next</span>
                 </a>
               </div>
-            </div>
+          </div>
       </div>
     </div>
 
@@ -298,10 +298,10 @@
             <div class="col" style="font-size:15px;">
               <p>
                 All our source codes, data, data cleaning scripts, and images can be found in our <a href="https://github.com/patsukhum/Marvel" target="_blank">GitHub repo</a>.
-                  <br>
+                  <ul></ul>
                   <b>Data</b>
                     <ul>
-                      <li style="margin-top:0px;"><a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses" target="_blank">Box Office Mojo</a>: We collected Top 100 films (2008-2019) by highest revenue. Additionally, for each film, we collected revenue information by country. Used in bubble chart, line chart, map visualization.</li>
+                      <li><a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses" target="_blank">Box Office Mojo</a>: We collected Top 100 films (2008-2019) by highest revenue. Additionally, for each film, we collected revenue information by country. Used in bubble chart, line chart, map visualization.</li>
                       <li><a href="http://www.omdbapi.com/">OMDB:</a> For each movie, we collected genre, year released, and ratings information. Used in bubble and map chart.</li>
                       <li>The visualization of the MCU plot was loosely based on <a href="https://www.reddit.com/r/marvelstudios/comments/7ko0b1/mcu_movie_dependency_chart_leading_to_infinity/">this post</a> from Reddit user
                         <a href="https://www.reddit.com/user/jaspartamed/">jaspartamed</a></li>
@@ -310,11 +310,6 @@
                         Wikipedia data on character links were collected using the Python <code>wikipedia</code> package and the <a href="https://www.mediawiki.org/wiki/API" target="_blank">MediaWiki API</a>.
                       </li>
                     </ul>
-                    <!-- Movie details were collected from <a href="https://marvelcinematicuniverse.fandom.com/wiki/Marvel_Cinematic_Universe_Wiki">MCU Wiki</a>.
-                    Wikipedia data on character links were collected using the Python <code>wikipedia</code> package and the <a href="https://www.mediawiki.org/wiki/API" target="_blank">MediaWiki API</a>.
-                    Eigenvector centrality was computed using the Python <code>networkx</code> package.
-                    Matrix data was populated from our movie knowledge as well as from <a href="https://www.marvel.com/characters" target="_blank">Marvel</a> website.
-                    Top 22 characters were selected based on their impact on the overall MCU storyline. -->
                     <b>Methods</b>
                     <ul>
                         <li>Because movies were all tagged with multiple genres, we combined them into fewer “super-genres” for simplicity. We then ranked super-genres by priority, whereby if a movie was a member of two different “super-genres”, it was assigned to the higher priority genre (or randomly if the super-genres had equal priority).</li>
@@ -330,7 +325,6 @@
                     <b>Images</b>: None of the images (except our faces) are ours; the images were collected from Google image search, and respective source links are commented in each image file.
 
                     Superhero icons were found from <a href="https://thenounproject.com/">Noun Project</a>.
-                </ul>
               </p>
             </div>
           </div>
