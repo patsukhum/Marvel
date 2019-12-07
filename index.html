@@ -302,6 +302,7 @@
                   <b>Data</b>
                     <ul>
                       <li style="margin-top:0px;"><a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses" target="_blank">Box Office Mojo</a>: We collected Top 100 films (2008-2019) by highest revenue. Additionally, for each film, we collected revenue information by country. Used in bubble chart, line chart, map visualization.</li>
+                      <li><a href="http://www.omdbapi.com/">OMDB:</a> For each movie, we collected genre, year released, and ratings information. Used in bubble and map chart.</li>
                       <li><a href="https://www.marvel.com/characters" target="_blank">Marvel Official Website</a>: After selecting our top 22 characters based on their impact on the overall MCU storyline, we populated the matrix using our background knowledge as well as the full comic book reports from Marvel website.</li>
                       <li>
                         Wikipedia data on character links were collected using the Python <code>wikipedia</code> package and the <a href="https://www.mediawiki.org/wiki/API" target="_blank">MediaWiki API</a>.
@@ -314,13 +315,15 @@
                     Top 22 characters were selected based on their impact on the overall MCU storyline. -->
                     <b>Methods</b>
                     <ul>
+                        <li>Because movies were all tagged with multiple genres, we combined them into fewer “super-genres” for simplicity. We then ranked super-genres by priority, whereby if a movie was a member of two different “super-genres”, it was assigned to the higher priority genre (or randomly if the super-genres had equal priority).</li>
+
+                        <li>
+                        Many pieces of data were found and populated via online resources, where our judgment dictated specific selections. We
+                        tried to be as objective as possible.
+                        </li>
                         <li>
                           Eigenvector centrality was computed using the Python <code>networkx</code> package.
                         </li>
-
-                        <li></li>
-                    Many pieces of data were found and populated via online resources, where our judgment dictated specific selections. We
-                    tried to be as objective as possible.
                   </ul>
                     <b>Images</b>: None of the images (except our faces) are ours; the images were collected from Google image search, and respective source links are commented in each image file.
 
