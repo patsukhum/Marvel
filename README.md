@@ -3,7 +3,7 @@
 **Team Members**: Benjamin Levy, Rachel Moon, Pat Sukhum, Kevin Ji Whan Yoon
 
 * URL to website: https://patsukhum.github.io/Marvel/
-* URL to video: 
+* URL to video: https://www.youtube.com/watch?v=_5D8RrOzJQ0
 
 ## Project Structure
 - `css/`: contains library CSS files as well as our custom `style.css`.
