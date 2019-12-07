@@ -3,17 +3,25 @@ var myFullpage = new fullpage('#fullpage', {
   navigation: true,
   navigationPosition: 'right',
 
+
+  onLeave: function(origin, destination, direction) {
+    var origId = origin.item.getAttribute('id');
+    var destId = destination.item.getAttribute('id');
+    
+    // color navigation dots accordingly
+    if(origId == 'mcu-intro-sec' || origId == 'map-sec' || origId == 'future-sec' || origId == 'summary-sec') {
+      $('#fp-nav ul li a span').removeClass('bright-navdots');
+
+    };
+    if(destId == 'mcu-intro-sec' || destId == 'map-sec' || destId == 'future-sec' || destId == 'summary-sec') {
+       $('#fp-nav ul li a span').addClass('bright-navdots');
+    };
+  },
+
+
   afterLoad: function(origin, destination, direction) {
     var secId = destination.item.getAttribute('id');
 
-    // update nav dots accordingly
-    if(secId == 'mcu-intro-sec' || secId == 'map-sec' || secId == 'future-sec' || secId == 'summary-sec') {
- 
-      $('#fp-nav ul li a span').addClass('bright-navdots');
-    }
-    else {
-      $('#fp-nav ul li a span').removeClass('bright-navdots');
-    }
 
     switch (secId) {
       case 'cookiechart-sec':
