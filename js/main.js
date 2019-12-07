@@ -95,12 +95,10 @@ queue()
     .await(createMatrixVis);
 
 function createMatrixVis(error, matrix_data) {
-  console.log(matrix_data);
   matrixVis = new Matrix("matrix-vis", matrix_data, eventHandler);
 }
 
 d3.select('#sort').on('change', function() {
   choice = d3.select('#sort').property('value');
-  console.log(choice);
   matrixVis.sortMatrix();
 });

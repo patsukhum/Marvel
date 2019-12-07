@@ -148,9 +148,6 @@ PlotFlowVis.prototype.wrangleData = function() {
     return (a.year * 100 + a.yearCount) - (b.year * 100 + b.yearCount);
   });
 
-  console.log(vis.displayData);
-
-  // vis.drawVis()
 
 };
 PlotFlowVis.prototype.drawVis = function() {
@@ -286,7 +283,6 @@ PlotFlowVis.prototype.drawVis = function() {
       .style('fill', d => d.filledIn ? '#f78f3f' : 'none')
       .style('stroke', d => d.color ? '#f78f3f' : '#aeaeae')
       .style('stroke-width', d => {
-        console.log(d);
         if (d.filledIn) {
           return 0;
         } else if (d.color) {
@@ -427,7 +423,6 @@ PlotFlowVis.prototype.drawLab = function(elem, vis, delay) {
 // Need to add arrowheads
 PlotFlowVis.prototype.drawArrow = function(elem, vis) {
   elem.attr('d', d => {
-    // console.log(d);
     return vis.line({
       source: [vis.x(d[0].x) + vis.rectWidth / 2, vis.y(d[0].y)],
       target: [vis.x(d[1].x) - vis.rectWidth / 2 - 5, vis.y(d[1].y)]
@@ -465,7 +460,6 @@ function charboxClick(d, vis) {
         .style('stroke-width', e => e.post_creds.includes(d) ? 4 : 1)
         .on('mouseover', function(e, i) {
           if (d === 'spider_man' && e.movie === 'Iron Man 2') {
-            console.log('Spider man + Iron Man 2');
             vis.spiderTip.show(e, i);
           }
         })
