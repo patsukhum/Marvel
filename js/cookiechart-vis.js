@@ -248,6 +248,13 @@ CookieChartVis.prototype.toggleCookie = function(h) {
 
   vis.stage = vis.sliderStage;
 
+  console.log(vis.stage)
+  if (vis.stage === 4) {
+    $('#play-button').text('Restart  ↻');
+  } else if (vis.stage === 1) {
+    $('#play-button').text('Next  ▶');
+  }
+
   $('#cookie-text-'+vis.stage).show();
   console.log('showing'+vis.stage);
   for (var i=1;i<=4;i++) {
