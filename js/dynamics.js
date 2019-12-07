@@ -254,6 +254,7 @@ function introCharStats() {
 function endIntro() {
   $(".tutorial").remove();
   fadeInAll();
+  drawReplayButton();
 }
 
 function drawSkipButton() {
@@ -263,7 +264,20 @@ function drawSkipButton() {
   button.appendTo('.col-left');
   button.on('click', skipIntro);
 }
-
 function skipIntro() {
   endIntro();
+
+}
+function drawReplayButton() {
+  var button = $("<div class='tutorial top-left'>" +
+        "<button class='btn btn-danger btn-tutorial' id='tutorial-replay'>Replay tutorial</button>" +
+      "</div>")
+      .hide();
+  button.appendTo('.col-left');
+  button.fadeIn(500);
+  button.on('click', replayIntro);
+}
+function replayIntro() {
+  $(".tutorial").remove();
+  startIntro();
 }
