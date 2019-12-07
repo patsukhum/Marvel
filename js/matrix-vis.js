@@ -112,15 +112,6 @@ Matrix.prototype.initVis = function() {
         d3.select(this).attr('fill', 'black');
       });
 
-
-  // Adding text
-  vis.svg.append('text')
-    .attr('y', vis.height - 20)
-    .attr('x', 0)
-    .text('Click the name of an ability to sort the columns!')
-    .attr('class', 'annotation');
-
-
   vis.wrangleData();
 };
 

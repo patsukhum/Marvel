@@ -138,13 +138,10 @@
       <div class="container box">
         <h3>1. Interconnected plots</h3>
         <div class="row">
-          <div class="col-md-7 caption text">
-            <span>This is a timeline of movies as they were released.</span><span> However, this linear timeline only tells part of the story.</span>
-            <br/>
-          </div>
-          <div class="col-md-5 caption">
+          <div class="col caption text" id="plot-flow-text"></div>
+          <div class="col caption" style="display: none;" id="btn-container">
             <button type="button" class="btn btn-danger" id="btn-branching">Click me</button>
-            <span> to toggle between the linear and branching timeline</span>
+            <span> to toggle between ordering the movies by year vs. by their place in the MCU plot.</span>
           </div>
         </div>
         <div class="row">
@@ -367,13 +364,14 @@
           <div class="row">
             <div class="col" style="font-size:20px;">
               <p>
-                All our source codes, data, and images can be found in our <a href="https://github.com/patsukhum/Marvel">gitHub repo</a>.
+                All our source codes, data, and images can be found in our <a href="https://github.com/patsukhum/Marvel" target="_blank">GitHub repo</a>.
                 <ul>
                   <li>
                     <b>Data:</b>
-                    Top 100 box office movie revenues from 2008-2019 were collected from <a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses">Box Office Mojo</a>.
+                    Top 100 box office movie revenues from 2008-2019 were collected from <a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses" target="_blank">Box Office Mojo</a>.
                     Movie details (Pat)
-                    Wikipedia (Ben)
+                    Wikipedia data on character links were collected using the Python <code>wikipedia</code> package and the <a href="https://www.mediawiki.org/wiki/API" target="_blank">MediaWiki API</a>.
+                    Eigenvector centrality was computed using the Python <code>networkx</code> package.
                     MCU character power/plot (Kevin)
                   </li>
                   <li>
