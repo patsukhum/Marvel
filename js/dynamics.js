@@ -9,11 +9,11 @@ var myFullpage = new fullpage('#fullpage', {
     var destId = destination.item.getAttribute('id');
     
     // color navigation dots accordingly
-    if(origId == 'mcu-intro-sec' || origId == 'map-sec' || origId == 'future-sec' || origId == 'summary-sec') {
+    if(origId == 'mcu-intro-sec' || origId == 'map-sec' || origId == 'future-sec') {
       $('#fp-nav ul li a span').removeClass('bright-navdots');
 
     };
-    if(destId == 'mcu-intro-sec' || destId == 'map-sec' || destId == 'future-sec' || destId == 'summary-sec') {
+    if(destId == 'mcu-intro-sec' || destId == 'map-sec' || destId == 'future-sec') {
        $('#fp-nav ul li a span').addClass('bright-navdots');
     };
   },
