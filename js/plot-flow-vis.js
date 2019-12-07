@@ -452,12 +452,12 @@ function charboxClick(d, vis) {
     vis.groupSelected = d;
 
     vis.films
-        .style('fill', e => e.characters.includes(d) ? heroColors[e.group] : 'none')
+        .style('fill', e => e.characters.includes(d) ? heroColors[d] : 'none')
         .style('stroke', e => {
           if (e.characters.includes(d)) {
             return 'none';
           } else if (e.post_creds.includes(d)) {
-            return heroColors[e.group];
+            return heroColors[d];
           } else {
             return '#aeaeae';
           }
