@@ -137,14 +137,11 @@
     <div id="plot-flow-sec" class="section">
       <div class="container box">
         <h3>1. Interconnected plots</h3>
-        <div class="row">
-          <div class="col-md-7 caption text">
-            <span>This is a timeline of movies as they were released.</span><span> However, this linear timeline only tells part of the story.</span>
-            <br/>
-          </div>
-          <div class="col-md-5 caption">
+        <div class="row" style="height:25px;">
+          <div class="col caption text" id="plot-flow-text"></div>
+          <div class="col caption" style="display: none;" id="btn-container">
             <button type="button" class="btn btn-danger" id="btn-branching">Click me</button>
-            <span> to toggle between the linear and branching timeline</span>
+            <span> to toggle between ordering the movies by year vs. by their place in the MCU plot.</span>
           </div>
         </div>
         <div class="row">
@@ -271,24 +268,6 @@
       </div>
     </div> -->
 
-
-    <!-- <div id="summary-sec" class="section">
-        <div class="container box">
-          <h3>[Summary]</h3>
-          <p>
-            It appears that the characters with the largest influence in the network -
-            <span class="captain-america">Captain America</span>, <span class="iron-man">Iron Man</span>,
-            <span class="thor">Thor</span> – tend to also have a similar set of powers – super-strength, speed,
-            intelligence – as well as a distinctive weapon. On the other hand, characters with
-            lower influence tend to be equipped with a different suite of powers and abilities. Perhaps this speaks
-            to the fact that these characters are more relatable and tend to take on more leadership roles in the Avengers.
-            However, we can't forget about characters like <span class="vision">Vision</span> and
-            <span class="captain-marvel">Captain Marvel</span>, who play crucial roles in the fight against evil!
-          </p>
-        </div>
-      </div> -->
-
-
       <div id="summary-sec" class="section superpower-background">
           <br><br><br><br><br><br><br><br><br><br><br><br>
           <div class="container box" style="padding:20px;padding-left:50px;">
@@ -366,14 +345,15 @@
           <div class="row">
             <div class="col" style="font-size:20px;">
               <p>
-                All our source codes, data, and images can be found in our <a href="https://github.com/patsukhum/Marvel">gitHub repo</a>.
+                All our source codes, data, and images can be found in our <a href="https://github.com/patsukhum/Marvel" target="_blank">GitHub repo</a>.
                 <ul>
                   <li>
                     <b>Data:</b>
-                    Top 100 box office movie revenues from 2008-2019 were collected from <a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses">Box Office Mojo</a>.
+                    Top 100 box office movie revenues from 2008-2019 were collected from <a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses" target="_blank">Box Office Mojo</a>.
                     Movie details (Pat)
                     Movie details were collected from <a href="https://marvelcinematicuniverse.fandom.com/wiki/Marvel_Cinematic_Universe_Wiki">MCU Wiki</a>.
-                    Wikipedia (Ben)
+                    Wikipedia data on character links were collected using the Python <code>wikipedia</code> package and the <a href="https://www.mediawiki.org/wiki/API" target="_blank">MediaWiki API</a>.
+                    Eigenvector centrality was computed using the Python <code>networkx</code> package.
                     Matrix data was populated from our movie knowledge as well as from <a href="https://www.marvel.com/characters">Marvel</a> website.
                     Top 22 characters were selected based on their impact on the overall MCU storyline.
                   </li>

@@ -76,13 +76,6 @@ NetworkVis.prototype.initVis = function() {
         .style('opacity', 0);
   }
 
-  vis.svg.append('text')
-      .attr('x', 0)
-      .attr('y', -20)
-      .attr('class', 'annotation')
-      .text(vis.topText)
-      .call(wrap, vis.width);
-
   vis.wrangleData();
 };
 NetworkVis.prototype.wrangleData = function() {

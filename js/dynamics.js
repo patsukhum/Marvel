@@ -25,7 +25,9 @@ var myFullpage = new fullpage('#fullpage', {
       case 'mcu-intro-sec':
         break;
       case 'plot-flow-sec':
-        drawPlotVis();
+        if (!plotVis.drawn) {
+          drawPlotVis();
+        }
         break;
       case 'characters-sec':
         if (!doneIntro) {
@@ -44,32 +46,46 @@ var myFullpage = new fullpage('#fullpage', {
 
 // ********** Plot plot ********** //
 function drawPlotVis() {
-  $('#plot-flow-sec .caption span').each(function(index) {
-    $(this).delay(1000 + 1500 * (index)).fadeTo(1000, 1);
-  });
-  $('#plot-flow-sec .caption button, #plot-flow-sec .caption span').delay(4000).fadeTo(1000, 1);
-  if (!plotVis.drawn) {
-    plotVis.drawVis();
-  }
+  plotVis.drawVis();
+  animationFuncs[0]();
 }
-$('#plot-flow-sec .caption').children().css('opacity', 0);
-$('#plot-flow-sec button').on('click', function(event) {
+var animationFuncs = [
+    plotFlowTextFirst,
+    plotFlowTextSecond,
+    plotFlowTextThird
+];
+function plotFlowTextFirst() {
+  var plotFlowText = $("#plot-flow-text");
+  $("<span>This is a timeline of movies as they were released.</span>")
+      .hide()
+      .appendTo(plotFlowText)
+      .fadeIn(1000, function() {
+        $("<span> However, this linear timeline only tells part of the story.</span>")
+            .hide()
+            .appendTo(plotFlowText)
+            .fadeIn(1000, animationFuncs[1]);
+      });
+}
+function plotFlowTextSecond() {
+  var plotFlowText = $("#plot-flow-text");
+  plotFlowText.children()
+      .delay(1000)
+      .fadeOut(500)
+      .promise()
+      .done(function() {
+        $("#plot-flow-text").remove();
+        animationFuncs[2]();
+      });
+}
+function plotFlowTextThird() {
+  $("#btn-container").fadeIn(1000)
+}
+$("#btn-branching")
+    .on('click', function() {
+      console.log("Toggling");
+      plotVis.toggleBranching();
+    });
 
-  if (!plotVis.toggledBefore) {
-    $("#plot-flow-sec .caption.text")
-      .children('span')
-      .fadeOut(1000, function() {
-        $(this).remove()
-      })
-      .end()
-      .append('span')
-      .html("This is the timeline in the MCU world. The plot flows from left to right along the lines.")
-      .css('opacity', 0)
-      .fadeTo(500, 1);
-  }
-
-  plotVis.toggleBranching();
-});
 
 $('#btn-cookie').on('click', function(event) {
   cookiechartVis.toggleCookie();
