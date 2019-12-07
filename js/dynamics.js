@@ -46,8 +46,6 @@ var myFullpage = new fullpage('#fullpage', {
 
 // ********** Plot plot ********** //
 function drawPlotVis() {
-  var plotFlowText = $( "#plot-flow-text" );
-
   plotVis.drawVis();
   animationFuncs[0]();
 }
