@@ -3,17 +3,25 @@ var myFullpage = new fullpage('#fullpage', {
   navigation: true,
   navigationPosition: 'right',
 
+
+  onLeave: function(origin, destination, direction) {
+    var origId = origin.item.getAttribute('id');
+    var destId = destination.item.getAttribute('id');
+    
+    // color navigation dots accordingly
+    if(origId == 'mcu-intro-sec' || origId == 'map-sec' || origId == 'future-sec' || origId == 'summary-sec') {
+      $('#fp-nav ul li a span').removeClass('bright-navdots');
+
+    };
+    if(destId == 'mcu-intro-sec' || destId == 'map-sec' || destId == 'future-sec' || destId == 'summary-sec') {
+       $('#fp-nav ul li a span').addClass('bright-navdots');
+    };
+  },
+
+
   afterLoad: function(origin, destination, direction) {
     var secId = destination.item.getAttribute('id');
 
-    // update nav dots accordingly
-    if(secId == 'mcu-intro-sec' || secId == 'map-sec' || secId == 'future-sec' || secId == 'summary-sec') {
- 
-      $('#fp-nav ul li a span').addClass('bright-navdots');
-    }
-    else {
-      $('#fp-nav ul li a span').removeClass('bright-navdots');
-    }
 
     switch (secId) {
       case 'cookiechart-sec':
@@ -254,6 +262,7 @@ function introCharStats() {
 function endIntro() {
   $(".tutorial").remove();
   fadeInAll();
+  drawReplayButton();
 }
 
 function drawSkipButton() {
@@ -263,7 +272,20 @@ function drawSkipButton() {
   button.appendTo('.col-left');
   button.on('click', skipIntro);
 }
-
 function skipIntro() {
   endIntro();
+
+}
+function drawReplayButton() {
+  var button = $("<div class='tutorial top-left'>" +
+        "<button class='btn btn-danger btn-tutorial' id='tutorial-replay'>Replay tutorial</button>" +
+      "</div>")
+      .hide();
+  button.appendTo('.col-left');
+  button.fadeIn(500);
+  button.on('click', replayIntro);
+}
+function replayIntro() {
+  $(".tutorial").remove();
+  startIntro();
 }
