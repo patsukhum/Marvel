@@ -68,13 +68,8 @@
           <div class="box" style="position:absolute;left:0%;width:110%;height:60%;margin-left:0px;margin-top:20%;padding-left:35px;padding-right:30px;padding-top:35px;">
             <h3 style="font-size:40px;">Comic book movies<br>are a big deal.</h3>
 
-              <!-- <p style="font-size:20px;">
-                The Marvel Cinematic Universe (MCU) series started in 2008 (with <i>Iron Man</i> and <i>The Incredible Hulk</i>) and saw its curtains close in 2019 with <i>Avengers:
-                Endgame</i>. Here are the top 100 box office records from each year, from 2008 to 2019.
-                Examining the box office revenue over the years by genre, one thing becomes apparent: <span style="font-family:'Permanent Marker'">comic book movies are truly dominant!</span>
-              </p> -->
               <p style="font-size:22px;" id="cookie-text-1">
-                Let's first take a look at the top 100 box office records from 2008, when the first MCU movie came out, to 2019. Each circle represents a film
+                Let's first take a look at the top 100 box office records from 2008 (when the first MCU movie came out) to 2019. Each circle represents a film
                 and is color-coded by genre. Let's group these films by genre to see which are the biggest genres.
               </p>
 
@@ -124,8 +119,8 @@
         <div class="row">
             <h3>What is MCU's secret superpower?</h3>
             <p style="font-size:22px;">
-              One of the defining features (one might say, 'superpowers') of the MCU is the sheer number of characters
-              and stories that have been woven into its single timeline.
+              Three of the defining features (one might say, 'superpowers') of the MCU are its interconnected storyline,
+              its strong global presence, and the sheer number of characters that have been woven into its single timeline.
               Beginning with Iron Man in 2008, MCU began producing movies with increasing frequency and success.
               Now in 2019, there have been a total of 23 MCU movies from 11 different series, with plans for
               at least 7 more in the near future.
@@ -276,7 +271,7 @@
                 <p style="font-size:22px;">
                   From its dense and complex storyline populated with unique characters to hilarious
                   cameos and post-credits appearances, Marvel has truly dominated the movie interesting in the past 11 years.
-                  As the world sends off the Infinity Saga and prepares for Phase Four of the Marvel Cinematic Universe,
+                  As the world sends off the "Infinity Saga" and prepares for "Phase Four" of the Marvel Cinematic Universe,
                   we expect (and hope) this trend to continue!
                 </p>
           </div>
@@ -341,27 +336,37 @@
     <div id="data-sec" class="section">
         <div class="container box box2">
 
-          <h3>Data & Methods</h3>
+          <h3>Data Sources and Methods</h3>
           <div class="row">
-            <div class="col" style="font-size:20px;">
+            <div class="col" style="font-size:18px;">
               <p>
-                All our source codes, data, and images can be found in our <a href="https://github.com/patsukhum/Marvel" target="_blank">GitHub repo</a>.
-                <ul>
-                  <li>
-                    <b>Data:</b>
-                    Top 100 box office movie revenues from 2008-2019 were collected from <a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses" target="_blank">Box Office Mojo</a>.
-                    Gross revenue from each country was collected by going into each individual film's page in Box Office Mojo.
-
-                    Movie details were collected from <a href="https://marvelcinematicuniverse.fandom.com/wiki/Marvel_Cinematic_Universe_Wiki">MCU Wiki</a>.
+                All our source codes, data, data cleaning scripts, and images can be found in our <a href="https://github.com/patsukhum/Marvel" target="_blank">GitHub repo</a>.
+                  <br>
+                  <b>Data</b>
+                    <ul>
+                      <li style="margin-top:0px;"><a href="https://www.boxofficemojo.com/year/world/2019/?grossesOption=totalGrosses" target="_blank">Box Office Mojo</a>: We collected Top 100 films (2008-2019) by highest revenue. Additionally, for each film, we collected revenue information by country. Used in bubble chart, line chart, map visualization.</li>
+                      <li><a href="https://www.marvel.com/characters" target="_blank">Marvel Official Website</a>: After selecting our top 22 characters based on their impact on the overall MCU storyline, we populated the matrix using our background knowledge as well as the full comic book reports from Marvel website.</li>
+                    </ul>
+                    <!-- Movie details were collected from <a href="https://marvelcinematicuniverse.fandom.com/wiki/Marvel_Cinematic_Universe_Wiki">MCU Wiki</a>.
                     Wikipedia data on character links were collected using the Python <code>wikipedia</code> package and the <a href="https://www.mediawiki.org/wiki/API" target="_blank">MediaWiki API</a>.
                     Eigenvector centrality was computed using the Python <code>networkx</code> package.
-                    Matrix data was populated from our movie knowledge as well as from <a href="https://www.marvel.com/characters">Marvel</a> website.
-                    Top 22 characters were selected based on their impact on the overall MCU storyline.
-                  </li>
-                  <li>
-                    <b>Images:</b> None of the images (except our faces) are ours; the images were collected from Google image search, and respective source links are commented in each image file.
+                    Matrix data was populated from our movie knowledge as well as from <a href="https://www.marvel.com/characters" target="_blank">Marvel</a> website.
+                    Top 22 characters were selected based on their impact on the overall MCU storyline. -->
+                    <b>Methods</b>
+                    <ul>
+                        <li></li>
+
+                    <li></li>
+                    Many pieces of data were found and populated via online resources, where our judgment dictated specific selections. We
+                    tried to be as objective as possible.
+                  </ul>
+                    <b>Images</b>
+
+                    <ul>
+                      <li></li>
+                      <li></li>
+                      None of the images (except our faces) are ours; the images were collected from Google image search, and respective source links are commented in each image file.
                     Superhero icons were found from <a href="https://thenounproject.com/">Noun Project</a>.
-                  </li>
                 </ul>
               </p>
             </div>

@@ -596,7 +596,6 @@ function mapCountryName(name) {
 }
 
 function clicked(i, vis) {
-  // console.log(i);
   vis.selectedMovie = vis.allData[i];
   vis.updateDataSelection();
 }

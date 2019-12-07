@@ -128,7 +128,7 @@ LineChartVis.prototype.wrangleData = function() {
 
   })
 
-  console.log(vis.displayData)
+
 
   //vis.updateVis();
 };

@@ -154,7 +154,6 @@ function translateAlong(path) {
   var angl = Math.atan2(pe.y - ps.y, pe.x - ps.x) * (180 / Math.PI) - 90;
   var rot_tran = "rotate(" + angl + ")";
   return function(d, i, a) {
-    console.log(d);
 
     return function(t) {
       var p = path.getPointAtLength(t * l);

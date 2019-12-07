@@ -148,9 +148,6 @@ PlotFlowVis.prototype.wrangleData = function() {
     return (a.year * 100 + a.yearCount) - (b.year * 100 + b.yearCount);
   });
 
-  console.log(vis.displayData);
-
-  // vis.drawVis()
 
 };
 PlotFlowVis.prototype.drawVis = function() {
@@ -178,6 +175,16 @@ PlotFlowVis.prototype.drawVis = function() {
         .call(vis.drawRect, vis);
 
   vis.films.call(vis.spiderTip);
+
+  var ironMan2 = vis.displayData.filter(d => d.movie === 'Iron Man 2')[0];
+  vis.gFilms.append('image')
+    .attr('xlink:href', 'img/other/info.svg')
+    .attr('width', 10)
+    .attr('height', 10)
+    .attr('x', vis.x(ironMan2[vis.selected.x]) + vis.rectWidth / 2 - 12)
+    .attr('y', vis.y(ironMan2[vis.selected.y]) - vis.rectHeight / 2 + 2)
+    .attr('class', 'info-bubble')
+    .style('opacity', 0);
 
   vis.titles = vis.gFilms.selectAll('text')
       .data(vis.displayData, d => d.movie);
@@ -286,7 +293,6 @@ PlotFlowVis.prototype.drawVis = function() {
       .style('fill', d => d.filledIn ? '#f78f3f' : 'none')
       .style('stroke', d => d.color ? '#f78f3f' : '#aeaeae')
       .style('stroke-width', d => {
-        console.log(d);
         if (d.filledIn) {
           return 0;
         } else if (d.color) {
@@ -323,13 +329,19 @@ PlotFlowVis.prototype.updateVis = function() {
       .duration(200)
       .call(vis.drawRect, vis);
 
+  var ironMan2 = vis.displayData.filter(d => d.movie === 'Iron Man 2')[0];
+  vis.gFilms.selectAll('.info-bubble')
+      .transition(200)
+      .delay(delay(null, 2))
+      .attr('x', vis.x(ironMan2[vis.selected.x]) + vis.rectWidth / 2 - 12)
+      .attr('y', vis.y(ironMan2[vis.selected.y]) - vis.rectHeight / 2 + 2)
+
   vis.titles.transition()
       .delay(delay)
       .duration(200)
       .call(vis.drawLab, vis, delay);
 
   // Drawing arrows
-  var triangle = d3.symbol(d3.symbolTriangle);
   if (vis.branching) {
     var arrowEnter = vis.arrows.enter()
         .append('path')
@@ -345,14 +357,7 @@ PlotFlowVis.prototype.updateVis = function() {
         .duration(1000)
         .style('opacity', 1)
         .selection();
-    //
-    // arrowEnter.append('path')
-    //     .attr('d', triangle)
-    //     .style('opacity', 0)
-    //     .transition()
-    //     .style('opacity', 1)
-    //     .delay(d => vis.toggledBefore ? 1000 : 200 + d[0].x * 400 + d[0].y * 100 + 2000)
-    //     .duration(1000)
+
   } else {
     vis.arrows.transition()
         .duration(200)
@@ -427,7 +432,6 @@ PlotFlowVis.prototype.drawLab = function(elem, vis, delay) {
 // Need to add arrowheads
 PlotFlowVis.prototype.drawArrow = function(elem, vis) {
   elem.attr('d', d => {
-    // console.log(d);
     return vis.line({
       source: [vis.x(d[0].x) + vis.rectWidth / 2, vis.y(d[0].y)],
       target: [vis.x(d[1].x) - vis.rectWidth / 2 - 5, vis.y(d[1].y)]
@@ -465,7 +469,6 @@ function charboxClick(d, vis) {
         .style('stroke-width', e => e.post_creds.includes(d) ? 4 : 1)
         .on('mouseover', function(e, i) {
           if (d === 'spider_man' && e.movie === 'Iron Man 2') {
-            console.log('Spider man + Iron Man 2');
             vis.spiderTip.show(e, i);
           }
         })
@@ -482,6 +485,14 @@ function charboxClick(d, vis) {
         .style('stroke-width', e => matchEdge(e, d) ? 4 : 1)
         .attr('marker-end', e => matchEdge(e, d) ? 'url(#selected)' : 'url(#arrowhead)');
   }
+
+  if (d === 'spider_man') {
+    vis.gFilms.selectAll('.info-bubble')
+        .style('opacity', 1);
+  } else {
+    vis.gFilms.selectAll('.info-bubble')
+        .style('opacity', 0);
+  }
 }
 function resetSelected(vis) {
   vis.groupSelected = null;
@@ -493,6 +504,8 @@ function resetSelected(vis) {
       .style('stroke', 'black')
       .style('stroke-width', 1)
       .attr('marker-end', 'url(#arrowhead)');
+  vis.gFilms.selectAll('.info-bubble')
+      .style('opacity', 0);
   unfocusAll(vis);
 }
 function focus(elem, d) {
@@ -510,4 +523,16 @@ function unfocusAll(vis) {
 }
 function matchEdge(e, d) {
   return e[0].characters.includes(d) && e[1].characters.includes(d)
+}
+function drawInfoBubble(elem, draw) {
+  if (draw) {
+    return elem.append('image')
+        .attr('xlink:href', 'img/other/info.svg')
+        .attr('width', 7)
+        .attr('height', 7)
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('class', '.info-bubble')
+        .style('opacity', 1);
+  }
 }

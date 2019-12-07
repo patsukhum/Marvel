@@ -85,11 +85,9 @@ NetworkVis.prototype.wrangleData = function() {
   // Filtering out all edges below 10 counts
   vis.displayData.edges = vis.data.edges.filter(d => d.count >= 5);
 
-  console.log(vis.displayData);
   // Finding all links from each character to the others
   vis.connections = {};
   vis.displayData.nodes.forEach(d => vis.connections[d.name] = []);
-  console.log(vis.connections);
   vis.displayData.edges.forEach(function(d) {
     var source = vis.displayData.nodes[d.source].name,
         target = vis.displayData.nodes[d.target].name;
@@ -101,7 +99,6 @@ NetworkVis.prototype.wrangleData = function() {
     }
 
   });
-  console.log(vis.connections);
 
   vis.updateVis();
 };

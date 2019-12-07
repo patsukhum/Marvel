@@ -90,7 +90,6 @@ function plotFlowTextThird() {
 }
 $("#btn-branching")
     .on('click', function() {
-      console.log("Toggling");
       plotVis.toggleBranching();
     });
 
@@ -185,7 +184,6 @@ function fadeInAll() {
 }
 
 function introNetwork() {
-  console.log("Intro network");
   networkVis.force.stop();
 
   // Show the network
@@ -214,7 +212,6 @@ function introNetwork() {
 }
 
 function introMatrix() {
-  console.log("Intro matrix");
   fadeIn(matrixVis);
 
   // Show text
@@ -238,7 +235,6 @@ function introMatrix() {
 }
 
 function introCharStats() {
-  console.log("Intro charStats");
 
   fadeIn(charStatsVis);
 

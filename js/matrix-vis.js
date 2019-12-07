@@ -220,12 +220,10 @@ Matrix.prototype.hideDetail = function(d, vis) {
 };
 
 Matrix.prototype.sortMatrix = function(power, vis) {
-  console.log(`Sorting by ${power}`);
   vis.matrixData = vis.matrixData.sort(function(a, b) {
     return b[power] - a[power];
   });
 
-  console.log(vis.matrixData);
 
   vis.wrangleData();
 };
@@ -235,18 +233,11 @@ Matrix.prototype.highlight = function(character) {
   vis.cols.select('rect.highlight-box')
       .datum(d => d)
       .style('opacity', d => d.name === character ? 0.3 : 0);
-  // vis.highlightBox.transition()
-  //     .attr('x',
-  //     vis.innerPadding
-  //     + vis.displayData.findIndex(d => d.name === character)
-  //     * (vis.innerPadding + vis.rectWidth)
-  // ).style('opacity', 1);
 };
 Matrix.prototype.clearHighlight = function() {
   var vis = this;
 
   vis.cols.style('opacity', 1);
-  // vis.highlightBox.style('opacity', 0.3)
 };
 Matrix.prototype.colMouseover = function(d, vis) {
   $(vis.eventHandler).trigger("mouseover", d.name);
