@@ -302,6 +302,9 @@ CookieChartVis.prototype.updateVis = function() {
       return vis.yCenter[i] * 1.1 - yOffsetText - 25;
     })
     .text((d, i) => {
+      if (d==='Animation/Fantasy') {
+        d = 'Animation';
+      }
       if (vis.stage === 1) {
         if (i === 0) {
           return ''
