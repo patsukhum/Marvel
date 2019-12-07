@@ -45,10 +45,6 @@ Matrix.prototype.initVis = function() {
     9: baseDir + "chemistry.svg"
   };
 
-  vis.tooltip = d3.select('body').append('g')
-    .append('div')
-    .attr('class', 'tooltip')
-    .style('opacity', 0);
   vis.rectWidth = 20;
   vis.innerPadding = 3;
 
@@ -159,9 +155,7 @@ Matrix.prototype.updateVis = function() {
     .attr('x', 0)
     .attr('y', -vis.rectWidth)
     .attr('width', vis.rectWidth)
-    .attr('height', vis.rectHeight)
-    .on('mouseover', d => vis.showDetail(d, vis))
-    .on('mouseout', d => vis.hideDetail(d, vis));
+    .attr('height', vis.rectHeight);
 
   vis.cols = colEnter.merge(vis.cols)
     .transition(400)
@@ -202,21 +196,6 @@ Matrix.prototype.updateVis = function() {
 
   cellEnter.merge(cells)
     .attr('transform', (d, i) => 'translate(0,' + (vis.innerPadding + (vis.innerPadding + vis.rectWidth) * i) + ')');
-};
-
-Matrix.prototype.showDetail = function(d, vis) {
-  vis.tooltip.transition()
-    .style('opacity', 0.8);
-
-  vis.tooltip.html(`<p>${d.name}</p>`)
-    .style("left", (d3.event.pageX) + "px")
-    .style("top", (d3.event.pageY + 10) + "px");
-};
-
-Matrix.prototype.hideDetail = function(d, vis) {
-  vis.tooltip.transition()
-    .duration(100)
-    .style("opacity", 0);
 };
 
 Matrix.prototype.sortMatrix = function(power, vis) {
