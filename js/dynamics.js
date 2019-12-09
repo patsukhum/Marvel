@@ -218,7 +218,7 @@ function introMatrix() {
   var divLeft = $("<div></div>").addClass('tutorial bottom');
   divLeft.appendTo(".col-left");
   divLeft.append("<p>" +
-    "In this matrix, we can see the superpowers and abilities of each of the avengers (and their enemeies) " +
+    "In this matrix, we can see the superpowers and abilities of each of the avengers (and their enemies) " +
     "Each row represents a type of ability and each column is a character. If a character has that ability, an " +
     "icon will be displayed. " +
     "<br/>" +
