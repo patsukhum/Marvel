@@ -10,8 +10,8 @@ var myFullpage = new fullpage('#fullpage', {
     
 
     if(origId == "title-sec") {
-      // show map section title, when user scrolls beyond title page (this is to prevent stack-loading in first page!)
-      $('#map-title').css("display", "inline");
+      // show map section when user scrolls beyond title page (this is to prevent stack-loading in first page!)
+      $('#map-container').css("display", "inline");
     }
     
     // color navigation dots accordingly

@@ -1,4 +1,4 @@
-/* prevent stack-loading on the first title page */
+/* prevent stack-loading on the first title page help from: https://stackoverflow.com/a/53807786/10012842 */
 html,
 body,
 #fullpage,
@@ -238,8 +238,23 @@ html {
 
 }
 
-#map-title {
+
+#map-container {
   display: none;
+
+  /* center absolute positioned div help from: https://www.beacontechnologies.com/blog/2015/07/center-an-absolute-positioned-div/ */
+  padding:15px;
+  
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .mapPath {
