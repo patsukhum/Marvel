@@ -8,6 +8,12 @@ var myFullpage = new fullpage('#fullpage', {
     var origId = origin.item.getAttribute('id');
     var destId = destination.item.getAttribute('id');
     
+
+    if(origId == "title-sec") {
+      // show map section title, when user scrolls beyond title page (this is to prevent stack-loading in first page!)
+      $('#map-title').css("display", "inline");
+    }
+    
     // color navigation dots accordingly
     if(origId == 'mcu-intro-sec' || origId == 'map-sec' || origId == 'future-sec') {
       $('#fp-nav ul li a span').removeClass('bright-navdots');
@@ -16,6 +22,7 @@ var myFullpage = new fullpage('#fullpage', {
     if(destId == 'mcu-intro-sec' || destId == 'map-sec' || destId == 'future-sec') {
        $('#fp-nav ul li a span').addClass('bright-navdots');
     };
+
   },
 
 
@@ -37,6 +44,7 @@ var myFullpage = new fullpage('#fullpage', {
           drawPlotVis();
         }
         break;
+
       case 'characters-sec':
         if (!doneIntro) {
           charactersIntro();

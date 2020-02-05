@@ -1,5 +1,3 @@
-
-
 // Globals
 var plotVis,
     cookiechartVis,

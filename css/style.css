@@ -1,3 +1,15 @@
+/* prevent stack-loading on the first title page */
+html,
+body,
+#fullpage,
+.section,
+.slide,
+.fp-tableCell 
+{
+    height: 100%
+}
+
+
 body {
   margin: 30px;
   font-family: 'Pangolin', cursive;
@@ -224,6 +236,10 @@ html {
 .brain {
   background-color: red;
 
+}
+
+#map-title {
+  display: none;
 }
 
 .mapPath {
