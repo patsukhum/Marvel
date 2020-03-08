@@ -77,7 +77,7 @@ MapVis.prototype.initVis = function() {
   vis.svgCol2.append("text")
     .attr("class", "pie-title")
     .text('Gross Revenue Composition')
-    .attr("x", 315)
+    .attr("x", 310)
     .attr("y", 30)
     .attr("fill", "gray")
     .style("font-size", 13)
